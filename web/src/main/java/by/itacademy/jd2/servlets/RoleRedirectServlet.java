@@ -13,7 +13,6 @@ import java.util.List;
 public class RoleRedirectServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
-        super.init();
     }
 
     @Override
@@ -26,6 +25,7 @@ public class RoleRedirectServlet extends HttpServlet {
             case "ADMIN":
                 List<String> usersLogins = DataService.SERVICE_DATA_USER.getUsersLogin(User.ROLE.USER);
                 req.getSession().setAttribute("listLogins",usersLogins);
+               // resp.sendRedirect("admin_menu.jsp");
                 req.getRequestDispatcher("admin_menu.jsp").forward(req, resp);
                 break;
             default:

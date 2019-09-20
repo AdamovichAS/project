@@ -5,7 +5,7 @@ import by.itacademy.jd2.service.ServletsAndFilterService;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 public class LogOutServlet extends HttpServlet {
     @Override

@@ -51,6 +51,7 @@
         <url-pattern>/update</url-pattern>
     </servlet-mapping>
 
+
     <filter>
         <filter-name>SessionAuthFilter</filter-name>
         <filter-class>by.itacademy.jd2.filters.SessionAuthFilter</filter-class>
@@ -82,7 +83,9 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>CookieFilter</filter-name>
-        <url-pattern>/user_menu.jsp</url-pattern>
+        <url-pattern>/admin_menu.jsp</url-pattern>
     </filter-mapping>
+
+
 
 </web-app>

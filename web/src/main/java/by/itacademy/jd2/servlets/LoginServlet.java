@@ -23,12 +23,10 @@ public class LoginServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         if (DataService.SERVICE_DATA_USER.userIsExist(login, password)) {
-      //      User user = DataService.SERVICE_DATA_USER.getUserByLogin(login);
             HttpSession session = request.getSession();
             ServletsAndFilterService.setRoleLoginInSession(session,login);
             Cookie cookieLogin = new Cookie("login", login + "/" + password);
             response.addCookie(cookieLogin);
-
             request.getRequestDispatcher("/redirect").forward(request,response);
         }else {
             request.setAttribute("wrongLogin", "User with this Login and password does not exist");
