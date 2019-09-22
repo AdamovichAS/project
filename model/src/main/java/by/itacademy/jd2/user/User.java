@@ -7,6 +7,8 @@ public class User {
 
     private int money;
 
+    private String name;
+    
     private String login;
 
     private String password;
