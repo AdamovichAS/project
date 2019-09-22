@@ -14,9 +14,9 @@
     </c:when>
     <c:otherwise>
         <a href="${pageContext.request.contextPath}/login.jsp" target="_blank">login</a><br>
+        <a href="${pageContext.request.contextPath}/registration.jsp" target="_blank">Registration</a><br>
     </c:otherwise>
 </c:choose>
 
-<a href="${pageContext.request.contextPath}/registration.jsp" target="_blank">Registration</a><br>
 </body>
 </html>

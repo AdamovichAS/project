@@ -14,7 +14,7 @@
 </head>
 <body>
 <c:out value="hello ${login} you role is ${role}"/><br>
-    <a href="${pageContext.request.contextPath}/logout" target="_blank">logout</a>
+    <a href="${pageContext.request.contextPath}/logout" >logout</a>
     <br>
     <a href="${pageContext.request.contextPath}/update" >update</a>
     <br>
