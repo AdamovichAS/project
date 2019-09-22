@@ -1,6 +1,7 @@
 package by.itacademy.jd2.filters;
 
-import by.itacademy.jd2.ServiceDAO.DataService;
+import by.itacademy.jd2.ServiceDAO.ServiceDAO;
+import by.itacademy.jd2.ServiceDAO.IServiceDAO;
 import by.itacademy.jd2.service.ServletsAndFilterService;
 
 import javax.servlet.*;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class CookieFilter implements Filter {
+    private final IServiceDAO serviceDAO = ServiceDAO.SERVICE_DATA_USER;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -29,7 +32,7 @@ public class CookieFilter implements Filter {
         if (nonNull(cookie)) {
             String cookieValue = cookie.getValue();
             String[] loginPassword = cookieValue.split("/");
-            boolean checkUserLoginPassword = DataService.SERVICE_DATA_USER.userIsExist(loginPassword[0], loginPassword[1]);
+            boolean checkUserLoginPassword = serviceDAO.userIsExist(loginPassword[0], loginPassword[1]);
             if (checkUserLoginPassword) {
                 ServletsAndFilterService.setRoleLoginInSession(session, loginPassword[0]);
                 filterChain.doFilter(servletRequest, servletResponse);
