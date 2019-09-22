@@ -1,2 +1,13 @@
 *.iml
 .idea
+tmp
+.classpath
+.project
+.checkstyle
+build
+target
+bin
+.settings
+out
+/build/
+/target/
