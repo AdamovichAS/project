@@ -9,6 +9,8 @@ public class User {
 
     private String login;
 
+    private String LastName;
+
     private String password;
 
     private ROLE role;
