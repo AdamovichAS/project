@@ -11,8 +11,8 @@ import java.util.Map;
 
 import static java.util.Objects.nonNull;
 
-public enum UsersData{
-    USERS_DATA;
+public enum UsersData implements IUserData{
+     USERS_DATA;
 
     private Map<String, User> users;
 
@@ -52,8 +52,8 @@ public enum UsersData{
         }
         return result;
     }*/
-
-    public boolean updateUserInfo(User user){
+   @Override
+    public synchronized boolean updateUserInfo(User user){
         boolean result = false;
         if(nonNull(USERS_DATA.getUser(user.getLogin()))){
             users.replace(user.getLogin(),user);
@@ -62,8 +62,8 @@ public enum UsersData{
         return result;
     }
 
-
-    public User getUser(String login) {
+    @Override
+    public synchronized User getUser(String login) {
         User result = null;
         if (users.containsKey(login)) {
             result = users.get(login);
@@ -71,8 +71,8 @@ public enum UsersData{
         return result;
     }
 
-
-    public boolean userIsExist(String login, String password) {
+    @Override
+    public synchronized boolean userIsExist(String login, String password) {
         boolean result = false;
         User user = USERS_DATA.getUser(login);
         if(nonNull(user)){
@@ -85,8 +85,8 @@ public enum UsersData{
     }
 
 
-
-    public boolean addUser(User user) {
+    @Override
+    public synchronized boolean addUser(User user) {
         boolean result = false;
         if(!users.containsKey(user.getLogin())){
             users.put(user.getLogin(),user);
@@ -94,8 +94,8 @@ public enum UsersData{
         }
         return result;
     }
-
-    public List<String> getUsersWithRole(User.ROLE role){
+    @Override
+    public synchronized List<String> getUsersWithRole(User.ROLE role){
         List<String>logins = new ArrayList<>();
         for (Map.Entry<String, User> entry : users.entrySet()) {
             if(entry.getValue().getRole().equals(role)){
