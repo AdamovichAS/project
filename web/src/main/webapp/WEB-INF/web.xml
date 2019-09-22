@@ -58,16 +58,13 @@
     </filter>
     <filter-mapping>
         <filter-name>SessionAuthFilter</filter-name>
-        <url-pattern>/user_menu.jsp</url-pattern>
+        <url-pattern>/menu.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SessionAuthFilter</filter-name>
         <url-pattern>/redirect</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>SessionAuthFilter</filter-name>
-        <url-pattern>/admin_menu.jsp</url-pattern>
-    </filter-mapping>
+
 
     <filter>
         <filter-name>CookieFilter</filter-name>
@@ -75,17 +72,11 @@
     </filter>
     <filter-mapping>
         <filter-name>CookieFilter</filter-name>
-        <url-pattern>/user_menu.jsp</url-pattern>
+        <url-pattern>/menu.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>CookieFilter</filter-name>
         <url-pattern>/redirect</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>CookieFilter</filter-name>
-        <url-pattern>/admin_menu.jsp</url-pattern>
-    </filter-mapping>
-
-
 
 </web-app>

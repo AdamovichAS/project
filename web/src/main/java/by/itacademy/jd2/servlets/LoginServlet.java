@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
             ServletsAndFilterService.setRoleLoginInSession(session,login);
             Cookie cookieLogin = new Cookie("login", login + "/" + password);
             response.addCookie(cookieLogin);
-            request.getRequestDispatcher("/redirect").forward(request,response);
+            request.getRequestDispatcher("/menu.jsp").forward(request,response);
         }else {
             request.setAttribute("wrongLogin", "User with this Login and password does not exist");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
