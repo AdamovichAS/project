@@ -25,7 +25,7 @@ public class SessionAuthFilter implements Filter {
         String role = (String) session.getAttribute("role");
         String login = (String) session.getAttribute("login");
         if (nonNull(login) && nonNull(role)) {
-            req.getRequestDispatcher("/hello.jsp");
+            req.getRequestDispatcher("/menu.jsp");
         //    ServletsAndFilterService.userRoleRedirect(role, req, res);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
