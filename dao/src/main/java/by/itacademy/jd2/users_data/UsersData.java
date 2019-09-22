@@ -1,6 +1,7 @@
 package by.itacademy.jd2.users_data;
 
 
+
 import by.itacademy.jd2.user.User;
 
 import java.util.ArrayList;
