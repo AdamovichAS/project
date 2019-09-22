@@ -9,9 +9,15 @@ public class User {
 
     private String login;
 
+    private String name;
+
+    private String lastName;
+
     private String password;
 
     private ROLE role;
+
+    private STATUS status;
 
     public User() {
     }
@@ -21,6 +27,30 @@ public class User {
         this.login = login;
         this.password = password;
         this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public STATUS getStatus() {
+        return status;
+    }
+
+    public void setStatus(STATUS status) {
+        this.status = status;
     }
 
     public int getMoney() {
@@ -65,5 +95,9 @@ public class User {
 
     public enum ROLE {
         USER, ADMIN
+    }
+
+    public enum STATUS{
+        NOT_VERIFIERD, VERIFIERD, BLOCKED
     }
 }
