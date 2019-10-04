@@ -3,15 +3,22 @@ package by.itacademy.jd2.admin_service;
 import by.itacademy.jd2.user.Admin;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public enum  AdminFieldsSetter {
     SETTER;
 
-    private Field[] adminFields;
+    private List<Field> adminFields;
 
     AdminFieldsSetter() {
-        adminFields = Admin.class.getDeclaredFields();
+        adminFields = new ArrayList<>();
+        Field[] authUserFields = Admin.class.getSuperclass().getDeclaredFields();
+        Field[] userField = Admin.class.getDeclaredFields();
+        adminFields.addAll(Arrays.asList(authUserFields));
+        adminFields.addAll(Arrays.asList(userField));
     }
 
 
