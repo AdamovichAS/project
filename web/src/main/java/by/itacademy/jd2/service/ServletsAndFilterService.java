@@ -1,7 +1,10 @@
 package by.itacademy.jd2.service;
 
+
 import by.itacademy.jd2.ServiceDAO.IServiceDAO;
 import by.itacademy.jd2.ServiceDAO.ServiceDAO;
+import by.itacademy.jd2.user.AuthUser;
+import by.itacademy.jd2.user.Role;
 import by.itacademy.jd2.user.User;
 
 import javax.servlet.http.Cookie;
@@ -36,9 +39,10 @@ public final class ServletsAndFilterService {
         return resultCookie;
     }
 
-    public static void setRoleLoginInSession(HttpSession session, String login){
-        User user = serviceDAO.getUserByLogin(login);
-        session.setAttribute("login", user.getLogin());
-        session.setAttribute("role", user.getRole().toString());
+    public static void setAuthUserInSession(HttpSession session, String login){
+        Role role = Role.valueOf(serviceDAO.getUserRoleByLogin(login));
+        AuthUser authUser = new AuthUser(login,role);
+        session.setAttribute("authUser", authUser);
+
     }
 }

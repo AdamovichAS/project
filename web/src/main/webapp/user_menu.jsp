@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<c:out value="hello ${login} you role is ${role}"/><br>
+<c:out value="hello ${authUser.login} you role is ${authUser.role}"/><br>
     <a href="${pageContext.request.contextPath}/logout" >logout</a>
     <br>
     <a href="${pageContext.request.contextPath}/update" >update</a>

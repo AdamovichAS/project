@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         if (serviceDAO.userIsExist(login, password)) {
             HttpSession session = request.getSession();
-            ServletsAndFilterService.setRoleLoginInSession(session,login);
+            ServletsAndFilterService.setAuthUserInSession(session,login);
             Cookie cookieLogin = new Cookie("login", login + "/" + password);
             response.addCookie(cookieLogin);
             request.getRequestDispatcher("/redirect").forward(request,response);

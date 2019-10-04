@@ -21,6 +21,10 @@
             <artifactId>junit</artifactId>
         </dependency>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>by.itacademy.jd2</groupId>
             <artifactId>model</artifactId>
             <version>1.0-SNAPSHOT</version>

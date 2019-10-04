@@ -1,7 +1,8 @@
 package by.itacademy.jd2.filters;
 
 
-import by.itacademy.jd2.service.ServletsAndFilterService;
+
+import by.itacademy.jd2.user.AuthUser;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,8 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class SessionAuthFilter implements Filter {
+
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -22,9 +25,8 @@ public class SessionAuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
-        String role = (String) session.getAttribute("role");
-        String login = (String) session.getAttribute("login");
-        if (nonNull(login) && nonNull(role)) {
+        AuthUser authUser = (AuthUser) session.getAttribute("authUser");
+        if (nonNull(authUser)) {
             req.getRequestDispatcher("/hello.jsp");
         //    ServletsAndFilterService.userRoleRedirect(role, req, res);
         } else {

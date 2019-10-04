@@ -13,8 +13,7 @@ public class LogOutServlet extends HttpServlet {
         Cookie loginCookie = ServletsAndFilterService.getCookie("login", req.getCookies());
         loginCookie.setMaxAge(0);
         resp.addCookie(loginCookie);
-        req.getSession().removeAttribute("login");
-        req.getSession().removeAttribute("role");
+        req.getSession().removeAttribute("authUser");
         resp.sendRedirect("http://localhost:8080/project/logout.jsp");
     }
 }

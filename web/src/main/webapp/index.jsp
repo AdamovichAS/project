@@ -9,7 +9,7 @@
 
 <a href="${pageContext.request.contextPath}/redirect" target="_blank">hello</a><br>
 <c:choose>
-    <c:when test="${login ne null}">
+    <c:when test="${authUser.login ne null}">
         <a href="${pageContext.request.contextPath}/logout" target="_blank">logout</a><br>
     </c:when>
     <c:otherwise>

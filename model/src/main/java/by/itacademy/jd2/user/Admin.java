@@ -1,20 +1,15 @@
 package by.itacademy.jd2.user;
 
-
-public class User extends AuthUser {
+public class Admin extends AuthUser {
 
     private String password;
     private String firstName;
     private String lastName;
     private String phone;
     private String email;
-    private int age;
-    private int money;
-    private String country;
 
-    public User() {
+    public Admin() {
     }
-
 
     public String getPassword() {
         return password;
@@ -54,29 +49,5 @@ public class User extends AuthUser {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getMoney() {
-        return money;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 }

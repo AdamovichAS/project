@@ -16,11 +16,20 @@
 <body>
 
     <form action="${pageContext.request.contextPath}/update" method="POST">
-        <label>money:</label>
-        <input type="number" required placeholder="${user.money}" value="${user.money}" name="money"><br>
         <label>password:</label>
-        <input type="text" required placeholder="${user.password}" value="${user.password}" name="password"><br>
-        <input type="submit" name="submit" value="update"/><br>
+        <input type="password" placeholder="new password" name="password"><br>
+        <label>firstName:</label>
+        <input type="text" placeholder="new first name" name="firstName"><br>
+        <label>lastName:</label>
+        <input type="text" placeholder="new last name" name="lastName"><br>
+        <label>phone:</label>
+        <input type="number" placeholder="new phone" name="phone"><br>
+        <label>email:</label>
+        <input type="text" placeholder="new email" name="email"><br>
+        <label>country:</label>
+        <input type="text" placeholder="new country" name="country"><br>
+
+        <input type="submit" name="submit" value="new update"/><br>
     </form>
 
 </body>

@@ -17,12 +17,24 @@
 <form action="${pageContext.request.contextPath}/registration" method="POST">
     <label>username:</label>
     <input type="text" required placeholder="login" name="login"><br>
-    <label>money:</label>
-    <input type="number" required placeholder="money" name="money"><br>
+
     <label>password:</label>
     <input type="password" required placeholder="password" name="password"><br>
-    <label>password:</label>
+    <label>repeat password:</label>
     <input type="password" required placeholder="repeat password" name="repeatedPassword"><br><br>
+    <label>firstName:</label>
+    <input type="text" required placeholder="first name" name="firstName"><br>
+    <label>lastName:</label>
+    <input type="text" required placeholder="last name" name="lastName"><br>
+    <label>phone:</label>
+    <input type="number" required placeholder="phone" name="phone"><br>
+    <label>email:</label>
+    <input type="text" required placeholder="email" name="email"><br>
+    <label>age:</label>
+    <input type="number" required placeholder="age" name="age"><br>
+    <label>country:</label>
+    <input type="text" required placeholder="country" name="country"><br>
+
     <input type="submit" name="submit" value="Registration"/><br>
 </form>
     <c:if test="${loginError != null}">

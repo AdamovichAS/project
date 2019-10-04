@@ -29,6 +29,7 @@
         <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
         <jstl.version>1.2</jstl.version>
         <cobertura.version>2.7</cobertura.version>
+        <mysql.conector.java.version>8.0.17</mysql.conector.java.version>
     </properties>
 
     <dependencyManagement>
@@ -44,6 +45,11 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax.servlet-api.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.conector.java.version}</version>
             </dependency>
             <dependency>
                 <groupId>jstl</groupId>

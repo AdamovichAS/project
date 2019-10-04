@@ -1,71 +1,77 @@
 package by.itacademy.jd2.ServiceDAO;
-
-
-
-
+import by.itacademy.jd2.mysql_data.MysqlData;
 import by.itacademy.jd2.user.User;
-import by.itacademy.jd2.users_data.IUserData;
-import by.itacademy.jd2.users_data.UsersData;
+import by.itacademy.jd2.mysql_data.IMysqlData;
+import by.itacademy.jd2.user_service.UserCreater;
+import by.itacademy.jd2.user_service.UserFieldsSetter;
 
-import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
+import static java.util.Objects.nonNull;
 
 public enum ServiceDAO implements IServiceDAO {
     SERVICE_DATA_USER;
 
-    private Field[] userFields;
-    private IUserData userData;
+    private IMysqlData data;
 
     ServiceDAO() {
-        userFields = User.class.getDeclaredFields();
-        userData  = UsersData.USERS_DATA;
+        data  = MysqlData.DATA;
     }
 
     @Override
-    public User getUserByLogin(String login)  {
-        return userData.getUser(login);
+    public boolean loginIsExist(String login)  {
+        boolean result = false;
+        String loginData = data.loginIsExist(login);
+        if(nonNull(loginData)){
+            if(loginData.equals(login)){
+                result = true;
+            }
+        }
+        return result;
     }
 
     @Override
-    public boolean addNewUser(User newUser) {
-        return userData.addUser(newUser);
+    public boolean addNewUser(Map<String,String> userFieldsAndValues) {
+        String login = userFieldsAndValues.get("login");
+        if(loginIsExist(login)){
+            return false;
+        }
+        User user = UserCreater.CREATER.createUser(userFieldsAndValues);
+        data.addUser(user);
+        return true;
     }
 
     @Override
     public boolean userIsExist(String login, String password) {
-        return userData.userIsExist(login, password);
-
-    }
-
-    @Override
-    public boolean updateUserInfo(Map<String, String> usersFieldsForUpdate, String userLogin) {
-        User user = getUserByLogin(userLogin);
-         for (Field userField : userFields) {
-            if(usersFieldsForUpdate.containsKey(userField.getName())){
-                String fieldNameForUpdate = userField.getName();
-                String fieldValueForUpdate = usersFieldsForUpdate.get(fieldNameForUpdate);
-                updateUserField(user,fieldNameForUpdate,fieldValueForUpdate);
+        boolean result = false;
+        List<String> loginPassData = data.userIsExist(login, password);
+        if(!loginPassData.isEmpty()){
+            if(loginPassData.get(0).equals(login) && loginPassData.get(1).equals(password)){
+                result = true;
             }
         }
-        return userData.updateUserInfo(user);
+        return result;
+
     }
 
     @Override
-    public List<String> getUsersLogin(User.ROLE role) {
-        return userData.getUsersWithRole(role);
-    }
-
-
-    private void updateUserField(User user,String fieldNameForUpdate,String fieldValueForUpdate){
-        switch (fieldNameForUpdate){
-            case "password":
-                user.setPassword(fieldValueForUpdate);
-                break;
-            case "money":
-                user.setMoney(Integer.parseInt(fieldValueForUpdate));
-                break;
-
+    public boolean updateUserInfo(Map<String, String> usersFieldsForUpdateWithLogin) {
+        Map<String, String> userDataByLogin = data.getUserFieldsByLogin(usersFieldsForUpdateWithLogin.get("login"));
+        if(userDataByLogin.isEmpty()){
+            return false;
         }
+        User dataUser = UserCreater.CREATER.createUser(userDataByLogin);
+        UserFieldsSetter.SETTER.SetFields(dataUser,usersFieldsForUpdateWithLogin);
+        return data.updateUserInfo(dataUser);
     }
+
+    @Override
+    public String getUserRoleByLogin(String login) {
+        HashMap<String, String> userFieldsByLogin = data.getUserFieldsByLogin(login);
+        return userFieldsByLogin.get("role");
+    }
+
 }
