@@ -2,6 +2,7 @@ package by.itacademy.jd2.filters;
 
 
 
+import by.itacademy.jd2.service.ServletsAndFilterService;
 import by.itacademy.jd2.user.AuthUser;
 
 import javax.servlet.*;
@@ -27,8 +28,8 @@ public class SessionAuthFilter implements Filter {
         HttpSession session = req.getSession();
         AuthUser authUser = (AuthUser) session.getAttribute("authUser");
         if (nonNull(authUser)) {
-            req.getRequestDispatcher("/hello.jsp");
-        //    ServletsAndFilterService.userRoleRedirect(role, req, res);
+            req.getRequestDispatcher("/redirect").forward(req,res);
+
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

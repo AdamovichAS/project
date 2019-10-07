@@ -1,7 +1,7 @@
 package by.itacademy.jd2.filters;
 
-import by.itacademy.jd2.ServiceDAO.IServiceDAO;
-import by.itacademy.jd2.ServiceDAO.ServiceDAO;
+import by.itacademy.jd2.DAO.IDAOUser;
+import by.itacademy.jd2.DAO.DAOUser;
 
 import by.itacademy.jd2.service.ServletsAndFilterService;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class CookieFilter implements Filter {
-    private IServiceDAO serviceDAO = ServiceDAO.SERVICE_DATA_USER;
+    private IDAOUser serviceDAO = DAOUser.DAO_USER;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

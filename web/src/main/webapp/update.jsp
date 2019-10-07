@@ -31,6 +31,10 @@
 
         <input type="submit" name="submit" value="new update"/><br>
     </form>
+    <a href="${pageContext.request.contextPath}/user_menu.jsp" >my page</a><br>
 
+    <c:if test="${message ne null}">
+        <c:out value="${message}"/>
+    </c:if>
 </body>
 </html>

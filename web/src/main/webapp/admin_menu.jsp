@@ -13,8 +13,11 @@
     <title>Title</title>
 </head>
 <body>
-    <c:out value="hello ${login} you role is ${role}"/><br>
-    <a href="${pageContext.request.contextPath}/logout">logout</a><br>
+    <c:out value="hello ${authUser.login} you role is ${authUser.role}"/><br>
+    <a href="${pageContext.request.contextPath}/logout">logout</a><br><br>
+    <a href="${pageContext.request.contextPath}/new_event/chose_league/">add new event</a><br><br>
+
+
 
 
 </body>

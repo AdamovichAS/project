@@ -1,63 +1,95 @@
 package by.itacademy.jd2.event;
 
-import java.util.Date;
-import java.util.Map;
+import java.sql.Timestamp;
+
+import java.util.List;
 
 public class Event {
-    private String name;
-    private Date startTime;
-    private Date endTime;
-    private Map<String,Double> factors;
-    private String result;
+    private Long id;
+    private Long teamOneId;
+    private Long teamTwoId;
+    private Timestamp startTime;
+    private Timestamp endTime;
+    private List<Factor>factors;
+    private Long resultFactorId;
+
+    public Event(Long teamOneId, Long teamTwoId, Timestamp startTime, Timestamp endTime) {
+        this.teamOneId = teamOneId;
+        this.teamTwoId = teamTwoId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
 
     public Event() {
     }
 
-    public Event(String name, Date startTime, Date endTime, Map<String, Double> factors) {
-        this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.factors = factors;
-        this.result = null;
+    public Long getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Long getTeamOneId() {
+        return teamOneId;
     }
 
-    public Date getStartTime() {
+    public void setTeamOneId(Long teamOneId) {
+        this.teamOneId = teamOneId;
+    }
+
+    public Long getTeamTwoId() {
+        return teamTwoId;
+    }
+
+    public void setTeamTwoId(Long teamTwoId) {
+        this.teamTwoId = teamTwoId;
+    }
+
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 
-    public Map<String, Double> getFactors() {
+    public List<Factor> getFactors() {
         return factors;
     }
 
-    public void setFactors(Map<String, Double> factors) {
+    public void setFactors(List<Factor> factors) {
         this.factors = factors;
     }
 
-    public String getResult() {
-        return result;
+    public Long getResultFactorId() {
+        return resultFactorId;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setResultFactorId(Long resultFactorId) {
+        this.resultFactorId = resultFactorId;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", teamOneId=" + teamOneId +
+                ", teamTwoId=" + teamTwoId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", factors=" + factors +
+                ", resultFactorId=" + resultFactorId +
+                '}';
     }
 }

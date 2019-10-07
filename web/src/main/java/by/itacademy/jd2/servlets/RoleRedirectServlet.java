@@ -1,8 +1,8 @@
 package by.itacademy.jd2.servlets;
 
 
-import by.itacademy.jd2.ServiceDAO.IServiceDAO;
-import by.itacademy.jd2.ServiceDAO.ServiceDAO;
+import by.itacademy.jd2.DAO.DAOUser;
+import by.itacademy.jd2.DAO.IDAOUser;
 import by.itacademy.jd2.user.AuthUser;
 
 
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 
 public class RoleRedirectServlet extends HttpServlet {
-    private final IServiceDAO serviceDAO = ServiceDAO.SERVICE_DATA_USER;
+    private final IDAOUser daoUser = DAOUser.DAO_USER;
     @Override
     public void init() throws ServletException {
     }

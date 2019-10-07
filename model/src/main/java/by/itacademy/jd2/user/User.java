@@ -9,7 +9,6 @@ public class User extends AuthUser {
     private String phone;
     private String email;
     private int age;
-    private int money;
     private String country;
 
     public User() {
@@ -62,14 +61,6 @@ public class User extends AuthUser {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public int getMoney() {
-        return money;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
     }
 
     public String getCountry() {

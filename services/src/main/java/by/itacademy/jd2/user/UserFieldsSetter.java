@@ -1,7 +1,4 @@
-package by.itacademy.jd2.user_service;
-
-import by.itacademy.jd2.user.Role;
-import by.itacademy.jd2.user.User;
+package by.itacademy.jd2.user;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -57,13 +54,10 @@ public enum  UserFieldsSetter {
             case "age":
                 user.setAge(Integer.parseInt(fieldValue));
                 break;
-            case "money":
-                user.setMoney(Integer.parseInt(fieldValue));
-                break;
             case "country":
                 user.setCountry(fieldValue);
                 break;
-            case "role":
+            case "dto":
                 user.setRole(Role.valueOf(fieldValue));
                 break;
         }

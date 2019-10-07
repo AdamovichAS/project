@@ -1,6 +1,5 @@
-package by.itacademy.jd2.user_service;
+package by.itacademy.jd2.user;
 
-import by.itacademy.jd2.user.User;
 import java.util.Map;
 
 public enum  UserCreater {
@@ -14,6 +13,14 @@ public enum  UserCreater {
 
     public User createUser(Map<String,String> userFieldsAndValues){
         User user = new User();
+        user.setRole(Role.USER_NOT_VER);
+        SETTER.SetFields(user,userFieldsAndValues);
+        return user;
+    }
+
+    public User createAdmin(Map<String,String> userFieldsAndValues){
+        User user = new User();
+        user.setRole(Role.ADMIN);
         SETTER.SetFields(user,userFieldsAndValues);
         return user;
     }

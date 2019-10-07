@@ -1,24 +1,23 @@
-package by.itacademy.jd2.ServiceDAO;
-import by.itacademy.jd2.mysql_data.MysqlData;
+package by.itacademy.jd2.DAO;
+import by.itacademy.jd2.mysql_data.DataUser;
 import by.itacademy.jd2.user.User;
-import by.itacademy.jd2.mysql_data.IMysqlData;
-import by.itacademy.jd2.user_service.UserCreater;
-import by.itacademy.jd2.user_service.UserFieldsSetter;
+import by.itacademy.jd2.mysql_data.IDataUser;
+import by.itacademy.jd2.user.UserCreater;
+import by.itacademy.jd2.user.UserFieldsSetter;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 import static java.util.Objects.nonNull;
 
-public enum ServiceDAO implements IServiceDAO {
-    SERVICE_DATA_USER;
+public enum DAOUser implements IDAOUser {
+    DAO_USER;
 
-    private IMysqlData data;
+    private IDataUser data;
 
-    ServiceDAO() {
-        data  = MysqlData.DATA;
+    DAOUser() {
+        data  = DataUser.DATA;
     }
 
     @Override
@@ -58,20 +57,19 @@ public enum ServiceDAO implements IServiceDAO {
     }
 
     @Override
-    public boolean updateUserInfo(Map<String, String> usersFieldsForUpdateWithLogin) {
-        Map<String, String> userDataByLogin = data.getUserFieldsByLogin(usersFieldsForUpdateWithLogin.get("login"));
-        if(userDataByLogin.isEmpty()){
+    public boolean updateUserInfo(String login, Map<String, String> userFieldsForUpdate) {
+        User user = data.getUserByLogin(login);
+        if(user.getLogin() == null){
             return false;
         }
-        User dataUser = UserCreater.CREATER.createUser(userDataByLogin);
-        UserFieldsSetter.SETTER.SetFields(dataUser,usersFieldsForUpdateWithLogin);
-        return data.updateUserInfo(dataUser);
+        UserFieldsSetter.SETTER.SetFields(user,userFieldsForUpdate);
+        return data.updateUserInfo(user);
     }
 
     @Override
-    public String getUserRoleByLogin(String login) {
-        HashMap<String, String> userFieldsByLogin = data.getUserFieldsByLogin(login);
-        return userFieldsByLogin.get("role");
+    public User getUserByLogin(String login) {
+        User user = data.getUserByLogin(login);
+        return user;
     }
 
 }

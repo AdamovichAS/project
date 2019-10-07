@@ -51,6 +51,32 @@
         <url-pattern>/update</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ChoseEventInfo</servlet-name>
+        <servlet-class>by.itacademy.jd2.servlets.event.ChoseEventInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChoseEventInfo</servlet-name>
+        <url-pattern>/new_event/chose_league/chose_event_info</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ChoseLeague</servlet-name>
+        <servlet-class>by.itacademy.jd2.servlets.event.ChoseLeague</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChoseLeague</servlet-name>
+        <url-pattern>/new_event/chose_league/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addEvent</servlet-name>
+        <servlet-class>by.itacademy.jd2.servlets.event.addEvent</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addEvent</servlet-name>
+        <url-pattern>/new_event/add_event/</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>SessionAuthFilter</filter-name>
