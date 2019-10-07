@@ -21,8 +21,9 @@ public class addEvent extends HttpServlet {
         data = DAOEvent.DAO_EVENT;
     }
 
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Event event = (Event) req.getAttribute("event");
         boolean isExist = data.eventIsExist(event);
         if(!isExist){
@@ -32,12 +33,5 @@ public class addEvent extends HttpServlet {
             req.setAttribute("savedEvent","Event is Exist");
         }
         req.getRequestDispatcher("/add_event.jsp").forward(req,resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getAttribute("isExist") == null){
-            doGet(req,resp);
-        }
     }
 }
