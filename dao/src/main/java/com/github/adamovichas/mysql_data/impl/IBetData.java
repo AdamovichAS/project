@@ -7,9 +7,9 @@ import com.github.adamovichas.dto.Money;
 import java.util.List;
 
 public interface IBetData {
-    Money getMoneyById(String userLogin);
+    Money getMoneyByLogin(String userLogin);
     Long addBet(Bet bet);
     BetView getViewById(Long idBet);
     List<BetView> getNotFinishedBetByLogin(String login);
-    void cancelBetById(Long idBet);
+    void CancelBetById(Long idBet);
 }

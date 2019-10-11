@@ -14,9 +14,7 @@ public enum  UserFieldsSetter {
 
     UserFieldsSetter() {
         userFields = new ArrayList<>();
-        Field[] authUserFields = User.class.getSuperclass().getDeclaredFields();
         Field[] userField = User.class.getDeclaredFields();
-        userFields.addAll(Arrays.asList(authUserFields));
         userFields.addAll(Arrays.asList(userField));
     }
 

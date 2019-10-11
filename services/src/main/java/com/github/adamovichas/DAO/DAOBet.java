@@ -22,7 +22,7 @@ public enum DAOBet implements IDAOBet {
 
     @Override
     public Money getMoneyByLogin(String userLogin) {
-        return data.getMoneyById(userLogin);
+        return data.getMoneyByLogin(userLogin);
     }
 
     @Override
@@ -42,6 +42,6 @@ public enum DAOBet implements IDAOBet {
 
     @Override
     public void cancelBetById(Long idBet) {
-        data.cancelBetById(idBet);
+        data.CancelBetById(idBet);
     }
 }

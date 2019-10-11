@@ -12,6 +12,8 @@ import com.github.adamovichas.dto.AuthUser;
 import com.github.adamovichas.dto.Money;
 import com.github.adamovichas.util.EventUtil;
 import com.github.adamovichas.util.IEventUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +27,8 @@ public class BetServlet extends HttpServlet {
     private IDAOEvent dataEvent;
     private IEventUtil util;
     private IDAOBet dataBet;
+
+    private static final Logger log = LoggerFactory.getLogger(BetServlet.class);
 
     @Override
     public void init() throws ServletException {
@@ -55,6 +59,7 @@ public class BetServlet extends HttpServlet {
         Bet bet = new Bet(authUser.getLogin(), idFactor, moneyForBet);
         Long idBet = dataBet.addBet(bet);
         BetView view = dataBet.getViewById(idBet);
+        log.info("Bet saved {}",view);
         req.setAttribute("bet", view);
         doGet(req,resp);
 

@@ -3,6 +3,8 @@ package com.github.adamovichas.servlet;
 import com.github.adamovichas.DAO.DAOUser;
 import com.github.adamovichas.DAO.impl.IDAOUser;
 import com.github.adamovichas.service.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import java.io.IOException;
 
 
 public class LoginServlet extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
     private final IDAOUser daoUser = DAOUser.DAO_USER;
 
     @Override
@@ -29,6 +32,7 @@ public class LoginServlet extends HttpServlet {
             Cookie cookieLogin = new Cookie("login", login + "/" + password);
             response.addCookie(cookieLogin);
             request.getRequestDispatcher("/redirect").forward(request,response);
+            log.info("user {} log in", login);
         }else {
             request.setAttribute("wrongLogin", "User with this Login and password does not exist");
             request.getRequestDispatcher("/login.jsp").forward(request, response);

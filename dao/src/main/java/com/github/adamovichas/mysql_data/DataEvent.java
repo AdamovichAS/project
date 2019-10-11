@@ -8,6 +8,8 @@ import com.github.adamovichas.event.Factor;
 import com.github.adamovichas.event.FactorName;
 import com.github.adamovichas.mysql_data.impl.IDataConnect;
 import com.github.adamovichas.mysql_data.impl.IDataEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 public enum DataEvent implements IDataEvent {
     DATA_EVENT;
 
+    private static final Logger log = LoggerFactory.getLogger(DataEvent.class);
     private IDataConnect CONNECTION;
 
     DataEvent() {
@@ -35,9 +38,9 @@ public enum DataEvent implements IDataEvent {
                 statementEvent.setTimestamp(3, event.getStartTime());
                 statementEvent.setTimestamp(4, event.getEndTime());
                 statementEvent.executeUpdate();
-                final ResultSet generatedKeys = statementEvent.getGeneratedKeys();
+                ResultSet generatedKeys = statementEvent.getGeneratedKeys();
                 generatedKeys.next();
-                final long idEvent = generatedKeys.getLong(1);
+                long idEvent = generatedKeys.getLong(1);
                 List<Factor> factors = event.getFactors();
                 for (Factor factor : factors) {
                     statementFactor.setString(1, factor.getName().toString());
@@ -46,23 +49,15 @@ public enum DataEvent implements IDataEvent {
                     statementFactor.addBatch();
                 }
                 statementFactor.executeBatch();
-                /*final ResultSet factorKeys = statementFactor.getGeneratedKeys();
-                List<Factor>resultFactors = new ArrayList<>();
-                for (Factor factor : factors) {
-                    factorKeys.next();
-                    final long id = factorKeys.getLong(1);
-                    resultFactors.add(new Factor(id, factor.getName(), factor.getValue(), idEvent));
-                }
-                Event resultEvent = new Event(event.getTeamOneId(),event.getTeamTwoId(),event.getStartTime(),event.getEndTime());
-                resultEvent.setId(idEvent);
-                resultEvent.setFactors(resultFactors);*/
                 connection.commit();
                 return idEvent;
             }
         } catch (Exception e) {
+            log.error("AddEvent exception, Event {}",event);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
+                log.error("Sql exception, Event {}",event,ex);
                 throw new RuntimeException(e);
             }
 
@@ -72,7 +67,7 @@ public enum DataEvent implements IDataEvent {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    log.error("close connection exception, Event {}",event);
                 }
             }
         }
@@ -97,7 +92,7 @@ public enum DataEvent implements IDataEvent {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("eventIsExist Sql exception, Event {}",event);
         }
         return result;
     }
@@ -140,7 +135,7 @@ public enum DataEvent implements IDataEvent {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("GetAllNotFinishedEvent Sql exception");
         }
         return result;
     }
@@ -176,7 +171,7 @@ public enum DataEvent implements IDataEvent {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("GetSavedEventById Sql exception, ID {}",id);
         }
         return result;
     }
@@ -204,7 +199,7 @@ public enum DataEvent implements IDataEvent {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("GetAllLeagues Sql exception");
         }
         return leagues;
     }
@@ -223,7 +218,7 @@ public enum DataEvent implements IDataEvent {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("GetAllTeamsByLeague Sql exception, IdLeague {}",idLeague);
         }
         return teams;
     }

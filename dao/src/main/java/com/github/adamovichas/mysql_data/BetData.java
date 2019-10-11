@@ -6,6 +6,8 @@ import com.github.adamovichas.event.FactorName;
 import com.github.adamovichas.dto.Money;
 import com.github.adamovichas.mysql_data.impl.IBetData;
 import com.github.adamovichas.mysql_data.impl.IDataConnect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 public enum BetData implements IBetData {
     BET_DATA;
 
+    private static final Logger log = LoggerFactory.getLogger(BetData.class);
     private IDataConnect CONNECTION;
 
     BetData() {
@@ -21,7 +24,7 @@ public enum BetData implements IBetData {
     }
 
     @Override
-    public Money getMoneyById(String userLogin) {
+    public Money getMoneyByLogin(String userLogin) {
         Money money = null;
         try (Connection connect = CONNECTION.connect();
              PreparedStatement preparedStatement = connect.prepareStatement("SELECT money.value as money FROM money WHERE user_login = ?")) {
@@ -32,7 +35,7 @@ public enum BetData implements IBetData {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("getMoneyByLogin Sql exception, Login {}",userLogin);
         }
         return money;
     }
@@ -62,9 +65,11 @@ public enum BetData implements IBetData {
                 return idBet;
             }
         } catch (Exception e) {
+            log.error("AddBet exception, Bet {}",bet);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
+                log.error("AddBet rollback exception, Bet {}",bet);
                 throw new RuntimeException(e);
             }
 
@@ -74,7 +79,7 @@ public enum BetData implements IBetData {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    log.error("AddBet connection.close exception, Bet {}",bet);
                 }
             }
         }
@@ -109,7 +114,7 @@ public enum BetData implements IBetData {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("GetViewById Sql exception, idBet {}",idBet);
         }
         return betView;
     }
@@ -144,13 +149,13 @@ public enum BetData implements IBetData {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("getNotFinishedBetByLogin Sql exception, Login {}",login);
         }
         return bets;
     }
 
     @Override
-    public void cancelBetById(Long idBet) {
+    public void CancelBetById(Long idBet) {
         Connection connection = null;
         String login = null;
         Integer bet = null;
@@ -176,9 +181,11 @@ public enum BetData implements IBetData {
 
             }
         } catch (Exception e) {
+            log.error("CancelBetById exception, idBet {}",idBet);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
+                log.error("CancelBetById rollback exception, idBet {}",idBet);
                 throw new RuntimeException(e);
             }
 
@@ -188,7 +195,7 @@ public enum BetData implements IBetData {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    log.error("CancelBetById connection.close exception, idBet {}",idBet);
                 }
             }
         }

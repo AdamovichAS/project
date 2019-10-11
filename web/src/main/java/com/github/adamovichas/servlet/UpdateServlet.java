@@ -6,6 +6,8 @@ import com.github.adamovichas.DAO.DAOUser;
 import com.github.adamovichas.dto.AuthUser;
 import com.github.adamovichas.user.User;
 import com.github.adamovichas.util.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -17,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UpdateServlet extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(UpdateServlet.class);
     private final IDAOUser daoUser = DAOUser.DAO_USER;
 
     @Override
@@ -40,6 +43,7 @@ public class UpdateServlet extends HttpServlet {
             User user = daoUser.getUserByLogin(authUser.getLogin());
             req.setAttribute("user",user);
             req.setAttribute("message","Update is done! ");
+            log.info("Updated user {}", user);
             req.getRequestDispatcher("/update.jsp").forward(req,resp);
         }else {
             req.setAttribute("message","Update is failed! ");

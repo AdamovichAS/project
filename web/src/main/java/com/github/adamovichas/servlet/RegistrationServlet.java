@@ -2,6 +2,8 @@ package com.github.adamovichas.servlet;
 
 import com.github.adamovichas.DAO.DAOUser;
 import com.github.adamovichas.DAO.impl.IDAOUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationServlet extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
     private final IDAOUser daoUser = DAOUser.DAO_USER;
 
     @Override
@@ -22,6 +25,7 @@ public class RegistrationServlet extends HttpServlet {
         String repeatedPassword = req.getParameter("repeatedPassword");
         if(daoUser.loginIsExist(login) || !password.equals(repeatedPassword)){
             req.setAttribute("loginError","A user with this login already exists or the passwords do not match");
+            log.info("Login {} password {} repeated password {}", login, password, repeatedPassword);
             req.getRequestDispatcher("registration.jsp").forward(req, resp);
         }else{
             Map<String,String> userParam = new HashMap<>();
@@ -34,6 +38,7 @@ public class RegistrationServlet extends HttpServlet {
             userParam.put("age",req.getParameter("age"));
             userParam.put("country",req.getParameter("country"));
             daoUser.addNewUser(userParam);
+            log.info("User saved {}", login);
             getServletContext().getRequestDispatcher("/login").forward(req,resp);
         }
     }

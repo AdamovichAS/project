@@ -56,7 +56,7 @@ public final class Util {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         String login = authUser.getLogin();
         List<BetView> betViews = betData.getNotFinishedBetByLogin(login);
-        Money deposit = betData.getMoneyById(authUser.getLogin());
+        Money deposit = betData.getMoneyByLogin(authUser.getLogin());
         if(!betViews.isEmpty()) {
             req.setAttribute("userBets", betViews);
         }

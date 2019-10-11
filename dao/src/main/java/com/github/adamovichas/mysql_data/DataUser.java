@@ -4,6 +4,8 @@ import com.github.adamovichas.mysql_data.impl.IDataConnect;
 import com.github.adamovichas.mysql_data.impl.IDataUser;
 import com.github.adamovichas.user.Role;
 import com.github.adamovichas.user.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.*;
@@ -11,6 +13,7 @@ import java.util.*;
 public enum DataUser implements IDataUser {
     DATA;
 
+    private static final Logger log = LoggerFactory.getLogger(DataUser.class);
     private IDataConnect CONNECTION;
 
     DataUser() {
@@ -29,7 +32,7 @@ public enum DataUser implements IDataUser {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Sql exception, Login {}",login);
         }
         return loginData;
     }
@@ -48,7 +51,7 @@ public enum DataUser implements IDataUser {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Sql exception Login {} Password {}",login,password);
         }
         return result;
     }
@@ -61,7 +64,7 @@ public enum DataUser implements IDataUser {
             setNotNullUserColumns(user, preparedStatement);
             result = preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Sql exception User {}",user);
         }
         return result;
     }
@@ -97,10 +100,10 @@ public enum DataUser implements IDataUser {
                     user.setRole(Role.valueOf(resultSet.getString("role")));
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("Execute exception Login {}",login);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Sql exception login {}",login);
         }
         return user;
     }
@@ -113,7 +116,7 @@ public enum DataUser implements IDataUser {
             setNotNullUserColumns(user, preparedStatement);
             result = preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Sql exception User {}",user);
         }
         return result;
     }
