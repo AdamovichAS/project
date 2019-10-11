@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class RegistrationServlet extends HttpServlet {
             userParam.put("age",req.getParameter("age"));
             userParam.put("country",req.getParameter("country"));
             daoUser.addNewUser(userParam);
-            log.info("User saved {}", login);
+            log.info("user created:{} at {}", login, LocalDateTime.now());
             getServletContext().getRequestDispatcher("/login").forward(req,resp);
         }
     }

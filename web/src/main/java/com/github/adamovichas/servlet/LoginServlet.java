@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 
 public class LoginServlet extends HttpServlet {
@@ -32,9 +33,10 @@ public class LoginServlet extends HttpServlet {
             Cookie cookieLogin = new Cookie("login", login + "/" + password);
             response.addCookie(cookieLogin);
             request.getRequestDispatcher("/redirect").forward(request,response);
-            log.info("user {} log in", login);
+            log.info("user {} logIn at {}", login, LocalDateTime.now());
         }else {
             request.setAttribute("wrongLogin", "User with this Login and password does not exist");
+            log.info("user {} Wrong logIn at {}", login, LocalDateTime.now());
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
