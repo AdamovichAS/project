@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>by.itacademy.jd2.servlets.LogOutServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.servlet.LogOutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -17,7 +17,7 @@
 
     <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
-        <servlet-class>by.itacademy.jd2.servlets.RegistrationServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.servlet.RegistrationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegistrationServlet</servlet-name>
@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>by.itacademy.jd2.servlets.LoginServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -35,7 +35,7 @@
 
     <servlet>
         <servlet-name>RoleRedirectServlet</servlet-name>
-        <servlet-class>by.itacademy.jd2.servlets.RoleRedirectServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.servlet.RoleRedirectServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RoleRedirectServlet</servlet-name>
@@ -44,7 +44,7 @@
 
     <servlet>
         <servlet-name>UpdateServlet</servlet-name>
-        <servlet-class>by.itacademy.jd2.servlets.UpdateServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.servlet.UpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateServlet</servlet-name>
@@ -53,7 +53,7 @@
 
     <servlet>
         <servlet-name>ChoseEventInfo</servlet-name>
-        <servlet-class>by.itacademy.jd2.servlets.event.ChoseEventInfo</servlet-class>
+        <servlet-class>com.github.adamovichas.servlet.event.add.ChoseEventInfo</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChoseEventInfo</servlet-name>
@@ -62,7 +62,7 @@
 
     <servlet>
         <servlet-name>ChoseLeague</servlet-name>
-        <servlet-class>by.itacademy.jd2.servlets.event.ChoseLeague</servlet-class>
+        <servlet-class>com.github.adamovichas.servlet.event.add.ChoseLeague</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChoseLeague</servlet-name>
@@ -71,16 +71,34 @@
 
     <servlet>
         <servlet-name>addEvent</servlet-name>
-        <servlet-class>by.itacademy.jd2.servlets.event.addEvent</servlet-class>
+        <servlet-class>com.github.adamovichas.servlet.event.add.AddEvent</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addEvent</servlet-name>
         <url-pattern>/new_event/add_event/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>BetServlet</servlet-name>
+        <servlet-class>com.github.adamovichas.servlet.BetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BetServlet</servlet-name>
+        <url-pattern>/bet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CancelBetServlet</servlet-name>
+        <servlet-class>com.github.adamovichas.servlet.CancelBetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CancelBetServlet</servlet-name>
+        <url-pattern>/cancel_bet</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>SessionAuthFilter</filter-name>
-        <filter-class>by.itacademy.jd2.filters.SessionAuthFilter</filter-class>
+        <filter-class>com.github.adamovichas.filter.SessionAuthFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SessionAuthFilter</filter-name>
@@ -97,7 +115,7 @@
 
     <filter>
         <filter-name>CookieFilter</filter-name>
-        <filter-class>by.itacademy.jd2.filters.CookieFilter</filter-class>
+        <filter-class>com.github.adamovichas.filter.CookieFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CookieFilter</filter-name>

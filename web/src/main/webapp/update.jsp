@@ -1,4 +1,4 @@
-<%@ page import="by.itacademy.jd2.user.User" %><%--
+<%@ page import="com.github.adamovichas.user.User" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 16.09.2019
@@ -35,6 +35,9 @@
 
     <c:if test="${message ne null}">
         <c:out value="${message}"/>
+    </c:if>
+    <c:if test="${user ne null}">
+        <c:out value="${user}"/>
     </c:if>
 </body>
 </html>

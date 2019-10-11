@@ -13,10 +13,24 @@
     <title>Title</title>
 </head>
 <body>
-<c:out value="hello ${authUser.login} you role is ${authUser.role}"/><br>
+<H3>Your bets</H3>
+<c:out value="hello ${authUser.login} you role is ${authUser.role}, deposit is ${deposit}"/><br>
     <a href="${pageContext.request.contextPath}/logout" >logout</a>
     <br>
     <a href="${pageContext.request.contextPath}/update" >update</a>
     <br>
+
+    <a href="${pageContext.request.contextPath}/bet" >bet</a>
+    <c:if test="${userBets ne null}">
+        <form action="${pageContext.request.contextPath}/cancel_bet" method="POST">
+            <select name="betId">
+                <c:forEach items="${userBets}" var="item">
+                    <option value="${item.id}" >${item}</option>
+                </c:forEach>
+                <input type="submit" name="submit"  value="cancel bet" /><br>
+            </select>
+
+        </form>
+    </c:if>
 </body>
 </html>

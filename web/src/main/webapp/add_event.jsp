@@ -49,8 +49,15 @@
         </c:if>
 
     </c:when>
-    <c:when test="${savedEvent ne null}">
-        <c:out value="${savedEvent}"/>
+    <c:when test="${savedEvent.name ne null}">
+        <h3>Saved event:</h3>
+        <c:out value="Id - ${savedEvent.id}"/><br>
+        <c:out value="Name - ${savedEvent.name}"/><br>
+        <c:out value="Start time - ${savedEvent.startTime}"/><br>
+        <c:out value="End time - ${savedEvent.endTime}"/><br>
+        <c:forEach items="${savedEvent.factors}" var="item">
+            <c:out value="${item}"/>
+        </c:forEach>
     </c:when>
     <c:otherwise>
 
