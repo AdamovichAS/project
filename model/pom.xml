@@ -15,9 +15,14 @@
     <name>model</name>
 
     <dependencies>
+        <!--<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+</dependency> -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

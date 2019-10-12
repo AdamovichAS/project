@@ -1,8 +1,8 @@
-package com.github.adamovichas.DAO;
-import com.github.adamovichas.DAO.impl.IDAOUser;
-import com.github.adamovichas.mysql_data.DataUser;
+package com.github.adamovichas.data.impl;
+import com.github.adamovichas.data.IdataUserService;
+import com.github.adamovichas.mysql_data.impl.DataUser;
 import com.github.adamovichas.user.User;
-import com.github.adamovichas.mysql_data.impl.IDataUser;
+import com.github.adamovichas.mysql_data.IDataUser;
 import com.github.adamovichas.user.UserCreater;
 import com.github.adamovichas.user.UserFieldsSetter;
 
@@ -12,12 +12,12 @@ import java.util.Map;
 
 import static java.util.Objects.nonNull;
 
-public enum DAOUser implements IDAOUser {
-    DAO_USER;
+public enum DataUserService implements IdataUserService {
+    DATA_USER_SERVICE;
 
     private IDataUser data;
 
-    DAOUser() {
+    DataUserService() {
         data  = DataUser.DATA;
     }
 
@@ -69,8 +69,7 @@ public enum DAOUser implements IDAOUser {
 
     @Override
     public User getUserByLogin(String login) {
-        User user = data.getUserByLogin(login);
-        return user;
+        return data.getUserByLogin(login);
     }
 
 }

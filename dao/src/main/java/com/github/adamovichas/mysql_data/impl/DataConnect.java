@@ -1,12 +1,11 @@
-package com.github.adamovichas.mysql_data;
+package com.github.adamovichas.mysql_data.impl;
 
-import com.github.adamovichas.mysql_data.impl.IDataConnect;
+import com.github.adamovichas.mysql_data.IDataConnect;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 

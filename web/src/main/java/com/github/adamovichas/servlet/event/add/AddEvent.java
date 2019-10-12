@@ -1,10 +1,9 @@
 package com.github.adamovichas.servlet.event.add;
 
-import com.github.adamovichas.DAO.DAOEvent;
-import com.github.adamovichas.DAO.impl.IDAOEvent;
+import com.github.adamovichas.data.impl.DataEventService;
+import com.github.adamovichas.data.IdataEventService;
 import com.github.adamovichas.dto.EventView;
 import com.github.adamovichas.event.Event;
-import com.github.adamovichas.servlet.RegistrationServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,11 +16,11 @@ import java.io.IOException;
 public class AddEvent extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(AddEvent.class);
 
-    private IDAOEvent data;
+    private IdataEventService data;
 
     @Override
     public void init() throws ServletException {
-        data = DAOEvent.DAO_EVENT;
+        data = DataEventService.DATA_EVENT_SERVICE;
     }
 
 

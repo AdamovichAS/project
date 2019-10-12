@@ -1,7 +1,7 @@
 package com.github.adamovichas.servlet.event.add;
 
-import com.github.adamovichas.DAO.DAOEvent;
-import com.github.adamovichas.DAO.impl.IDAOEvent;
+import com.github.adamovichas.data.impl.DataEventService;
+import com.github.adamovichas.data.IdataEventService;
 import com.github.adamovichas.dto.Team;
 import com.github.adamovichas.event.Event;
 import com.github.adamovichas.event.Factor;
@@ -22,13 +22,13 @@ import static java.util.Objects.nonNull;
 
 public class ChoseEventInfo extends HttpServlet {
 
-    private IDAOEvent dataEvent;
+    private IdataEventService dataEvent;
     private IEventValidation eventVal;
     private IEventUtil eventUtil;
 
     @Override
     public void init() throws ServletException {
-        dataEvent = DAOEvent.DAO_EVENT;
+        dataEvent = DataEventService.DATA_EVENT_SERVICE;
         eventVal = EventValidation.EVENT_VALIDATION;
         eventUtil = EventUtil.EVENT_UTIL;
     }

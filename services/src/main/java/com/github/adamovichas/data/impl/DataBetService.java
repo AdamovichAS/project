@@ -1,20 +1,20 @@
-package com.github.adamovichas.DAO;
+package com.github.adamovichas.data.impl;
 
-import com.github.adamovichas.DAO.impl.IDAOBet;
+import com.github.adamovichas.data.IdataBetService;
 import com.github.adamovichas.dto.Bet;
 import com.github.adamovichas.dto.BetView;
 import com.github.adamovichas.dto.Money;
-import com.github.adamovichas.mysql_data.BetData;
-import com.github.adamovichas.mysql_data.impl.IBetData;
+import com.github.adamovichas.mysql_data.impl.BetData;
+import com.github.adamovichas.mysql_data.IBetData;
 
 import java.util.List;
 
-public enum DAOBet implements IDAOBet {
-    DAO_BET;
+public enum DataBetService implements IdataBetService {
+    DATA_BET_SERVICE;
 
     private IBetData data;
 
-    DAOBet() {
+    DataBetService() {
         data = BetData.BET_DATA;
     }
 

@@ -1,24 +1,24 @@
-package com.github.adamovichas.DAO;
+package com.github.adamovichas.data.impl;
 
 
-import com.github.adamovichas.DAO.impl.IDAOEvent;
+import com.github.adamovichas.data.IdataEventService;
 import com.github.adamovichas.dto.EventView;
 import com.github.adamovichas.dto.League;
 import com.github.adamovichas.dto.Team;
 import com.github.adamovichas.event.Event;
-import com.github.adamovichas.mysql_data.DataEvent;
-import com.github.adamovichas.mysql_data.impl.IDataEvent;
+import com.github.adamovichas.mysql_data.impl.DataEvent;
+import com.github.adamovichas.mysql_data.IDataEvent;
 
 import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-public enum  DAOEvent implements IDAOEvent {
-    DAO_EVENT;
+public enum DataEventService implements IdataEventService {
+    DATA_EVENT_SERVICE;
 
     private IDataEvent dataEvent;
 
-    DAOEvent() {
+    DataEventService() {
         dataEvent = DataEvent.DATA_EVENT;
     }
 
@@ -45,7 +45,7 @@ public enum  DAOEvent implements IDAOEvent {
 
     @Override
     public List<EventView> getAllNotFinishedEvents() {
-        return dataEvent.getAllNotFinisedEvents();
+        return dataEvent.getAllNotFinishedEvents();
     }
 
     @Override

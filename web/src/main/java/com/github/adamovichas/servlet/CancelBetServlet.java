@@ -1,7 +1,7 @@
 package com.github.adamovichas.servlet;
 
-import com.github.adamovichas.DAO.DAOBet;
-import com.github.adamovichas.DAO.impl.IDAOBet;
+import com.github.adamovichas.data.impl.DataBetService;
+import com.github.adamovichas.data.IdataBetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,17 +14,13 @@ import java.io.IOException;
 public class CancelBetServlet extends HttpServlet{
 
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
-    private IDAOBet betData;
+    private IdataBetService betData;
 
     @Override
     public void init() throws ServletException {
-        betData = DAOBet.DAO_BET;
+        betData = DataBetService.DATA_BET_SERVICE;
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

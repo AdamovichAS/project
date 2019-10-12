@@ -1,7 +1,7 @@
 package com.github.adamovichas.filter;
 
-import com.github.adamovichas.DAO.impl.IDAOUser;
-import com.github.adamovichas.DAO.DAOUser;
+import com.github.adamovichas.data.impl.DataUserService;
+import com.github.adamovichas.data.IdataUserService;
 
 import com.github.adamovichas.service.Util;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class CookieFilter implements Filter {
-    private IDAOUser serviceDAO = DAOUser.DAO_USER;
+    private IdataUserService serviceDAO = DataUserService.DATA_USER_SERVICE;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

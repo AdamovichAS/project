@@ -1,8 +1,8 @@
 package com.github.adamovichas.servlet;
 
 
-import com.github.adamovichas.DAO.impl.IDAOUser;
-import com.github.adamovichas.DAO.DAOUser;
+import com.github.adamovichas.data.impl.DataUserService;
+import com.github.adamovichas.data.IdataUserService;
 import com.github.adamovichas.dto.AuthUser;
 import com.github.adamovichas.user.User;
 import com.github.adamovichas.util.Utils;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class UpdateServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(UpdateServlet.class);
-    private final IDAOUser daoUser = DAOUser.DAO_USER;
+    private final IdataUserService daoUser = DataUserService.DATA_USER_SERVICE;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,7 +40,7 @@ public class UpdateServlet extends HttpServlet {
             if(password !=null) {
                 resp.addCookie(new Cookie("login", authUser.getLogin() + "/" + password));
             }
-            User user = daoUser.getUserByLogin(authUser.getLogin());
+            final User user = daoUser.getUserByLogin(authUser.getLogin());
             req.setAttribute("user",user);
             req.setAttribute("message","Update is done! ");
             log.info("Updated user {}", user);

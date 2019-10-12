@@ -1,7 +1,7 @@
 package com.github.adamovichas.servlet.event.add;
 
-import com.github.adamovichas.DAO.DAOEvent;
-import com.github.adamovichas.DAO.impl.IDAOEvent;
+import com.github.adamovichas.data.impl.DataEventService;
+import com.github.adamovichas.data.IdataEventService;
 import com.github.adamovichas.dto.League;
 
 import javax.servlet.ServletException;
@@ -13,10 +13,10 @@ import java.util.List;
 
 public class ChoseLeague extends HttpServlet {
 
-    private IDAOEvent dataEvent;
+    private IdataEventService dataEvent;
     @Override
     public void init() throws ServletException {
-        dataEvent = DAOEvent.DAO_EVENT;
+        dataEvent = DataEventService.DATA_EVENT_SERVICE;
     }
 
     @Override

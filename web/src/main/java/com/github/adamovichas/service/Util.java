@@ -1,13 +1,14 @@
 package com.github.adamovichas.service;
 
 
-import com.github.adamovichas.DAO.impl.IDAOUser;
-import com.github.adamovichas.DAO.DAOUser;
+import com.github.adamovichas.data.impl.DataUserService;
+import com.github.adamovichas.data.IdataUserService;
 import com.github.adamovichas.dto.BetView;
 import com.github.adamovichas.dto.AuthUser;
 import com.github.adamovichas.dto.Money;
-import com.github.adamovichas.mysql_data.BetData;
-import com.github.adamovichas.mysql_data.impl.IBetData;
+
+import com.github.adamovichas.mysql_data.IBetData;
+import com.github.adamovichas.mysql_data.impl.BetData;
 import com.github.adamovichas.user.Role;
 
 import javax.servlet.http.Cookie;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public final class Util {
-    private static final IDAOUser serviceDAO = DAOUser.DAO_USER;
+    private static final IdataUserService serviceDAO = DataUserService.DATA_USER_SERVICE;
     private static final IBetData betData = BetData.BET_DATA;
     /* public static void userRoleRedirect(String userRole, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch (userRole) {
@@ -24,7 +25,7 @@ public final class Util {
                 request.getRequestDispatcher("user_menu.jsp").forward(request, response);
                 break;
             case "ADMIN":
-                List<String> usersLogins = DAOUser.DAO_USER.getUsersLogin(User.ROLE.USER);
+                List<String> usersLogins = DataUserService.DATA_USER_SERVICE.getUsersLogin(User.ROLE.USER);
                 request.getSession().setAttribute("listLogins",usersLogins);
                 request.getRequestDispatcher("admin_menu.jsp").forward(request, response);
                 break;

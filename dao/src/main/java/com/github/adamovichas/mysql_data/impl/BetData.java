@@ -1,11 +1,11 @@
-package com.github.adamovichas.mysql_data;
+package com.github.adamovichas.mysql_data.impl;
 
 import com.github.adamovichas.dto.Bet;
 import com.github.adamovichas.dto.BetView;
 import com.github.adamovichas.event.FactorName;
 import com.github.adamovichas.dto.Money;
-import com.github.adamovichas.mysql_data.impl.IBetData;
-import com.github.adamovichas.mysql_data.impl.IDataConnect;
+import com.github.adamovichas.mysql_data.IBetData;
+import com.github.adamovichas.mysql_data.IDataConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

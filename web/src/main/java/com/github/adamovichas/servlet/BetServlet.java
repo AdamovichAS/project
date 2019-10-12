@@ -1,9 +1,9 @@
 package com.github.adamovichas.servlet;
 
-import com.github.adamovichas.DAO.DAOBet;
-import com.github.adamovichas.DAO.DAOEvent;
-import com.github.adamovichas.DAO.impl.IDAOBet;
-import com.github.adamovichas.DAO.impl.IDAOEvent;
+import com.github.adamovichas.data.impl.DataBetService;
+import com.github.adamovichas.data.impl.DataEventService;
+import com.github.adamovichas.data.IdataBetService;
+import com.github.adamovichas.data.IdataEventService;
 import com.github.adamovichas.dto.Bet;
 import com.github.adamovichas.dto.BetView;
 import com.github.adamovichas.dto.EventView;
@@ -24,17 +24,17 @@ import java.util.List;
 
 public class BetServlet extends HttpServlet {
 
-    private IDAOEvent dataEvent;
+    private IdataEventService dataEvent;
     private IEventUtil util;
-    private IDAOBet dataBet;
+    private IdataBetService dataBet;
 
     private static final Logger log = LoggerFactory.getLogger(BetServlet.class);
 
     @Override
     public void init() throws ServletException {
-        dataEvent = DAOEvent.DAO_EVENT;
+        dataEvent = DataEventService.DATA_EVENT_SERVICE;
         util = EventUtil.EVENT_UTIL;
-        dataBet = DAOBet.DAO_BET;
+        dataBet = DataBetService.DATA_BET_SERVICE;
     }
 
     @Override

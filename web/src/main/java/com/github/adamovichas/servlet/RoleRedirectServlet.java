@@ -1,10 +1,10 @@
 package com.github.adamovichas.servlet;
 
 
-import com.github.adamovichas.DAO.DAOBet;
-import com.github.adamovichas.DAO.DAOUser;
-import com.github.adamovichas.DAO.impl.IDAOBet;
-import com.github.adamovichas.DAO.impl.IDAOUser;
+import com.github.adamovichas.data.impl.DataBetService;
+import com.github.adamovichas.data.impl.DataUserService;
+import com.github.adamovichas.data.IdataBetService;
+import com.github.adamovichas.data.IdataUserService;
 import com.github.adamovichas.service.Util;
 import com.github.adamovichas.dto.AuthUser;
 
@@ -17,14 +17,14 @@ import java.io.IOException;
 
 
 public class RoleRedirectServlet extends HttpServlet {
-    private IDAOUser daoUser;
-    private IDAOBet dataBet;
+    private IdataUserService daoUser;
+    private IdataBetService dataBet;
 
 
     @Override
     public void init() throws ServletException {
-        daoUser = DAOUser.DAO_USER;
-        dataBet = DAOBet.DAO_BET;
+        daoUser = DataUserService.DATA_USER_SERVICE;
+        dataBet = DataBetService.DATA_BET_SERVICE;
     }
 
     @Override

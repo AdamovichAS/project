@@ -1,4 +1,4 @@
-package com.github.adamovichas.mysql_data.impl;
+package com.github.adamovichas.mysql_data;
 
 
 import com.github.adamovichas.user.User;

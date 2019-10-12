@@ -1,10 +1,12 @@
-package com.github.adamovichas.DAO.impl;
+package com.github.adamovichas.data;
+
+
 
 import com.github.adamovichas.user.User;
 
 import java.util.Map;
 
-public interface IDAOUser {
+public interface IdataUserService {
 
     boolean loginIsExist(String login);
     boolean addNewUser(Map<String,String> userFieldsAndValues);

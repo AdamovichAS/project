@@ -1,4 +1,4 @@
-package com.github.adamovichas.mysql_data.impl;
+package com.github.adamovichas.mysql_data;
 
 import com.github.adamovichas.dto.EventView;
 import com.github.adamovichas.dto.League;
@@ -9,11 +9,9 @@ import java.util.List;
 
 public interface IDataEvent {
     Long addEvent(Event event);
-    void updateEventInfo(Event event);
-    void deleteEvent(Event event);
     List<League> getAllLeagues();
     List<Team> getAllTeamsByLeague(Long idLeague);
     Event eventIsExist(Event event);
-    List<EventView> getAllNotFinisedEvents();
+    List<EventView> getAllNotFinishedEvents();
     EventView getSavedEventById(Long id);
 }

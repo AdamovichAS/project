@@ -1,7 +1,7 @@
 package com.github.adamovichas.servlet;
 
-import com.github.adamovichas.DAO.DAOUser;
-import com.github.adamovichas.DAO.impl.IDAOUser;
+import com.github.adamovichas.data.impl.DataUserService;
+import com.github.adamovichas.data.IdataUserService;
 import com.github.adamovichas.service.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 public class LoginServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
-    private final IDAOUser daoUser = DAOUser.DAO_USER;
+    private final IdataUserService daoUser = DataUserService.DATA_USER_SERVICE;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

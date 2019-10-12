@@ -1,4 +1,4 @@
-package com.github.adamovichas.mysql_data;
+package com.github.adamovichas.mysql_data.impl;
 
 import com.github.adamovichas.dto.EventView;
 import com.github.adamovichas.dto.League;
@@ -6,8 +6,8 @@ import com.github.adamovichas.dto.Team;
 import com.github.adamovichas.event.Event;
 import com.github.adamovichas.event.Factor;
 import com.github.adamovichas.event.FactorName;
-import com.github.adamovichas.mysql_data.impl.IDataConnect;
-import com.github.adamovichas.mysql_data.impl.IDataEvent;
+import com.github.adamovichas.mysql_data.IDataConnect;
+import com.github.adamovichas.mysql_data.IDataEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,11 +53,11 @@ public enum DataEvent implements IDataEvent {
                 return idEvent;
             }
         } catch (Exception e) {
-            log.error("AddEvent exception, Event {}",event);
+            log.error("AddEvent exception, Event {}", event);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                log.error("Sql exception, Event {}",event,ex);
+                log.error("Sql exception, Event {}", event, ex);
                 throw new RuntimeException(e);
             }
 
@@ -67,7 +67,7 @@ public enum DataEvent implements IDataEvent {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    log.error("close connection exception, Event {}",event);
+                    log.error("close connection exception, Event {}", event);
                 }
             }
         }
@@ -92,13 +92,13 @@ public enum DataEvent implements IDataEvent {
             }
 
         } catch (SQLException e) {
-            log.error("eventIsExist Sql exception, Event {}",event);
+            log.error("eventIsExist Sql exception, Event {}", event);
         }
         return result;
     }
 
     @Override
-    public List<EventView> getAllNotFinisedEvents() {
+    public List<EventView> getAllNotFinishedEvents() {
         List<EventView> result = new ArrayList<>();
         try (Connection connect = CONNECTION.connect();
              PreparedStatement preparedStatement = connect.prepareStatement(
@@ -143,48 +143,37 @@ public enum DataEvent implements IDataEvent {
     @Override
     public EventView getSavedEventById(Long id) {
         EventView result = null;
-        try {
-            try (Connection connect = CONNECTION.connect();
-                 PreparedStatement preparedStatement = connect.prepareStatement(
-                         "SELECT e.id as id, t.name as team_one, t2.name as team_two, e.start_time, e.end_time, fe.id as factor_id, fe.name as factor_name, value as factor_value  FROM factor_event fe\n" +
-                         "LEFT JOIN event e on fe.event_id = e.id\n" +
-                         "LEFT JOIN team t on e.team_one = t.id\n" +
-                         "LEFT JOIN team t2 on e.team_two = t2.id\n" +
-                         "WHERE e.id = ?;")) {
-                preparedStatement.setLong(1, id);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    result = new EventView();
-                    List<Factor> factors = new ArrayList<>();
-                    while (resultSet.next()) {
-                        result.setId(resultSet.getLong("id"));
-                        String teamOne = resultSet.getString("team_one");
-                        String teamTwo = resultSet.getString("team_two");
-                        result.setName(String.format("%s - %s", teamOne, teamTwo));
-                        result.setStartTime(resultSet.getTimestamp("start_time"));
-                        result.setEndTime(resultSet.getTimestamp("end_time"));
-                        long factor_id = resultSet.getLong("factor_id");
-                        String factorName = resultSet.getString("factor_name");
-                        double factorValue = resultSet.getDouble("factor_value");
-                        factors.add(new Factor(factor_id,FactorName.valueOf(factorName), factorValue));
-                    }
-                    result.setFactors(factors);
+        try (Connection connect = CONNECTION.connect();
+             PreparedStatement preparedStatement = connect.prepareStatement(
+                     "SELECT e.id as id, t.name as team_one, t2.name as team_two, e.start_time, e.end_time, fe.id as factor_id, fe.name as factor_name, value as factor_value  FROM factor_event fe\n" +
+                             "LEFT JOIN event e on fe.event_id = e.id\n" +
+                             "LEFT JOIN team t on e.team_one = t.id\n" +
+                             "LEFT JOIN team t2 on e.team_two = t2.id\n" +
+                             "WHERE e.id = ?;")) {
+            preparedStatement.setLong(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                result = new EventView();
+                List<Factor> factors = new ArrayList<>();
+                while (resultSet.next()) {
+                    result.setId(resultSet.getLong("id"));
+                    String teamOne = resultSet.getString("team_one");
+                    String teamTwo = resultSet.getString("team_two");
+                    result.setName(String.format("%s - %s", teamOne, teamTwo));
+                    result.setStartTime(resultSet.getTimestamp("start_time"));
+                    result.setEndTime(resultSet.getTimestamp("end_time"));
+                    long factor_id = resultSet.getLong("factor_id");
+                    String factorName = resultSet.getString("factor_name");
+                    double factorValue = resultSet.getDouble("factor_value");
+                    factors.add(new Factor(factor_id, FactorName.valueOf(factorName), factorValue));
                 }
+                result.setFactors(factors);
             }
         } catch (SQLException e) {
-            log.error("GetSavedEventById Sql exception, ID {}",id);
+            log.error("GetSavedEventById Sql exception, ID {}", id);
         }
         return result;
     }
 
-    @Override
-    public void updateEventInfo(Event event) {
-
-    }
-
-    @Override
-    public void deleteEvent(Event event) {
-
-    }
 
     @Override
     public List<League> getAllLeagues() {
@@ -218,7 +207,7 @@ public enum DataEvent implements IDataEvent {
                 }
             }
         } catch (SQLException e) {
-            log.error("GetAllTeamsByLeague Sql exception, IdLeague {}",idLeague);
+            log.error("GetAllTeamsByLeague Sql exception, IdLeague {}", idLeague);
         }
         return teams;
     }

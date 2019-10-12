@@ -1,7 +1,8 @@
-package com.github.adamovichas.mysql_data;
+package com.github.adamovichas.mysql_data.impl;
 
-import com.github.adamovichas.mysql_data.impl.IDataConnect;
-import com.github.adamovichas.mysql_data.impl.IDataUser;
+import com.github.adamovichas.dto.AuthUser;
+import com.github.adamovichas.mysql_data.IDataUser;
+import com.github.adamovichas.mysql_data.IDataConnect;
 import com.github.adamovichas.user.Role;
 import com.github.adamovichas.user.User;
 import org.slf4j.Logger;
@@ -50,6 +51,7 @@ public enum DataUser implements IDataUser {
                     result.add(resultSet.getString("password"));
                 }
             }
+
         } catch (SQLException e) {
             log.error("Sql exception Login {} Password {}",login,password);
         }
@@ -60,10 +62,11 @@ public enum DataUser implements IDataUser {
     public boolean addUser(User user) {
         boolean result = false;
         try (Connection connect = CONNECTION.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO data.user (password,first_name, last_name, phone, email,age,country,role,login) VALUES (?,?,?,?,?,?,?,?);")){
+             PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO data.user (password,first_name, last_name, phone, email,age,country,role,login) VALUES (?,?,?,?,?,?,?,?,?);")){
             setNotNullUserColumns(user, preparedStatement);
             result = preparedStatement.execute();
         } catch (SQLException e) {
+            e.printStackTrace();
             log.error("Sql exception User {}",user);
         }
         return result;

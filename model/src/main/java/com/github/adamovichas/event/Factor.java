@@ -1,5 +1,7 @@
 package com.github.adamovichas.event;
 
+import com.github.adamovichas.event.FactorName;
+
 public class Factor {
     private Long id;
     private FactorName name;
