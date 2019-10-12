@@ -27,7 +27,7 @@ public class DataEventServiceTest {
     @Mock
     public DataEvent dataEvent;
 
-    @Mock
+    @InjectMocks
     public DataEventService dataEventService;
 
     @BeforeEach
@@ -35,11 +35,7 @@ public class DataEventServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    /*public Bet createTestBet(){
-        Bet bet = new Bet("test",100L,1000);
-        bet.setId(50L);
-        return bet;
-    }*/
+
     Event createEventTest(){
         Event event = new Event(1L,2L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
         List<Factor> factors= new ArrayList<>();
