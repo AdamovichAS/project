@@ -54,15 +54,16 @@ public enum BetData implements IBetData {
                 statementBet.setLong(2, bet.getFactorId());
                 statementBet.setInt(3, bet.getMoney());
                 statementBet.executeUpdate();
-                ResultSet generatedKeys = statementBet.getGeneratedKeys();
-                while (generatedKeys.next()) {
-                    idBet = generatedKeys.getLong(1);
+                try(ResultSet generatedKeys = statementBet.getGeneratedKeys()) {
+                    while (generatedKeys.next()) {
+                        idBet = generatedKeys.getLong(1);
+                    }
+                    statementMoney.setInt(1, bet.getMoney());
+                    statementMoney.setString(2, bet.getUserLogin());
+                    statementMoney.executeUpdate();
+                    connection.commit();
+                    return idBet;
                 }
-                statementMoney.setInt(1, bet.getMoney());
-                statementMoney.setString(2, bet.getUserLogin());
-                statementMoney.executeUpdate();
-                connection.commit();
-                return idBet;
             }
         } catch (Exception e) {
             log.error("AddBet exception, Bet {}",bet);
@@ -111,12 +112,13 @@ public enum BetData implements IBetData {
                     betView.setFactorValue(resultSet.getDouble("factor_val"));
 
                 }
+                return betView;
             }
 
         } catch (SQLException e) {
             log.error("GetViewById Sql exception, idBet {}",idBet);
         }
-        return betView;
+        throw new RuntimeException();
     }
 
     @Override
@@ -133,7 +135,6 @@ public enum BetData implements IBetData {
             preparedStatement.setString(1, login);
             preparedStatement.executeQuery();
             try (ResultSet resultSet = preparedStatement.getResultSet()) {
-
                 while (resultSet.next()) {
                     BetView betView = new BetView();
                     betView.setId(resultSet.getLong("id"));
@@ -146,12 +147,13 @@ public enum BetData implements IBetData {
                     betView.setFactorValue(resultSet.getDouble("factor_val"));
                     bets.add(betView);
                 }
+                return bets;
 
             }
         } catch (SQLException e) {
             log.error("getNotFinishedBetByLogin Sql exception, Login {}",login);
         }
-        return bets;
+        throw new RuntimeException();
     }
 
     @Override
@@ -167,18 +169,18 @@ public enum BetData implements IBetData {
                  PreparedStatement statementMoney = connection.prepareStatement("UPDATE money set value = value + ? WHERE user_login = ?")){
                 statementBet.setLong(1, idBet);
                 statementBet.executeQuery();
-                ResultSet resultSet = statementBet.getResultSet();
-                while (resultSet.next()) {
-                    login = resultSet.getString("login");
-                    bet = resultSet.getInt("money_for_bet");
+                try(ResultSet resultSet = statementBet.getResultSet()) {
+                    while (resultSet.next()) {
+                        login = resultSet.getString("login");
+                        bet = resultSet.getInt("money_for_bet");
+                    }
+                    statementMoney.setInt(1, bet);
+                    statementMoney.setString(2, login);
+                    statementMoney.executeUpdate();
+                    statementDeleteBet.setLong(1, idBet);
+                    statementDeleteBet.executeUpdate();
+                    connection.commit();
                 }
-                statementMoney.setInt(1, bet);
-                statementMoney.setString(2,login);
-                statementMoney.executeUpdate();
-                statementDeleteBet.setLong(1,idBet);
-                statementDeleteBet.executeUpdate();
-                connection.commit();
-
             }
         } catch (Exception e) {
             log.error("CancelBetById exception, idBet {}",idBet);

@@ -15,11 +15,11 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class CookieFilter implements Filter {
-    private IdataUserService serviceDAO = DataUserService.DATA_USER_SERVICE;
+    private IdataUserService serviceDAO;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void init(FilterConfig filterConfig) {
+        serviceDAO = DataUserService.getInstance();
     }
 
     @Override

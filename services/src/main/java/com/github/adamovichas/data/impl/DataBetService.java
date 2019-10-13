@@ -1,6 +1,6 @@
 package com.github.adamovichas.data.impl;
 
-import com.github.adamovichas.data.IdataBetService;
+import com.github.adamovichas.data.IDataBetService;
 import com.github.adamovichas.dto.Bet;
 import com.github.adamovichas.dto.BetView;
 import com.github.adamovichas.dto.Money;
@@ -9,16 +9,28 @@ import com.github.adamovichas.mysql_data.IBetData;
 
 import java.util.List;
 
-public enum DataBetService implements IdataBetService {
-    DATA_BET_SERVICE;
+public class DataBetService implements IDataBetService {
+
+    private static volatile IDataBetService instance;
 
     private IBetData data;
 
-    DataBetService() {
+    private DataBetService() {
         data = BetData.BET_DATA;
     }
 
-
+    public static IDataBetService getInstance() {
+        IDataBetService localInstance = instance;
+        if (localInstance == null) {
+            synchronized (IDataBetService.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new DataBetService();
+                }
+            }
+        }
+        return localInstance;
+    }
 
     @Override
     public Money getMoneyByLogin(String userLogin) {

@@ -3,7 +3,7 @@ package com.github.adamovichas.servlet;
 
 import com.github.adamovichas.data.impl.DataBetService;
 import com.github.adamovichas.data.impl.DataUserService;
-import com.github.adamovichas.data.IdataBetService;
+import com.github.adamovichas.data.IDataBetService;
 import com.github.adamovichas.data.IdataUserService;
 import com.github.adamovichas.service.Util;
 import com.github.adamovichas.dto.AuthUser;
@@ -18,13 +18,13 @@ import java.io.IOException;
 
 public class RoleRedirectServlet extends HttpServlet {
     private IdataUserService daoUser;
-    private IdataBetService dataBet;
+    private IDataBetService dataBet;
 
 
     @Override
     public void init() throws ServletException {
-        daoUser = DataUserService.DATA_USER_SERVICE;
-        dataBet = DataBetService.DATA_BET_SERVICE;
+        daoUser = DataUserService.getInstance();
+        dataBet = DataBetService.getInstance();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class RoleRedirectServlet extends HttpServlet {
             // resp.sendRedirect("admin_menu.jsp");
             req.getRequestDispatcher("admin_menu.jsp").forward(req, resp);
         } else {
-            Util.setUserBetDepositInReq(req);
+            Util.setUserBetsAndDepositInReq(req);
             req.getRequestDispatcher("user_menu.jsp").forward(req, resp);
         }
     }

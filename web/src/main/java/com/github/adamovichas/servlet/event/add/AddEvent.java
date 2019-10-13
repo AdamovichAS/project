@@ -20,7 +20,7 @@ public class AddEvent extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        data = DataEventService.DATA_EVENT_SERVICE;
+        data = DataEventService.getInstance();
     }
 
 

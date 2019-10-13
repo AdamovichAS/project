@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class RegistrationServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
-    private final IdataUserService daoUser = DataUserService.DATA_USER_SERVICE;
+    private final IdataUserService daoUser = DataUserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

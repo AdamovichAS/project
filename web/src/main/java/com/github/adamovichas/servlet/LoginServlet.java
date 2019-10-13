@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 public class LoginServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
-    private final IdataUserService daoUser = DataUserService.DATA_USER_SERVICE;
+    private final IdataUserService daoUser = DataUserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

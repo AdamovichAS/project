@@ -12,6 +12,5 @@ public interface IdataUserService {
     boolean addNewUser(Map<String,String> userFieldsAndValues);
     boolean userIsExist(String login, String password);
     boolean updateUserInfo(String login, Map<String, String> usersFieldsForUpdateWithLogin);
-
     User getUserByLogin(String login);
 }

@@ -28,7 +28,7 @@ public class ChoseEventInfo extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        dataEvent = DataEventService.DATA_EVENT_SERVICE;
+        dataEvent = DataEventService.getInstance();
         eventVal = EventValidation.EVENT_VALIDATION;
         eventUtil = EventUtil.EVENT_UTIL;
     }

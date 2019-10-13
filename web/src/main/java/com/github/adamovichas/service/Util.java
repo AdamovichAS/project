@@ -17,25 +17,14 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public final class Util {
-    private static final IdataUserService serviceDAO = DataUserService.DATA_USER_SERVICE;
-    private static final IBetData betData = BetData.BET_DATA;
-    /* public static void userRoleRedirect(String userRole, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        switch (userRole) {
-            case "USER":
-                request.getRequestDispatcher("user_menu.jsp").forward(request, response);
-                break;
-            case "ADMIN":
-                List<String> usersLogins = DataUserService.DATA_USER_SERVICE.getUsersLogin(User.ROLE.USER);
-                request.getSession().setAttribute("listLogins",usersLogins);
-                request.getRequestDispatcher("admin_menu.jsp").forward(request, response);
-                break;
-            default:
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                break;
-        }
-    }*/
 
-    public static Cookie getCookie(String cookieName,Cookie[] cookies){
+    private static final IdataUserService serviceDAO = DataUserService.getInstance();
+    private static final IBetData betData = BetData.BET_DATA;
+
+    private Util() {
+    }
+
+    public static Cookie getCookie(String cookieName, Cookie[] cookies){
         Cookie resultCookie = null;
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) {
@@ -53,7 +42,7 @@ public final class Util {
 
     }
 
-    public static void setUserBetDepositInReq(HttpServletRequest req){
+    public static void setUserBetsAndDepositInReq(HttpServletRequest req){
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         String login = authUser.getLogin();
         List<BetView> betViews = betData.getNotFinishedBetByLogin(login);
@@ -61,7 +50,9 @@ public final class Util {
         if(!betViews.isEmpty()) {
             req.setAttribute("userBets", betViews);
         }
-        req.setAttribute("deposit",deposit.getValue());
+        if(authUser.getRole().equals(Role.USER_VER)) {
+            req.setAttribute("deposit", deposit.getValue());
+        }
     }
 
 

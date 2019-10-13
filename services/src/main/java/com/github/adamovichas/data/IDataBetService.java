@@ -6,7 +6,7 @@ import com.github.adamovichas.dto.Money;
 
 import java.util.List;
 
-public interface IdataBetService {
+public interface IDataBetService {
     Money getMoneyByLogin(String userLogin);
     Long addBet(Bet bet);
     BetView getViewById(Long idBet);

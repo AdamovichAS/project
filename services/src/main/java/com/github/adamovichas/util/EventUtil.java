@@ -32,15 +32,5 @@ public enum EventUtil implements IEventUtil{
         return factorEv;
     }
 
-  /*  @Override
-    public List<String> getViewForLogInUser(List<EventView> events) {
-        List<String> views;
-        if(!events.isEmpty()){
-            for (EventView event : events) {
-                views.add(String.format("%s | start: %s | WIN: %s | DRAW: %s | LOSE: ",event.getFactors().get(0)))
-            }
-        }
-        return null;
-    }*/
 
 }

@@ -5,7 +5,7 @@ import com.github.adamovichas.data.impl.DataUserService;
 import com.github.adamovichas.data.IdataUserService;
 import com.github.adamovichas.dto.AuthUser;
 import com.github.adamovichas.user.User;
-import com.github.adamovichas.util.Utils;
+import com.github.adamovichas.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class UpdateServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(UpdateServlet.class);
-    private final IdataUserService daoUser = DataUserService.DATA_USER_SERVICE;
+    private final IdataUserService daoUser = DataUserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,7 +34,7 @@ public class UpdateServlet extends HttpServlet {
         userFieldsForUpdate.put("phone",req.getParameter("phone"));
         userFieldsForUpdate.put("email",req.getParameter("email"));
         userFieldsForUpdate.put("country",req.getParameter("country"));
-        Utils.UTILS.removeEmptyValue(userFieldsForUpdate);
+        Util.UTILS.removeEmptyValue(userFieldsForUpdate);
         if(!userFieldsForUpdate.isEmpty()){
             daoUser.updateUserInfo(authUser.getLogin(),userFieldsForUpdate);
             if(password !=null) {

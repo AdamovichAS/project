@@ -13,13 +13,24 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-public enum DataEventService implements IdataEventService {
-    DATA_EVENT_SERVICE;
+public class DataEventService implements IdataEventService {
 
-    private IDataEvent dataEvent;
 
-    DataEventService() {
-        dataEvent = DataEvent.DATA_EVENT;
+    private IDataEvent dataEvent = DataEvent.DATA_EVENT;
+
+    private static volatile IdataEventService instance;
+
+    public static IdataEventService getInstance() {
+        IdataEventService localInstance = instance;
+        if (localInstance == null) {
+            synchronized (IdataEventService.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new DataEventService();
+                }
+            }
+        }
+        return localInstance;
     }
 
     @Override

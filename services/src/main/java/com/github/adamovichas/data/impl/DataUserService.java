@@ -12,13 +12,23 @@ import java.util.Map;
 
 import static java.util.Objects.nonNull;
 
-public enum DataUserService implements IdataUserService {
-    DATA_USER_SERVICE;
+public class DataUserService implements IdataUserService {
 
-    private IDataUser data;
+    private IDataUser data =DataUser.DATA;
 
-    DataUserService() {
-        data  = DataUser.DATA;
+    private static volatile IdataUserService instance;
+
+    public static IdataUserService getInstance() {
+        IdataUserService localInstance = instance;
+        if (localInstance == null) {
+            synchronized (IdataUserService.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new DataUserService();
+                }
+            }
+        }
+        return localInstance;
     }
 
     @Override
@@ -40,8 +50,8 @@ public enum DataUserService implements IdataUserService {
             return false;
         }
         User user = UserCreater.CREATER.createUser(userFieldsAndValues);
-        data.addUser(user);
-        return true;
+        final boolean b = data.addUser(user);
+        return b;
     }
 
     @Override

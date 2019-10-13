@@ -38,19 +38,20 @@ public enum DataEvent implements IDataEvent {
                 statementEvent.setTimestamp(3, event.getStartTime());
                 statementEvent.setTimestamp(4, event.getEndTime());
                 statementEvent.executeUpdate();
-                ResultSet generatedKeys = statementEvent.getGeneratedKeys();
-                generatedKeys.next();
-                long idEvent = generatedKeys.getLong(1);
-                List<Factor> factors = event.getFactors();
-                for (Factor factor : factors) {
-                    statementFactor.setString(1, factor.getName().toString());
-                    statementFactor.setDouble(2, factor.getValue());
-                    statementFactor.setLong(3, idEvent);
-                    statementFactor.addBatch();
+                try(ResultSet generatedKeys = statementEvent.getGeneratedKeys()) {
+                    generatedKeys.next();
+                    long idEvent = generatedKeys.getLong(1);
+                    List<Factor> factors = event.getFactors();
+                    for (Factor factor : factors) {
+                        statementFactor.setString(1, factor.getName().toString());
+                        statementFactor.setDouble(2, factor.getValue());
+                        statementFactor.setLong(3, idEvent);
+                        statementFactor.addBatch();
+                    }
+                    statementFactor.executeBatch();
+                    connection.commit();
+                    return idEvent;
                 }
-                statementFactor.executeBatch();
-                connection.commit();
-                return idEvent;
             }
         } catch (Exception e) {
             log.error("AddEvent exception, Event {}", event);
@@ -89,12 +90,13 @@ public enum DataEvent implements IDataEvent {
                     result.setStartTime(resultSet.getTimestamp("start_time"));
                     result.setEndTime(resultSet.getTimestamp("end_time"));
                 }
+                return result;
             }
 
         } catch (SQLException e) {
             log.error("eventIsExist Sql exception, Event {}", event);
         }
-        return result;
+        throw new RuntimeException();
     }
 
     @Override
@@ -133,11 +135,12 @@ public enum DataEvent implements IDataEvent {
                     view.setFactors(factors);
                     result.add(view);
                 }
+                return result;
             }
         } catch (SQLException e) {
             log.error("GetAllNotFinishedEvent Sql exception");
         }
-        return result;
+        throw new RuntimeException();
     }
 
     @Override
@@ -167,11 +170,12 @@ public enum DataEvent implements IDataEvent {
                     factors.add(new Factor(factor_id, FactorName.valueOf(factorName), factorValue));
                 }
                 result.setFactors(factors);
+                return result;
             }
         } catch (SQLException e) {
             log.error("GetSavedEventById Sql exception, ID {}", id);
         }
-        return result;
+        throw new RuntimeException();
     }
 
 
@@ -186,11 +190,12 @@ public enum DataEvent implements IDataEvent {
                     String name = resultSet.getString("name");
                     leagues.add(new League(id, name));
                 }
+                return leagues;
             }
         } catch (SQLException e) {
             log.error("GetAllLeagues Sql exception");
         }
-        return leagues;
+        throw new RuntimeException();
     }
 
     @Override
@@ -205,10 +210,11 @@ public enum DataEvent implements IDataEvent {
                     String name = resultSet.getString("name");
                     teams.add(new Team(id, name));
                 }
+                return teams;
             }
         } catch (SQLException e) {
             log.error("GetAllTeamsByLeague Sql exception, IdLeague {}", idLeague);
         }
-        return teams;
+        throw new RuntimeException();
     }
 }

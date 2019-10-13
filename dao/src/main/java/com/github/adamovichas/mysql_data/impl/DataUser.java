@@ -31,11 +31,12 @@ public enum DataUser implements IDataUser {
                 while (resultSet.next()){
                     loginData = resultSet.getString("login");
                 }
+                return loginData;
             }
         } catch (SQLException e) {
             log.error("Sql exception, Login {}",login);
         }
-        return loginData;
+        throw new RuntimeException();
     }
 
     @Override
@@ -51,11 +52,11 @@ public enum DataUser implements IDataUser {
                     result.add(resultSet.getString("password"));
                 }
             }
-
+            return result;
         } catch (SQLException e) {
             log.error("Sql exception Login {} Password {}",login,password);
         }
-        return result;
+        throw new RuntimeException();
     }
 
     @Override
@@ -65,11 +66,11 @@ public enum DataUser implements IDataUser {
              PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO data.user (password,first_name, last_name, phone, email,age,country,role,login) VALUES (?,?,?,?,?,?,?,?,?);")){
             setNotNullUserColumns(user, preparedStatement);
             result = preparedStatement.execute();
+            return result;
         } catch (SQLException e) {
-            e.printStackTrace();
             log.error("Sql exception User {}",user);
         }
-        return result;
+        throw new RuntimeException();
     }
 
     private void setNotNullUserColumns(User user, PreparedStatement preparedStatement) throws SQLException {
@@ -102,13 +103,14 @@ public enum DataUser implements IDataUser {
                     user.setCountry(resultSet.getString("country"));
                     user.setRole(Role.valueOf(resultSet.getString("role")));
                 }
+                return user;
             } catch (SQLException e) {
                 log.error("Execute exception Login {}",login);
             }
         } catch (SQLException e) {
             log.error("Sql exception login {}",login);
         }
-        return user;
+        throw new RuntimeException();
     }
 
     @Override
@@ -118,10 +120,11 @@ public enum DataUser implements IDataUser {
              PreparedStatement preparedStatement = connect.prepareStatement("UPDATE user SET password = ?, first_name = ?, last_name =?, phone = ?, email = ?, age =?, country =?, role =? WHERE login = ?;")){
             setNotNullUserColumns(user, preparedStatement);
             result = preparedStatement.execute();
+            return result;
         } catch (SQLException e) {
             log.error("Sql exception User {}",user);
         }
-        return result;
+        throw new RuntimeException();
     }
 
 }

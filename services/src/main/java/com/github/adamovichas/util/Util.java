@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public enum  Utils {
+public enum Util {
     UTILS;
 
     public void removeEmptyValue(Map<String,String> map){

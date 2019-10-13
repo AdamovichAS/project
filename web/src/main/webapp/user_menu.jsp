@@ -19,8 +19,9 @@
     <br>
     <a href="${pageContext.request.contextPath}/update" >update</a>
     <br>
-
-    <a href="${pageContext.request.contextPath}/bet" >bet</a>
+    <c:if test="${authUser.role = 'USER_VER'}">
+        <a href="${pageContext.request.contextPath}/bet" >bet</a>
+    </c:if>
     <c:if test="${userBets ne null}">
         <form action="${pageContext.request.contextPath}/cancel_bet" method="POST">
             <select name="betId">

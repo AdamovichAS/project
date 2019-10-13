@@ -2,7 +2,7 @@ package com.github.adamovichas.servlet;
 
 import com.github.adamovichas.data.impl.DataBetService;
 import com.github.adamovichas.data.impl.DataEventService;
-import com.github.adamovichas.data.IdataBetService;
+import com.github.adamovichas.data.IDataBetService;
 import com.github.adamovichas.data.IdataEventService;
 import com.github.adamovichas.dto.Bet;
 import com.github.adamovichas.dto.BetView;
@@ -26,15 +26,15 @@ public class BetServlet extends HttpServlet {
 
     private IdataEventService dataEvent;
     private IEventUtil util;
-    private IdataBetService dataBet;
+    private IDataBetService dataBet;
 
     private static final Logger log = LoggerFactory.getLogger(BetServlet.class);
 
     @Override
     public void init() throws ServletException {
-        dataEvent = DataEventService.DATA_EVENT_SERVICE;
+        dataEvent = DataEventService.getInstance();
         util = EventUtil.EVENT_UTIL;
-        dataBet = DataBetService.DATA_BET_SERVICE;
+        dataBet = DataBetService.getInstance();
     }
 
     @Override

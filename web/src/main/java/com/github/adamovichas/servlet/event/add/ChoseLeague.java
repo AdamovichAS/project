@@ -15,8 +15,8 @@ public class ChoseLeague extends HttpServlet {
 
     private IdataEventService dataEvent;
     @Override
-    public void init() throws ServletException {
-        dataEvent = DataEventService.DATA_EVENT_SERVICE;
+    public void init(){
+        dataEvent = DataEventService.getInstance();
     }
 
     @Override
@@ -31,6 +31,7 @@ public class ChoseLeague extends HttpServlet {
         String  leagueId = req.getParameter("league");
         if(leagueId == null){
             doGet(req,resp);
+            return;
         }
         req.removeAttribute("allLeague");
         req.setAttribute("leagueId",Long.valueOf(leagueId));

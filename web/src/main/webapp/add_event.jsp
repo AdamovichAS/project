@@ -58,6 +58,7 @@
         <c:forEach items="${savedEvent.factors}" var="item">
             <c:out value="${item}"/>
         </c:forEach>
+        <a href="${pageContext.request.contextPath}/redirect">My page</a><br>
     </c:when>
     <c:otherwise>
 

@@ -17,6 +17,13 @@ public class EventView {
     public EventView() {
     }
 
+    public EventView(Long id, String name, Timestamp startTime, Timestamp endTime) {
+        this.id = id;
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public Long getId() {
         return id;
     }
