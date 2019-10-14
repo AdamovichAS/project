@@ -17,7 +17,7 @@
 </head>
 <body>
     <c:if test="${bet ne null}">
-        <c:out value="Your bet is: ${bet}"/>
+        <fmt:message key="bet.saved_bet" bundle="${messages}"/> ${bet}
     </c:if>
     <h3><fmt:message key="bet.new_bet" bundle="${messages}"/></h3>
     <form action="${pageContext.request.contextPath}/bet" method="POST">
