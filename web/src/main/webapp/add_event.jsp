@@ -47,9 +47,8 @@
             </div>
             <input type="submit"  value="<fmt:message key="add_event.create_event" bundle="${messages}"/>"/>
         </form><br><br>
-        <c:if test="${error ne null}">
-            <fmt:message key="${error}" bundle="${messages}"/>
-            <c:out value="${error}"/>
+        <c:if test="${requestScope.get('error') != null}">
+            <fmt:message key="${requestScope.get('error')}" bundle="${messages}"/>
         </c:if>
 
     </c:when>

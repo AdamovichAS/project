@@ -105,6 +105,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <filter>
+        <filter-name>LocaleFilter</filter-name>
+        <filter-class>com.github.adamovichas.project.web.filter.LocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LocaleFilter</filter-name>
+        <url-pattern>/index.jsp</url-pattern>
+    </filter-mapping>
+    <filter>
         <filter-name>SessionAuthFilter</filter-name>
         <filter-class>com.github.adamovichas.project.web.filter.SessionAuthFilter</filter-class>
     </filter>

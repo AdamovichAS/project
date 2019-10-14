@@ -60,6 +60,7 @@ public class ChoseEventInfo extends HttpServlet {
         if(nonNull(errorMessage)){
             req.setAttribute("error",errorMessage);
             req.getRequestDispatcher("/new_event/chose_league/").forward(req,resp);
+            return;
         }
 
         req.removeAttribute("allTeams");
