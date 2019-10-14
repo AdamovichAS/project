@@ -9,6 +9,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<fmt:setLocale value= "${locale}"/>
+<fmt:setBundle basename = "translations" var = "messages"/>
 <html>
 <head>
     <title>Title</title>
@@ -16,22 +18,22 @@
 <body>
 
     <form action="${pageContext.request.contextPath}/update" method="POST">
-        <label>password:</label>
+        <label><fmt:message key="login.password" bundle="${messages}"/></label>
         <input type="password" placeholder="new password" name="password"><br>
-        <label>firstName:</label>
+        <label><fmt:message key="registration.first_name" bundle="${messages}"/></label>
         <input type="text" placeholder="new first name" name="firstName"><br>
-        <label>lastName:</label>
+        <label><fmt:message key="registration.last_name" bundle="${messages}"/></label>
         <input type="text" placeholder="new last name" name="lastName"><br>
-        <label>phone:</label>
+        <label><fmt:message key="registration.phone" bundle="${messages}"/></label>
         <input type="number" placeholder="new phone" name="phone"><br>
-        <label>email:</label>
+        <label><fmt:message key="registration.mail" bundle="${messages}"/></label>
         <input type="text" placeholder="new email" name="email"><br>
-        <label>country:</label>
+        <label><fmt:message key="registration.country" bundle="${messages}"/></label>
         <input type="text" placeholder="new country" name="country"><br>
 
-        <input type="submit" name="submit" value="new update"/><br>
+        <input type="submit" name="submit" value="<fmt:message key="update.button" bundle="${messages}"/>"/><br>
     </form>
-    <a href="${pageContext.request.contextPath}/user_menu.jsp" >my page</a><br>
+    <a href="${pageContext.request.contextPath}/user_menu.jsp" ><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
 
     <c:if test="${message ne null}">
         <c:out value="${message}"/>

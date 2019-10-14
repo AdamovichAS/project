@@ -8,6 +8,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<fmt:setLocale value= "${locale}"/>
+<fmt:setBundle basename = "translations" var = "messages"/>
 <html>
 <head>
     <title>Title</title>
@@ -16,7 +19,7 @@
     <c:if test="${bet ne null}">
         <c:out value="Your bet is: ${bet}"/>
     </c:if>
-    <h3>New bet</h3>
+    <h3><fmt:message key="bet.new_bet" bundle="${messages}"/></h3>
     <form action="${pageContext.request.contextPath}/bet" method="POST">
         <select name="event">
             <c:forEach items="${events}" var="item">
@@ -29,11 +32,11 @@
             <option value="draw">DRAW</option>
         </select>
 
-        <input type="number" step="1" min="1" max="${user_money}" placeholder="money" name="money_for_bet" required><br>
-        <input type="submit" name="submit" value="bet" />
+        <input type="number" step="1" min="1" max="${user_money}" placeholder="<fmt:message key="bet.money" bundle="${messages}"/>" name="money_for_bet" required><br>
+        <input type="submit" name="submit" value="<fmt:message key="my_page.bet" bundle="${messages}"/>" />
     </form>
     <br>
-    <a href="${pageContext.request.contextPath}/user_menu.jsp">My page</a><br>
+    <a href="${pageContext.request.contextPath}/user_menu.jsp"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
 
 </body>
 </html>

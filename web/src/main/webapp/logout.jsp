@@ -5,12 +5,17 @@
   Time: 18:06
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<fmt:setLocale value= "${locale}"/>
+<fmt:setBundle basename = "translations" var = "messages"/>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-You are log out! <a href="${pageContext.request.contextPath}/index.jsp" >Main page</a>
+<fmt:message key="logout.logout" bundle="${messages}"/><a href="${pageContext.request.contextPath}/index.jsp" ><fmt:message key="index.my_page" bundle="${messages}"/></a>
 </body>
 </html>

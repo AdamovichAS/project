@@ -9,33 +9,35 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<fmt:setLocale value= "${locale}"/>
+<fmt:setBundle basename = "translations" var = "messages"/>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/registration" method="POST">
-    <label>username:</label>
+    <label><fmt:message key="index.login" bundle="${messages}"/></label>
     <input type="text" required placeholder="login" name="login"><br>
 
-    <label>password:</label>
+    <label><fmt:message key="login.password" bundle="${messages}"/></label>
     <input type="password" required placeholder="password" name="password"><br>
-    <label>repeat password:</label>
+    <label><fmt:message key="registration.repeat_password" bundle="${messages}"/></label>
     <input type="password" required placeholder="repeat password" name="repeatedPassword"><br><br>
-    <label>firstName:</label>
+    <label><fmt:message key="registration.first_name" bundle="${messages}"/></label>
     <input type="text" required placeholder="first name" name="firstName"><br>
-    <label>lastName:</label>
+    <label><fmt:message key="registration.last_name" bundle="${messages}"/></label>
     <input type="text" required placeholder="last name" name="lastName"><br>
-    <label>phone:</label>
+    <label><fmt:message key="registration.phone" bundle="${messages}"/></label>
     <input type="number" required placeholder="phone" name="phone"><br>
-    <label>email:</label>
+    <label><fmt:message key="registration.mail" bundle="${messages}"/></label>
     <input type="text" required placeholder="email" name="email"><br>
-    <label>age:</label>
+    <label><fmt:message key="registration.age" bundle="${messages}"/></label>
     <input type="number" required placeholder="age" name="age"><br>
-    <label>country:</label>
+    <label><fmt:message key="registration.country" bundle="${messages}"/></label>
     <input type="text" required placeholder="country" name="country"><br>
 
-    <input type="submit" name="submit" value="Registration"/><br>
+    <input type="submit" name="submit" value="<fmt:message key="index.registration" bundle="${messages}"/>"/><br>
 </form>
     <c:if test="${loginError != null}">
         <c:out value="${loginError}"/>
