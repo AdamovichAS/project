@@ -1,4 +1,4 @@
-<%@ page import="com.github.adamovichas.user.User" %><%--
+<%@ page import="com.github.adamovichas.project.web.user.User" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 16.09.2019

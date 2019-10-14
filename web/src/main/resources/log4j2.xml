@@ -15,8 +15,8 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="com.github.adamovichas" level="INFO" additivity="true">
-            <appender-ref ref="fileLogger" level="INFO" />
+        <Logger name="com.github.adamovichas" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
         </Logger>
         <Root level="INFO" additivity="false">
             <appender-ref ref="console" />

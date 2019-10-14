@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.LogOutServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.LogOutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -17,7 +17,7 @@
 
     <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.RegistrationServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.RegistrationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegistrationServlet</servlet-name>
@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.LoginServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -35,7 +35,7 @@
 
     <servlet>
         <servlet-name>RoleRedirectServlet</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.RoleRedirectServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.RoleRedirectServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RoleRedirectServlet</servlet-name>
@@ -44,7 +44,7 @@
 
     <servlet>
         <servlet-name>UpdateServlet</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.UpdateServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.UpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateServlet</servlet-name>
@@ -53,7 +53,7 @@
 
     <servlet>
         <servlet-name>ChoseEventInfo</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.event.add.ChoseEventInfo</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.event.add.ChoseEventInfo</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChoseEventInfo</servlet-name>
@@ -62,7 +62,7 @@
 
     <servlet>
         <servlet-name>ChoseLeague</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.event.add.ChoseLeague</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.event.add.ChoseLeague</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChoseLeague</servlet-name>
@@ -71,7 +71,7 @@
 
     <servlet>
         <servlet-name>addEvent</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.event.add.AddEvent</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.event.add.AddEvent</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addEvent</servlet-name>
@@ -80,7 +80,7 @@
 
     <servlet>
         <servlet-name>BetServlet</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.BetServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.BetServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>BetServlet</servlet-name>
@@ -89,7 +89,7 @@
 
     <servlet>
         <servlet-name>CancelBetServlet</servlet-name>
-        <servlet-class>com.github.adamovichas.servlet.CancelBetServlet</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.CancelBetServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CancelBetServlet</servlet-name>
@@ -97,8 +97,16 @@
     </servlet-mapping>
 
     <filter>
+        <filter-name>EncodeFilter</filter-name>
+        <filter-class>com.github.adamovichas.project.web.filter.EncodeFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodeFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
         <filter-name>SessionAuthFilter</filter-name>
-        <filter-class>com.github.adamovichas.filter.SessionAuthFilter</filter-class>
+        <filter-class>com.github.adamovichas.project.web.filter.SessionAuthFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SessionAuthFilter</filter-name>
@@ -115,7 +123,7 @@
 
     <filter>
         <filter-name>CookieFilter</filter-name>
-        <filter-class>com.github.adamovichas.filter.CookieFilter</filter-class>
+        <filter-class>com.github.adamovichas.project.web.filter.CookieFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CookieFilter</filter-name>
