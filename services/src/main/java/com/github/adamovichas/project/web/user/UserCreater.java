@@ -13,7 +13,7 @@ public enum  UserCreater {
 
     public User createUser(Map<String,String> userFieldsAndValues){
         User user = new User();
-        user.setRole(Role.USER_NOT_VER);
+        user.setRole(Role.USER_VER);
         SETTER.SetFields(user,userFieldsAndValues);
         return user;
     }

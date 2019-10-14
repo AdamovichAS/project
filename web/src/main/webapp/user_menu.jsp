@@ -22,9 +22,9 @@
     <br>
     <a href="${pageContext.request.contextPath}/update" ><fmt:message key="update.button" bundle="${messages}"/></a>
     <br>
-    <c:if test="${authUser.role = 'USER_VER'}">
+
         <a href="${pageContext.request.contextPath}/bet" ><fmt:message key="my_page.bet" bundle="${messages}"/></a>
-    </c:if>
+
     <c:if test="${userBets ne null}">
         <H3>Your bets</H3>
         <form action="${pageContext.request.contextPath}/cancel_bet" method="POST">

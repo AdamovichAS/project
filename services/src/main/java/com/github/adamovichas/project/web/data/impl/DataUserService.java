@@ -50,8 +50,7 @@ public class DataUserService implements IdataUserService {
             return false;
         }
         User user = UserCreater.CREATER.createUser(userFieldsAndValues);
-        final boolean b = data.addUser(user);
-        return b;
+        return data.addUser(user);
     }
 
     @Override
