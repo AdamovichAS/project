@@ -2,7 +2,7 @@ package com.github.adamovichas.project.web.filter;
 
 
 
-import com.github.adamovichas.project.web.dto.AuthUser;
+import com.github.adamovichas.project.model.dto.AuthUser;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

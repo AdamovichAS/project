@@ -1,9 +1,9 @@
 package com.github.adamovichas.project.project.dao;
 
-import com.github.adamovichas.project.web.dto.EventView;
-import com.github.adamovichas.project.web.dto.League;
-import com.github.adamovichas.project.web.dto.Team;
-import com.github.adamovichas.project.web.event.Event;
+import com.github.adamovichas.project.model.dto.EventView;
+import com.github.adamovichas.project.model.dto.League;
+import com.github.adamovichas.project.model.dto.Team;
+import com.github.adamovichas.project.model.event.Event;
 
 import java.util.List;
 

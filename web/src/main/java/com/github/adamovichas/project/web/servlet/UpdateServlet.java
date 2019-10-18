@@ -1,11 +1,11 @@
 package com.github.adamovichas.project.web.servlet;
 
 
-import com.github.adamovichas.project.web.data.impl.DataUserService;
-import com.github.adamovichas.project.web.data.IdataUserService;
-import com.github.adamovichas.project.web.dto.AuthUser;
-import com.github.adamovichas.project.web.user.User;
-import com.github.adamovichas.project.web.util.Util;
+import com.github.adamovichas.project.service.data.impl.DataUserService;
+import com.github.adamovichas.project.service.data.IdataUserService;
+import com.github.adamovichas.project.model.dto.AuthUser;
+import com.github.adamovichas.project.model.user.User;
+import com.github.adamovichas.project.service.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

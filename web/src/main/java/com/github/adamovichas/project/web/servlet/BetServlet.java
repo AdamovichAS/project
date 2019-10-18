@@ -1,17 +1,17 @@
 package com.github.adamovichas.project.web.servlet;
 
-import com.github.adamovichas.project.web.data.impl.DataBetService;
-import com.github.adamovichas.project.web.data.impl.DataEventService;
-import com.github.adamovichas.project.web.data.IDataBetService;
-import com.github.adamovichas.project.web.data.IdataEventService;
-import com.github.adamovichas.project.web.dto.Bet;
-import com.github.adamovichas.project.web.dto.BetView;
-import com.github.adamovichas.project.web.dto.EventView;
-import com.github.adamovichas.project.web.event.Factor;
-import com.github.adamovichas.project.web.dto.AuthUser;
-import com.github.adamovichas.project.web.dto.Money;
-import com.github.adamovichas.project.web.util.EventUtil;
-import com.github.adamovichas.project.web.util.IEventUtil;
+import com.github.adamovichas.project.service.data.impl.DataBetService;
+import com.github.adamovichas.project.service.data.impl.DataEventService;
+import com.github.adamovichas.project.service.data.IDataBetService;
+import com.github.adamovichas.project.service.data.IdataEventService;
+import com.github.adamovichas.project.model.dto.Bet;
+import com.github.adamovichas.project.model.dto.BetView;
+import com.github.adamovichas.project.model.dto.EventView;
+import com.github.adamovichas.project.model.event.Factor;
+import com.github.adamovichas.project.model.dto.AuthUser;
+import com.github.adamovichas.project.model.dto.Money;
+import com.github.adamovichas.project.service.util.EventUtil;
+import com.github.adamovichas.project.service.util.IEventUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

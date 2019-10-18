@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.web.servlet;
 
-import com.github.adamovichas.project.web.data.impl.DataBetService;
-import com.github.adamovichas.project.web.data.IDataBetService;
+import com.github.adamovichas.project.service.data.impl.DataBetService;
+import com.github.adamovichas.project.service.data.IDataBetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

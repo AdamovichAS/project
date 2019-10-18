@@ -1,14 +1,14 @@
 package com.github.adamovichas.project.web.servlet.event.add;
 
-import com.github.adamovichas.project.web.data.impl.DataEventService;
-import com.github.adamovichas.project.web.data.IdataEventService;
-import com.github.adamovichas.project.web.dto.Team;
-import com.github.adamovichas.project.web.event.Event;
-import com.github.adamovichas.project.web.event.Factor;
-import com.github.adamovichas.project.web.util.EventUtil;
-import com.github.adamovichas.project.web.util.IEventUtil;
-import com.github.adamovichas.project.web.validation.EventValidation;
-import com.github.adamovichas.project.web.validation.IEventValidation;
+import com.github.adamovichas.project.service.data.impl.DataEventService;
+import com.github.adamovichas.project.service.data.IdataEventService;
+import com.github.adamovichas.project.model.dto.Team;
+import com.github.adamovichas.project.model.event.Event;
+import com.github.adamovichas.project.model.event.Factor;
+import com.github.adamovichas.project.service.util.EventUtil;
+import com.github.adamovichas.project.service.util.IEventUtil;
+import com.github.adamovichas.project.service.validation.EventValidation;
+import com.github.adamovichas.project.service.validation.IEventValidation;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.project.dao;
 
 
-import com.github.adamovichas.project.web.user.User;
+import com.github.adamovichas.project.model.user.User;
 
 
 import java.util.List;

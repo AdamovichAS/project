@@ -1,11 +1,11 @@
 package com.github.adamovichas.project.web.servlet;
 
 
-import com.github.adamovichas.project.web.data.impl.DataBetService;
-import com.github.adamovichas.project.web.data.impl.DataUserService;
-import com.github.adamovichas.project.web.data.IDataBetService;
-import com.github.adamovichas.project.web.data.IdataUserService;
-import com.github.adamovichas.project.web.dto.AuthUser;
+import com.github.adamovichas.project.service.data.impl.DataBetService;
+import com.github.adamovichas.project.service.data.impl.DataUserService;
+import com.github.adamovichas.project.service.data.IDataBetService;
+import com.github.adamovichas.project.service.data.IdataUserService;
+import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.web.service.Util;
 
 
