@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.project.dao.IDataConnect;
+import com.github.adamovichas.project.IDataConnect;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

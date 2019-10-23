@@ -3,7 +3,7 @@ package com.github.adamovichas.project.service.data.impl;
 import com.github.adamovichas.project.model.dto.EventView;
 import com.github.adamovichas.project.model.dto.League;
 import com.github.adamovichas.project.model.dto.Team;
-import com.github.adamovichas.project.model.event.Event;
+import com.github.adamovichas.project.entity.Event;
 import com.github.adamovichas.project.model.event.Factor;
 import com.github.adamovichas.project.model.event.FactorName;
 import com.github.adamovichas.project.dao.impl.DataEvent;

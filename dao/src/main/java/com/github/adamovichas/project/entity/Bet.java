@@ -1,4 +1,4 @@
-package com.github.adamovichas.project.model.dto;
+package com.github.adamovichas.project.entity;
 
 public class Bet {
 

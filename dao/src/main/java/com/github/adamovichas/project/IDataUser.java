@@ -1,7 +1,7 @@
-package com.github.adamovichas.project.project.dao;
+package com.github.adamovichas.project;
 
 
-import com.github.adamovichas.project.model.user.User;
+import com.github.adamovichas.project.entity.User;
 
 
 import java.util.List;

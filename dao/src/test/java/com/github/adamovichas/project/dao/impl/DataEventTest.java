@@ -3,7 +3,7 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.model.dto.EventView;
 import com.github.adamovichas.project.model.dto.League;
 import com.github.adamovichas.project.model.dto.Team;
-import com.github.adamovichas.project.model.event.Event;
+import com.github.adamovichas.project.entity.Event;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

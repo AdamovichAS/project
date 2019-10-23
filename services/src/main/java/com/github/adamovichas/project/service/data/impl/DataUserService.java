@@ -2,9 +2,9 @@ package com.github.adamovichas.project.service.data.impl;
 import com.github.adamovichas.project.service.user.UserCreater;
 import com.github.adamovichas.project.service.user.UserFieldsSetter;
 import com.github.adamovichas.project.service.data.IdataUserService;
-import com.github.adamovichas.project.model.user.User;
+import com.github.adamovichas.project.entity.User;
 import com.github.adamovichas.project.dao.impl.DataUser;
-import com.github.adamovichas.project.project.dao.IDataUser;
+import com.github.adamovichas.project.IDataUser;
 
 import java.util.List;
 import java.util.Map;

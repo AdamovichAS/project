@@ -1,9 +1,9 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.model.event.Event;
+import com.github.adamovichas.project.entity.Event;
 import com.github.adamovichas.project.model.event.Factor;
 import com.github.adamovichas.project.model.event.FactorName;
-import com.github.adamovichas.project.model.user.User;
+import com.github.adamovichas.project.entity.User;
 import com.github.adamovichas.project.model.user.Role;
 
 import java.sql.*;

@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
 
-import com.github.adamovichas.project.model.user.User;
+import com.github.adamovichas.project.entity.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

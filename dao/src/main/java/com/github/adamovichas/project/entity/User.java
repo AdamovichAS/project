@@ -1,5 +1,7 @@
-package com.github.adamovichas.project.model.user;
+package com.github.adamovichas.project.entity;
 
+
+import com.github.adamovichas.project.model.user.Role;
 
 public class User  {
 

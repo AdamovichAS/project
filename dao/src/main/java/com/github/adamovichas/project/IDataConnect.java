@@ -1,4 +1,4 @@
-package com.github.adamovichas.project.project.dao;
+package com.github.adamovichas.project;
 
 import java.sql.Connection;
 import java.sql.SQLException;

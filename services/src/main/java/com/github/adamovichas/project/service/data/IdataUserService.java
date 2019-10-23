@@ -2,7 +2,7 @@ package com.github.adamovichas.project.service.data;
 
 
 
-import com.github.adamovichas.project.model.user.User;
+import com.github.adamovichas.project.entity.User;
 
 import java.util.Map;
 

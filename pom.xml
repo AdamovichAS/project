@@ -36,10 +36,16 @@
         <slf4j-api.version>1.7.28</slf4j-api.version>
         <log4j-core.version>2.12.1</log4j-core.version>
         <log4j-slf4j-impl.version>2.12.1</log4j-slf4j-impl.version>
+        <hibernate-core.version>5.4.5.Final</hibernate-core.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate-core.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>

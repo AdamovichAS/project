@@ -5,10 +5,10 @@ import com.github.adamovichas.project.service.data.impl.DataUserService;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.model.dto.Money;
+import com.github.adamovichas.project.entity.Money;
 
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.project.dao.IBetData;
+import com.github.adamovichas.project.IBetData;
 import com.github.adamovichas.project.dao.impl.BetData;
 
 import javax.servlet.http.Cookie;

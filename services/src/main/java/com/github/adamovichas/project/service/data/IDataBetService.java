@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.service.data;
 
-import com.github.adamovichas.project.model.dto.Bet;
+import com.github.adamovichas.project.entity.Bet;
 import com.github.adamovichas.project.model.dto.BetView;
-import com.github.adamovichas.project.model.dto.Money;
+import com.github.adamovichas.project.entity.Money;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package com.github.adamovichas.project.web.servlet.event.add;
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IdataEventService;
 import com.github.adamovichas.project.model.dto.Team;
-import com.github.adamovichas.project.model.event.Event;
+import com.github.adamovichas.project.entity.Event;
 import com.github.adamovichas.project.model.event.Factor;
 import com.github.adamovichas.project.service.util.EventUtil;
 import com.github.adamovichas.project.service.util.IEventUtil;

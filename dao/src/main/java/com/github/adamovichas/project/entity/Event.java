@@ -1,4 +1,6 @@
-package com.github.adamovichas.project.model.event;
+package com.github.adamovichas.project.entity;
+
+import com.github.adamovichas.project.model.event.Factor;
 
 import java.sql.Timestamp;
 

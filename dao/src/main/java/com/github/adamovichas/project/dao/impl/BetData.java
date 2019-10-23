@@ -1,11 +1,11 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.model.dto.Bet;
+import com.github.adamovichas.project.entity.Bet;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.model.event.FactorName;
-import com.github.adamovichas.project.model.dto.Money;
-import com.github.adamovichas.project.project.dao.IBetData;
-import com.github.adamovichas.project.project.dao.IDataConnect;
+import com.github.adamovichas.project.entity.Money;
+import com.github.adamovichas.project.IBetData;
+import com.github.adamovichas.project.IDataConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

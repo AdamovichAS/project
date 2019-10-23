@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.validation;
 
-import com.github.adamovichas.project.model.event.Event;
+import com.github.adamovichas.project.entity.Event;
 
 import java.sql.Timestamp;
 

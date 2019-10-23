@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.service.user;
 
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.model.user.User;
+import com.github.adamovichas.project.entity.User;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

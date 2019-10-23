@@ -5,9 +5,9 @@ import com.github.adamovichas.project.service.data.IdataEventService;
 import com.github.adamovichas.project.model.dto.EventView;
 import com.github.adamovichas.project.model.dto.League;
 import com.github.adamovichas.project.model.dto.Team;
-import com.github.adamovichas.project.model.event.Event;
+import com.github.adamovichas.project.entity.Event;
 import com.github.adamovichas.project.dao.impl.DataEvent;
-import com.github.adamovichas.project.project.dao.IDataEvent;
+import com.github.adamovichas.project.IDataEvent;
 
 import java.util.List;
 

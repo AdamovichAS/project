@@ -3,11 +3,11 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.model.dto.EventView;
 import com.github.adamovichas.project.model.dto.League;
 import com.github.adamovichas.project.model.dto.Team;
-import com.github.adamovichas.project.model.event.Event;
+import com.github.adamovichas.project.entity.Event;
 import com.github.adamovichas.project.model.event.Factor;
 import com.github.adamovichas.project.model.event.FactorName;
-import com.github.adamovichas.project.project.dao.IDataConnect;
-import com.github.adamovichas.project.project.dao.IDataEvent;
+import com.github.adamovichas.project.IDataConnect;
+import com.github.adamovichas.project.IDataEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
