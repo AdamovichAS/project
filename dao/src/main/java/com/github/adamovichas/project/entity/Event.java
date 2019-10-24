@@ -1,11 +1,14 @@
 package com.github.adamovichas.project.entity;
 
-import com.github.adamovichas.project.model.event.Factor;
 
+import com.github.adamovichas.project.model.factor.Factor;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 import java.util.List;
-
+//@Entity
+//@Table(name = "event")
 public class Event {
     private Long id;
     private Long teamOneId;
@@ -25,7 +28,9 @@ public class Event {
 
     public Event() {
     }
-
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
     public Long getId() {
         return id;
     }

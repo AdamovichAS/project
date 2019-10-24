@@ -2,7 +2,7 @@ package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.entity.Bet;
 import com.github.adamovichas.project.model.dto.BetView;
-import com.github.adamovichas.project.model.event.FactorName;
+import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.entity.Money;
 import com.github.adamovichas.project.IBetData;
 import com.github.adamovichas.project.IDataConnect;

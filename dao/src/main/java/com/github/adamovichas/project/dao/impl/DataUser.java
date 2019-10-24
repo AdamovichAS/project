@@ -3,12 +3,14 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.entity.User;
 import com.github.adamovichas.project.IDataUser;
 import com.github.adamovichas.project.IDataConnect;
-import com.github.adamovichas.project.model.user.Role;
+import com.github.adamovichas.project.util.HibernateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
+import javax.persistence.RollbackException;
 import java.sql.*;
-import java.util.*;
 
 public enum DataUser implements IDataUser {
     DATA;
@@ -20,110 +22,51 @@ public enum DataUser implements IDataUser {
         CONNECTION = DataConnect.CONNECT;
     }
 
-    @Override
-    public String loginIsExist(String login) {
-        String loginData = null;
-        try (Connection connect = CONNECTION.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("SELECT login FROM user WHERE login = ?;")){
-            preparedStatement.setString(1,login);
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                while (resultSet.next()){
-                    loginData = resultSet.getString("login");
-                }
-                return loginData;
-            }
-        } catch (SQLException e) {
-            log.error("Sql exception, Login {}",login);
-        }
-        throw new RuntimeException();
-    }
-
-    @Override
-    public List<String> userIsExist(String login, String password) {
-        List<String>result = new ArrayList<>();
-        try (Connection connect = CONNECTION.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("SELECT login,password FROM user WHERE login = ? AND password = ?;")){
-            preparedStatement.setString(1,login);
-            preparedStatement.setString(2,password);
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                while (resultSet.next()){
-                    result.add(resultSet.getString("login"));
-                    result.add(resultSet.getString("password"));
-                }
-            }
-            return result;
-        } catch (SQLException e) {
-            log.error("Sql exception Login {} Password {}",login,password);
-        }
-        throw new RuntimeException();
-    }
 
     @Override
     public boolean addUser(User user) {
         boolean result = false;
-        try (Connection connect = CONNECTION.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO data.user (password,first_name, last_name, phone, email,age,country,role,login) VALUES (?,?,?,?,?,?,?,?,?);")){
-            setNotNullUserColumns(user, preparedStatement);
-            result = preparedStatement.execute();
-            return result;
-        } catch (SQLException e) {
-            log.error("Sql exception User {}",user);
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+            result = true;
+        }catch (RollbackException e){
+            log.error("addUser exception User {}",user);
+            entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
-        throw new RuntimeException();
+        return result;
     }
 
-    private void setNotNullUserColumns(User user, PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setString(1, user.getPassword());
-        preparedStatement.setString(2, user.getFirstName());
-        preparedStatement.setString(3, user.getLastName());
-        preparedStatement.setString(4, user.getPhone());
-        preparedStatement.setString(5, user.getEmail());
-        preparedStatement.setInt(6, user.getAge());
-        preparedStatement.setString(7, user.getCountry());
-        preparedStatement.setString(8,user.getRole().toString());
-        preparedStatement.setString(9, user.getLogin());
-    }
 
     @Override
     public User getUserByLogin(String login) {
-        User user = new User();
-        try (Connection connect = CONNECTION.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM user WHERE login = ?;")){
-            preparedStatement.setString(1,login);
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                while (resultSet.next()){
-                    user.setLogin(resultSet.getString("login"));
-                    user.setPassword(resultSet.getString("password"));
-                    user.setFirstName(resultSet.getString("first_name"));
-                    user.setLastName(resultSet.getString("last_name"));
-                    user.setPhone(resultSet.getString("phone"));
-                    user.setEmail(resultSet.getString("email"));
-                    user.setAge(resultSet.getInt("age"));
-                    user.setCountry(resultSet.getString("country"));
-                    user.setRole(Role.valueOf(resultSet.getString("role")));
-                }
-                return user;
-            } catch (SQLException e) {
-                log.error("Execute exception Login {}",login);
-            }
-        } catch (SQLException e) {
-            log.error("Sql exception login {}",login);
-        }
-        throw new RuntimeException();
+        EntityManager em = HibernateUtil.getEntityManager();
+        em.getTransaction().begin();
+        User user = em.find(User.class, login);
+        em.getTransaction().commit();
+        em.close();
+        return user;
     }
 
     @Override
     public boolean updateUserInfo(User user) {
         boolean result = false;
-        try (Connection connect = CONNECTION.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("UPDATE user SET password = ?, first_name = ?, last_name =?, phone = ?, email = ?, age =?, country =?, role =? WHERE login = ?;")){
-            setNotNullUserColumns(user, preparedStatement);
-            result = preparedStatement.execute();
-            return result;
-        } catch (SQLException e) {
-            log.error("Sql exception User {}",user);
+        EntityManager em = HibernateUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(em.contains(user) ? user : em.merge(user));
+            em.getTransaction().commit();
+            result =true;
+        }catch (RollbackException e){
+            em.getTransaction().rollback();
+            log.error("updateUserInfo exception User {}",user);
+        }finally {
+            em.close();
         }
-        throw new RuntimeException();
+        return result;
+        }
     }
-
-}

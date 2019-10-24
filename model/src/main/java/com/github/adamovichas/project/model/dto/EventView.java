@@ -1,6 +1,8 @@
 package com.github.adamovichas.project.model.dto;
 
-import com.github.adamovichas.project.model.event.Factor;
+
+
+import com.github.adamovichas.project.model.factor.Factor;
 
 import java.sql.Timestamp;
 import java.util.List;

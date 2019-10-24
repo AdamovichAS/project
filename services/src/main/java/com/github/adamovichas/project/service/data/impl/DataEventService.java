@@ -3,8 +3,8 @@ package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.service.data.IdataEventService;
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.model.dto.League;
-import com.github.adamovichas.project.model.dto.Team;
+import com.github.adamovichas.project.entity.League;
+import com.github.adamovichas.project.entity.Team;
 import com.github.adamovichas.project.entity.Event;
 import com.github.adamovichas.project.dao.impl.DataEvent;
 import com.github.adamovichas.project.IDataEvent;

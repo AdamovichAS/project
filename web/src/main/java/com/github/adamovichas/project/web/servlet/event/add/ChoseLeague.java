@@ -2,7 +2,7 @@ package com.github.adamovichas.project.web.servlet.event.add;
 
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IdataEventService;
-import com.github.adamovichas.project.model.dto.League;
+import com.github.adamovichas.project.entity.League;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

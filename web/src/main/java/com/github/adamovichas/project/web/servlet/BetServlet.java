@@ -7,7 +7,7 @@ import com.github.adamovichas.project.service.data.IdataEventService;
 import com.github.adamovichas.project.entity.Bet;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.model.event.Factor;
+import com.github.adamovichas.project.model.factor.Factor;
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.entity.Money;
 import com.github.adamovichas.project.service.util.EventUtil;
@@ -49,7 +49,7 @@ public class BetServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long eventId = Long.valueOf(req.getParameter("event"));
+        Long eventId = Long.valueOf(req.getParameter("factor"));
         int moneyForBet = Integer.parseInt(req.getParameter("money_for_bet"));
         EventView eventView = dataEvent.getEventById(eventId);
         String factorName = req.getParameter("factor");

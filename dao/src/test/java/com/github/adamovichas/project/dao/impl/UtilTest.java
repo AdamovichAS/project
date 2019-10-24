@@ -1,11 +1,13 @@
 package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.entity.Event;
-import com.github.adamovichas.project.model.event.Factor;
-import com.github.adamovichas.project.model.event.FactorName;
+import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.entity.User;
 import com.github.adamovichas.project.model.user.Role;
+import com.github.adamovichas.project.util.HibernateUtil;
 
+import javax.persistence.EntityManager;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,22 +25,16 @@ public enum UtilTest {
         user.setEmail("mail");
         user.setAge(18);
         user.setCountry("bel");
-        user.setRole(Role.USER);
+        user.setRole(Role.USER_VER);
         return  user;
     }
 
-    void deleteTestUser(String login){
-        try (Connection connect = DataConnect.CONNECT.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM user WHERE login =?;")){
-            preparedStatement.setString(1,login);
-            try {
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    void deleteTestUser(User user){
+        EntityManager em = HibernateUtil.getEntityManager();
+        em.getTransaction().begin();
+        em.remove(em.contains(user) ? user : em.merge(user));
+        em.getTransaction().commit();
+        em.close();
     }
 
      Event createEventTest(){

@@ -26,7 +26,7 @@ public class AddEvent extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Event event = (Event) req.getAttribute("event");
+        Event event = (Event) req.getAttribute("factor");
         boolean isExist = data.eventIsExist(event);
         if(!isExist){
             Long eventId = data.addEvent(event);

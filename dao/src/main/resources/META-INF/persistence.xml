@@ -9,7 +9,7 @@
         <class>com.github.adamovichas.project.entity.Money</class>
         <class>com.github.adamovichas.project.entity.User</class>
         <class>com.github.adamovichas.project.entity.Bet</class>
-        <class>com.github.adamovichas.project.model.event.Factor</class>
+        <class>com.github.adamovichas.project.model.factor.Factor</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

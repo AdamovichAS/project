@@ -34,9 +34,9 @@ public class DataUserService implements IdataUserService {
     @Override
     public boolean loginIsExist(String login)  {
         boolean result = false;
-        String loginData = data.loginIsExist(login);
-        if(nonNull(loginData)){
-            if(loginData.equals(login)){
+        User userByLogin = data.getUserByLogin(login);
+        if(nonNull(userByLogin)){
+            if(userByLogin.getLogin().equals(login)){
                 result = true;
             }
         }
@@ -56,9 +56,9 @@ public class DataUserService implements IdataUserService {
     @Override
     public boolean userIsExist(String login, String password) {
         boolean result = false;
-        List<String> loginPassData = data.userIsExist(login, password);
-        if(!loginPassData.isEmpty()){
-            if(loginPassData.get(0).equals(login) && loginPassData.get(1).equals(password)){
+        final User userByLogin = data.getUserByLogin(login);
+        if(nonNull(userByLogin)){
+            if(userByLogin.getPassword().equals(password)){
                 result = true;
             }
         }

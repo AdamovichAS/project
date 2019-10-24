@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.model.dto;
 
-import com.github.adamovichas.project.model.event.FactorName;
+import com.github.adamovichas.project.model.factor.FactorName;
 
 public class BetView {
     private Long id;

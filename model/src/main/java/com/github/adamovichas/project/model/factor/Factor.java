@@ -1,4 +1,4 @@
-package com.github.adamovichas.project.model.event;
+package com.github.adamovichas.project.model.factor;
 
 public class Factor {
     private Long id;

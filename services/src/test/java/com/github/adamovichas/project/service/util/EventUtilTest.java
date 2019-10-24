@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.service.util;
 
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.model.event.Factor;
-import com.github.adamovichas.project.model.event.FactorName;
+import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.factor.FactorName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
