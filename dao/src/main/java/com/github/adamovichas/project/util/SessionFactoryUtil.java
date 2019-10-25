@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.util;
 
-import com.github.adamovichas.project.entity.User;
+import com.github.adamovichas.project.model.dto.UserDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -37,7 +37,7 @@ public class SessionFactoryUtil {
         ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
         // Create MetadataSources
         MetadataSources sources = new MetadataSources(serviceRegistry);
-        sources.addAnnotatedClass(User.class);
+        sources.addAnnotatedClass(UserDTO.class);
         // Create Metadata
         Metadata metadata = sources.getMetadataBuilder().build();
         // Create SessionFactory

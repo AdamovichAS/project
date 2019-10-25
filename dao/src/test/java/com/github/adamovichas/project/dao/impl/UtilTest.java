@@ -1,9 +1,12 @@
 package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.entity.Event;
+import com.github.adamovichas.project.entity.MoneyEntity;
+import com.github.adamovichas.project.model.dto.MoneyDTO;
+import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.factor.Factor;
 import com.github.adamovichas.project.model.factor.FactorName;
-import com.github.adamovichas.project.entity.User;
+import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.util.HibernateUtil;
 
@@ -15,8 +18,8 @@ import java.util.List;
 public enum UtilTest {
     UTIL_TEST;
 
-    User createTestUser(){
-        User user = new User();
+    UserDTO createTestUser(){
+        UserDTO user = new UserDTO();
         user.setLogin("test");
         user.setPassword("123");
         user.setFirstName("name");
@@ -29,10 +32,14 @@ public enum UtilTest {
         return  user;
     }
 
-    void deleteTestUser(User user){
+    void deleteTestUser(UserEntity user){
         EntityManager em = HibernateUtil.getEntityManager();
         em.getTransaction().begin();
-        em.remove(em.contains(user) ? user : em.merge(user));
+        user = em.merge(user);
+        MoneyEntity money = em.find(MoneyEntity.class, user.getLogin());
+        em.remove(money);
+        em.remove(user);
+//        em.remove(em.contains(user) ? user : em.merge(user));
         em.getTransaction().commit();
         em.close();
     }

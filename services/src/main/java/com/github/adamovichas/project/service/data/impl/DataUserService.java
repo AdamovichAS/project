@@ -2,11 +2,10 @@ package com.github.adamovichas.project.service.data.impl;
 import com.github.adamovichas.project.service.user.UserCreater;
 import com.github.adamovichas.project.service.user.UserFieldsSetter;
 import com.github.adamovichas.project.service.data.IdataUserService;
-import com.github.adamovichas.project.entity.User;
+import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.dao.impl.DataUser;
 import com.github.adamovichas.project.IDataUser;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -34,7 +33,7 @@ public class DataUserService implements IdataUserService {
     @Override
     public boolean loginIsExist(String login)  {
         boolean result = false;
-        User userByLogin = data.getUserByLogin(login);
+        UserDTO userByLogin = data.getUserByLogin(login);
         if(nonNull(userByLogin)){
             if(userByLogin.getLogin().equals(login)){
                 result = true;
@@ -49,14 +48,14 @@ public class DataUserService implements IdataUserService {
         if(loginIsExist(login)){
             return false;
         }
-        User user = UserCreater.CREATER.createUser(userFieldsAndValues);
+        UserDTO user = UserCreater.CREATER.createUser(userFieldsAndValues);
         return data.addUser(user);
     }
 
     @Override
     public boolean userIsExist(String login, String password) {
         boolean result = false;
-        final User userByLogin = data.getUserByLogin(login);
+        final UserDTO userByLogin = data.getUserByLogin(login);
         if(nonNull(userByLogin)){
             if(userByLogin.getPassword().equals(password)){
                 result = true;
@@ -68,7 +67,7 @@ public class DataUserService implements IdataUserService {
 
     @Override
     public boolean updateUserInfo(String login, Map<String, String> userFieldsForUpdate) {
-        User user = data.getUserByLogin(login);
+        UserDTO user = data.getUserByLogin(login);
         if(user.getLogin() == null){
             return false;
         }
@@ -77,7 +76,7 @@ public class DataUserService implements IdataUserService {
     }
 
     @Override
-    public User getUserByLogin(String login) {
+    public UserDTO getUserByLogin(String login) {
         return data.getUserByLogin(login);
     }
 

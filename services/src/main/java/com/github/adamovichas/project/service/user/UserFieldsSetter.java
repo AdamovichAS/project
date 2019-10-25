@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.service.user;
 
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.entity.User;
+import com.github.adamovichas.project.model.dto.UserDTO;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -17,12 +17,12 @@ public enum  UserFieldsSetter {
 
     UserFieldsSetter() {
         userFields = new ArrayList<>();
-        Field[] userField = User.class.getDeclaredFields();
+        Field[] userField = UserDTO.class.getDeclaredFields();
         userFields.addAll(Arrays.asList(userField));
     }
 
 
-    public void SetFields(User userForSet, Map<String,String> fieldsForSet){
+    public void SetFields(UserDTO userForSet, Map<String,String> fieldsForSet){
         String fieldName;
         for (Field field : userFields) {
             fieldName = field.getName();
@@ -32,7 +32,7 @@ public enum  UserFieldsSetter {
         }
     }
 
-    private void setOneFieldValue(User user, String fieldName, String fieldValue){
+    private void setOneFieldValue(UserDTO user, String fieldName, String fieldValue){
         switch (fieldName){
             case "login":
                 user.setLogin(fieldValue);

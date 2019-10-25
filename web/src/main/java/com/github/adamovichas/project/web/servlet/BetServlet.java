@@ -1,5 +1,6 @@
 package com.github.adamovichas.project.web.servlet;
 
+import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.service.data.impl.DataBetService;
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IDataBetService;
@@ -9,7 +10,6 @@ import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.model.dto.EventView;
 import com.github.adamovichas.project.model.factor.Factor;
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.entity.Money;
 import com.github.adamovichas.project.service.util.EventUtil;
 import com.github.adamovichas.project.service.util.IEventUtil;
 import org.slf4j.Logger;
@@ -42,8 +42,8 @@ public class BetServlet extends HttpServlet {
         List<EventView> events = dataEvent.getAllNotFinishedEvents();
         req.setAttribute("events", events);
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
-        Money moneyById = dataBet.getMoneyByLogin(authUser.getLogin());
-        req.setAttribute("user_money", moneyById);
+        MoneyDTO moneyDTOById = dataBet.getMoneyByLogin(authUser.getLogin());
+        req.setAttribute("user_money", moneyDTOById);
         req.getRequestDispatcher("/bet.jsp").forward(req, resp);
     }
 

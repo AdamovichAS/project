@@ -3,7 +3,7 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.entity.Bet;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.model.factor.FactorName;
-import com.github.adamovichas.project.entity.Money;
+import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.IBetData;
 import com.github.adamovichas.project.IDataConnect;
 import org.slf4j.Logger;
@@ -24,20 +24,20 @@ public enum BetData implements IBetData {
     }
 
     @Override
-    public Money getMoneyByLogin(String userLogin) {
-        Money money = null;
-        try (Connection connect = CONNECTION.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("SELECT money.value as money FROM money WHERE user_login = ?")) {
-            preparedStatement.setString(1, userLogin);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    money = new Money(userLogin, resultSet.getInt("money"));
-                }
-            }
-        } catch (SQLException e) {
-            log.error("getMoneyByLogin Sql exception, Login {}",userLogin);
-        }
-        return money;
+    public MoneyDTO getMoneyByLogin(String userLogin) {
+        MoneyDTO moneyDTO = null;
+//        try (Connection connect = CONNECTION.connect();
+//             PreparedStatement preparedStatement = connect.prepareStatement("SELECT moneyDTO.value as moneyDTO FROM moneyDTO WHERE user_login = ?")) {
+//            preparedStatement.setString(1, userLogin);
+//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+//                while (resultSet.next()) {
+//                    moneyDTO = new MoneyDTO(userLogin, resultSet.getInt("moneyDTO"));
+//                }
+//            }
+//        } catch (SQLException e) {
+//            log.error("getMoneyByLogin Sql exception, Login {}",userLogin);
+//        }
+        return moneyDTO;
     }
 
     @Override

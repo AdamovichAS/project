@@ -1,15 +1,12 @@
 package com.github.adamovichas.project.dao.impl;
 
 
-import com.github.adamovichas.project.entity.User;
+import com.github.adamovichas.project.entity.UserEntity;
+import com.github.adamovichas.project.model.dto.UserDTO;
+import com.github.adamovichas.project.util.EntityDtoConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
-import com.github.adamovichas.project.util.SessionFactoryUtil;
-import org.hibernate.Session;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-
-import javax.persistence.EntityManager;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,36 +17,28 @@ public class DataUserTest {
 
     @AfterAll
     public static void cleanUp() {
-        HibernateUtil.close();
+        HibernateUtil.closeEMFactory();
     }
 
     @Test
-    public void addUser(){
-        User testUser = util.createTestUser();
-//        dataUser.addUser(testUser);
-//        User userByLogin = dataUser.getUserByLogin(testUser.getLogin());
-//        assertEquals(testUser.getLogin(), userByLogin.getLogin());
-//        assertEquals(testUser.getPassword(), userByLogin.getPassword());
-//        util.deleteTestUser(testUser.getLogin());
+    public void addUser() {
+        UserDTO testUser = util.createTestUser();
+        UserEntity entity = EntityDtoConverter.getEntity(testUser);
         boolean result = dataUser.addUser(testUser);
         assertTrue(result);
- //       util.deleteTestUser(testUser);
+        util.deleteTestUser(entity);
 
-//        Session session = SessionFactoryUtil.getSession();
-//        session.beginTransaction();
-//        session.save(testUser);
-//        session.getTransaction().commit();
-//        session.close();
     }
 
     @Test
-    public void getUserByLogin(){
-        User testUser = util.createTestUser();
+    public void getUserByLogin() {
+        UserDTO testUser = util.createTestUser();
+        UserEntity entity = EntityDtoConverter.getEntity(testUser);
         dataUser.addUser(testUser);
-        User userByLogin = dataUser.getUserByLogin(testUser.getLogin());
+        UserDTO userByLogin = dataUser.getUserByLogin(testUser.getLogin());
         assertEquals(testUser.getLogin(), userByLogin.getLogin());
         assertEquals(testUser.getPassword(), userByLogin.getPassword());
-        util.deleteTestUser(testUser);
+        util.deleteTestUser(entity);
     }
 
 

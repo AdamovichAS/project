@@ -63,6 +63,6 @@ public class BetView {
 
     @Override
     public String toString() {
-        return String.format("BET ID: %d | Login: %s | Event: %s | %s: %.2f | Money in bet: %d",id,login,event,factorName,factorValue,money);
+        return String.format("BET ID: %d | Login: %s | Event: %s | %s: %.2f | MoneyDTO in bet: %d",id,login,event,factorName,factorValue,money);
     }
 }

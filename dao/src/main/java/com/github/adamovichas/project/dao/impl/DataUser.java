@@ -1,16 +1,18 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.entity.User;
+import com.github.adamovichas.project.entity.MoneyEntity;
+import com.github.adamovichas.project.model.dto.MoneyDTO;
+import com.github.adamovichas.project.entity.UserEntity;
+import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.IDataUser;
 import com.github.adamovichas.project.IDataConnect;
+import com.github.adamovichas.project.util.EntityDtoConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
 import javax.persistence.RollbackException;
-import java.sql.*;
 
 public enum DataUser implements IDataUser {
     DATA;
@@ -24,16 +26,22 @@ public enum DataUser implements IDataUser {
 
 
     @Override
-    public boolean addUser(User user) {
+    public boolean addUser(UserDTO userDTO) {
+        UserEntity userEntity = EntityDtoConverter.getEntity(userDTO);
         boolean result = false;
         EntityManager entityManager = HibernateUtil.getEntityManager();
         try {
+            MoneyEntity money = new MoneyEntity();
+            money.setValue(0);
+            money.setUserEntity(userEntity);
+            userEntity.setMoney(money);
             entityManager.getTransaction().begin();
-            entityManager.persist(user);
+            entityManager.persist(userEntity);
+            entityManager.persist(money);
             entityManager.getTransaction().commit();
             result = true;
         }catch (RollbackException e){
-            log.error("addUser exception User {}",user);
+            log.error("addUser exception User {}",userDTO);
             entityManager.getTransaction().rollback();
         }finally {
             entityManager.close();
@@ -43,17 +51,17 @@ public enum DataUser implements IDataUser {
 
 
     @Override
-    public User getUserByLogin(String login) {
+    public UserDTO getUserByLogin(String login) {
         EntityManager em = HibernateUtil.getEntityManager();
         em.getTransaction().begin();
-        User user = em.find(User.class, login);
+        UserDTO user = em.find(UserDTO.class, login);
         em.getTransaction().commit();
         em.close();
         return user;
     }
 
     @Override
-    public boolean updateUserInfo(User user) {
+    public boolean updateUserInfo(UserDTO user) {
         boolean result = false;
         EntityManager em = HibernateUtil.getEntityManager();
         try {
