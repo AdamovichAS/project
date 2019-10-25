@@ -1,4 +1,4 @@
-<%@ page import="com.github.adamovichas.project.entity.User" %><%--
+<%@ page import="com.github.adamovichas.project.model.dto.UserDTO" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 16.09.2019

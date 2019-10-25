@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.service.user;
 
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.entity.User;
+import com.github.adamovichas.project.model.dto.UserDTO;
 
 import java.util.Map;
 
@@ -14,15 +14,15 @@ public enum  UserCreater {
         SETTER = UserFieldsSetter.SETTER;
     }
 
-    public User createUser(Map<String,String> userFieldsAndValues){
-        User user = new User();
+    public UserDTO createUser(Map<String,String> userFieldsAndValues){
+        UserDTO user = new UserDTO();
         user.setRole(Role.USER_VER);
         SETTER.SetFields(user,userFieldsAndValues);
         return user;
     }
 
-    public User createAdmin(Map<String,String> userFieldsAndValues){
-        User user = new User();
+    public UserDTO createAdmin(Map<String,String> userFieldsAndValues){
+        UserDTO user = new UserDTO();
         user.setRole(Role.ADMIN);
         SETTER.SetFields(user,userFieldsAndValues);
         return user;

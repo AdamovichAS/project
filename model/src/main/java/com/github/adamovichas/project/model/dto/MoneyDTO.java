@@ -1,16 +1,12 @@
-package com.github.adamovichas.project.entity;
+package com.github.adamovichas.project.model.dto;
 
-public class Money {
+
+public class MoneyDTO {
 
     private String login;
     private int value;
 
-    public Money() {
-    }
-
-    public Money(String login, int value) {
-        this.login = login;
-        this.value = value;
+    public MoneyDTO() {
     }
 
     public String getLogin() {

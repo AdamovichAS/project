@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.model.dto;
 
-import com.github.adamovichas.project.model.event.FactorName;
+import com.github.adamovichas.project.model.factor.FactorName;
 
 public class BetView {
     private Long id;
@@ -63,6 +63,6 @@ public class BetView {
 
     @Override
     public String toString() {
-        return String.format("BET ID: %d | Login: %s | Event: %s | %s: %.2f | Money in bet: %d",id,login,event,factorName,factorValue,money);
+        return String.format("BET ID: %d | Login: %s | Event: %s | %s: %.2f | MoneyDTO in bet: %d",id,login,event,factorName,factorValue,money);
     }
 }

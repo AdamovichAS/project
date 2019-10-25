@@ -1,11 +1,11 @@
 package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.model.dto.League;
-import com.github.adamovichas.project.model.dto.Team;
+import com.github.adamovichas.project.entity.League;
+import com.github.adamovichas.project.entity.Team;
 import com.github.adamovichas.project.entity.Event;
-import com.github.adamovichas.project.model.event.Factor;
-import com.github.adamovichas.project.model.event.FactorName;
+import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.dao.impl.DataEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

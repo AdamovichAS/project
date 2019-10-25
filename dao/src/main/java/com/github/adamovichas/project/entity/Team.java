@@ -1,17 +1,21 @@
-package com.github.adamovichas.project.model.dto;
+package com.github.adamovichas.project.entity;
 
-public class League {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "team")
+public class Team {
+
     private Long id;
     private String name;
 
-    public League(Long id, String name) {
+    public Team(Long id, String name) {
         this.id = id;
         this.name = name;
     }
-
-    public League() {
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -20,6 +24,7 @@ public class League {
         this.id = id;
     }
 
+    @Column(name = "name",nullable = false)
     public String getName() {
         return name;
     }

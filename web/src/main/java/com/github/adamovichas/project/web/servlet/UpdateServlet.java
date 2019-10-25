@@ -1,10 +1,12 @@
 package com.github.adamovichas.project.web.servlet;
 
 
+
+import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.service.data.impl.DataUserService;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.entity.User;
+
 import com.github.adamovichas.project.service.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +42,7 @@ public class UpdateServlet extends HttpServlet {
             if(password !=null) {
                 resp.addCookie(new Cookie("login", authUser.getLogin() + "/" + password));
             }
-            final User user = daoUser.getUserByLogin(authUser.getLogin());
+            final UserDTO user = daoUser.getUserByLogin(authUser.getLogin());
             req.setAttribute("user",user);
             req.setAttribute("message","Update is done! ");
             log.info("Updated user {}", user);
@@ -55,7 +57,7 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
-        User user = daoUser.getUserByLogin(authUser.getLogin());
+        UserDTO user = daoUser.getUserByLogin(authUser.getLogin());
         req.setAttribute("user",user);
         req.getRequestDispatcher("/update.jsp").forward(req,resp);
     }

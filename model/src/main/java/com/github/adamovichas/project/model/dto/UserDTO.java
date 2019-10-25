@@ -1,9 +1,9 @@
-package com.github.adamovichas.project.entity;
+package com.github.adamovichas.project.model.dto;
 
 
 import com.github.adamovichas.project.model.user.Role;
 
-public class User  {
+public class UserDTO {
 
     private String login;
     private String password;
@@ -15,7 +15,7 @@ public class User  {
     private String country;
     private Role role;
 
-    public User() {
+    public UserDTO() {
     }
 
     public String getLogin() {
@@ -24,14 +24,6 @@ public class User  {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public String getPassword() {
@@ -88,6 +80,14 @@ public class User  {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

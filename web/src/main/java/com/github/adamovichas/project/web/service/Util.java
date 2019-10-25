@@ -5,7 +5,7 @@ import com.github.adamovichas.project.service.data.impl.DataUserService;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.entity.Money;
+import com.github.adamovichas.project.model.dto.MoneyDTO;
 
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.IBetData;
@@ -46,7 +46,7 @@ public final class Util {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         String login = authUser.getLogin();
         List<BetView> betViews = betData.getNotFinishedBetByLogin(login);
-        Money deposit = betData.getMoneyByLogin(authUser.getLogin());
+        MoneyDTO deposit = betData.getMoneyByLogin(authUser.getLogin());
         if(!betViews.isEmpty()) {
             req.setAttribute("userBets", betViews);
         }

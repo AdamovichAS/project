@@ -2,9 +2,9 @@ package com.github.adamovichas.project.web.servlet.event.add;
 
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IdataEventService;
-import com.github.adamovichas.project.model.dto.Team;
+import com.github.adamovichas.project.entity.Team;
 import com.github.adamovichas.project.entity.Event;
-import com.github.adamovichas.project.model.event.Factor;
+import com.github.adamovichas.project.model.factor.Factor;
 import com.github.adamovichas.project.service.util.EventUtil;
 import com.github.adamovichas.project.service.util.IEventUtil;
 import com.github.adamovichas.project.service.validation.EventValidation;
@@ -64,7 +64,7 @@ public class ChoseEventInfo extends HttpServlet {
         }
 
         req.removeAttribute("allTeams");
-        req.setAttribute("event",event);
+        req.setAttribute("factor",event);
         req.getRequestDispatcher("/new_event/add_event/").forward(req,resp);
 
     }

@@ -6,10 +6,10 @@
     <persistence-unit name="com.github.adamovichas.project" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.github.adamovichas.project.entity.Event</class>
-        <class>com.github.adamovichas.project.entity.Money</class>
-        <class>com.github.adamovichas.project.entity.User</class>
+        <class>com.github.adamovichas.project.entity.MoneyEntity</class>
+        <class>com.github.adamovichas.project.entity.UserEntity</class>
         <class>com.github.adamovichas.project.entity.Bet</class>
-        <class>com.github.adamovichas.project.model.event.Factor</class>
+        <class>com.github.adamovichas.project.model.factor.Factor</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -19,7 +19,7 @@
             <property name="javax.persistence.jdbc.password" value="admin"/>
             <property name="hibernate.dialect.storage_engine" value="innodb"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.connection.pool_size" value="10"/>

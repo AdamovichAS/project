@@ -1,7 +1,9 @@
 package com.github.adamovichas.project.entity;
 
-import com.github.adamovichas.project.model.event.Factor;
 
+import com.github.adamovichas.project.model.factor.Factor;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 import java.util.List;
