@@ -1,10 +1,10 @@
 package com.github.adamovichas.project.web.servlet.event.add;
 
+import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IdataEventService;
-import com.github.adamovichas.project.entity.Team;
-import com.github.adamovichas.project.entity.Event;
-import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.dto.TeamDTO;
+import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.service.util.EventUtil;
 import com.github.adamovichas.project.service.util.IEventUtil;
 import com.github.adamovichas.project.service.validation.EventValidation;
@@ -36,7 +36,7 @@ public class ChoseEventInfo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long leagueId = (Long) req.getAttribute("leagueId");
-        List<Team> allTeamsByLeague = dataEvent.getAllTeamsByLeague(leagueId);
+        List<TeamDTO> allTeamsByLeague = dataEvent.getAllTeamsByLeague(leagueId);
         req.setAttribute("allTeams", allTeamsByLeague);
         req.getRequestDispatcher("/add_event.jsp").forward(req,resp);
     }
@@ -50,13 +50,13 @@ public class ChoseEventInfo extends HttpServlet {
         Long teamTwoId = Long.valueOf(req.getParameter("teamTwoId"));
         Timestamp start = eventVal.formatDate(req.getParameter("start"));
         Timestamp end = eventVal.formatDate(req.getParameter("end"));
-        Event event = new Event(Long.valueOf(teamOneId),teamTwoId,start,end);
+        EventDTO eventDTO = new EventDTO(Long.valueOf(teamOneId),teamTwoId,start,end);
         double win = Double.valueOf(req.getParameter("win"));
         double lose = Double.valueOf(req.getParameter("lose"));
         double draw = Double.valueOf(req.getParameter("draw"));
-        List<Factor> factors = eventUtil.createFactors(win, lose, draw);
-        event.setFactors(factors);
-        String errorMessage = eventVal.checkEventParam(event);
+        List<FactorDTO> factorDTOS = eventUtil.createFactors(win, lose, draw);
+        eventDTO.setFactors(factorDTOS);
+        String errorMessage = eventVal.checkEventParam(eventDTO);
         if(nonNull(errorMessage)){
             req.setAttribute("error",errorMessage);
             req.getRequestDispatcher("/new_event/chose_league/").forward(req,resp);
@@ -64,7 +64,7 @@ public class ChoseEventInfo extends HttpServlet {
         }
 
         req.removeAttribute("allTeams");
-        req.setAttribute("factor",event);
+        req.setAttribute("factor", eventDTO);
         req.getRequestDispatcher("/new_event/add_event/").forward(req,resp);
 
     }

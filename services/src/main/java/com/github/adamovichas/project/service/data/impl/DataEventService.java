@@ -3,9 +3,9 @@ package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.service.data.IdataEventService;
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.entity.League;
-import com.github.adamovichas.project.entity.Team;
-import com.github.adamovichas.project.entity.Event;
+import com.github.adamovichas.project.model.dto.LeagueDTO;
+import com.github.adamovichas.project.model.dto.TeamDTO;
+import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.dao.impl.DataEvent;
 import com.github.adamovichas.project.IDataEvent;
 
@@ -34,24 +34,24 @@ public class DataEventService implements IdataEventService {
     }
 
     @Override
-    public List<League> getAllLeagues() {
+    public List<LeagueDTO> getAllLeagues() {
         return dataEvent.getAllLeagues();
     }
 
     @Override
-    public List<Team> getAllTeamsByLeague(Long idLeague) {
+    public List<TeamDTO> getAllTeamsByLeague(Long idLeague) {
         return dataEvent.getAllTeamsByLeague(idLeague);
     }
 
     @Override
-    public boolean eventIsExist(Event event) {
-        Event dataBaseEvent = dataEvent.eventIsExist(event);
-        return nonNull(dataBaseEvent);
+    public boolean eventIsExist(EventDTO eventDTO) {
+        EventDTO dataBaseEventDTO = dataEvent.eventIsExist(eventDTO);
+        return nonNull(dataBaseEventDTO);
     }
 
     @Override
-    public Long addEvent(Event event) {
-        return dataEvent.addEvent(event);
+    public Long addEvent(EventDTO eventDTO) {
+        return dataEvent.addEvent(eventDTO);
     }
 
     @Override

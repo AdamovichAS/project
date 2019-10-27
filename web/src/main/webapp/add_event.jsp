@@ -40,7 +40,7 @@
                 <input type="datetime-local" required placeholder="end time" name="end">
             </div>
             <div>
-                <label><fmt:message key="add_event.factors" bundle="${messages}"/></label>
+                <label><fmt:message key="add_event.factorDTOS" bundle="${messages}"/></label>
                 <input type="number" step="0.01" min="0.01" placeholder="factor win first" required name="win">
                 <input type="number" step="0.01" min="0.01" required  placeholder="factor draw" name="draw">
                 <input type="number" step="0.01" min="0.01" required placeholder="factor lose first" name="lose">
@@ -58,7 +58,7 @@
         <c:out value="Name - ${savedEvent.name}"/><br>
         <c:out value="Start time - ${savedEvent.startTime}"/><br>
         <c:out value="End time - ${savedEvent.endTime}"/><br>
-        <c:forEach items="${savedEvent.factors}" var="item">
+        <c:forEach items="${savedEvent.factorDTOS}" var="item">
             <c:out value="${item}"/>
         </c:forEach>
         <br> <a href="${pageContext.request.contextPath}/redirect"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
@@ -68,7 +68,7 @@
         <form action="${pageContext.request.contextPath}/new_event/chose_league/" method="POST">
             <label><fmt:message key="add_event.select_league" bundle="${messages}"/></label>
             <select name="league">
-                <c:forEach items="${allLeagues}" var="item">
+                <c:forEach items="${allLeagueDTOS}" var="item">
                     <option value="${item.id}">${item}</option>
                 </c:forEach>
             </select>

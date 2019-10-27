@@ -1,10 +1,9 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.entity.Event;
+import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.entity.MoneyEntity;
-import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.entity.UserEntity;
-import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
@@ -37,19 +36,20 @@ public enum UtilTest {
         em.getTransaction().begin();
         user = em.merge(user);
         MoneyEntity money = em.find(MoneyEntity.class, user.getLogin());
+        user.setMoney(money);
+        money.setUserEntity(user);
         em.remove(money);
-        em.remove(user);
 //        em.remove(em.contains(user) ? user : em.merge(user));
         em.getTransaction().commit();
         em.close();
     }
 
-     Event createEventTest(){
-        Event event = new Event(1L,2L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
-        List<Factor> factors= new ArrayList<>();
-        factors.add(new Factor(FactorName.win,2.5));
-        factors.add(new Factor(FactorName.draw,3));
-        factors.add(new Factor(FactorName.lose,2.1));
+     EventDTO createEventTest(){
+        EventDTO event = new EventDTO(1L,2L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
+        List<FactorDTO> factors= new ArrayList<>();
+        factors.add(new FactorDTO(FactorName.win,2.5));
+        factors.add(new FactorDTO(FactorName.draw,3));
+        factors.add(new FactorDTO(FactorName.lose,2.1));
         event.setFactors(factors);
         return event;
     }

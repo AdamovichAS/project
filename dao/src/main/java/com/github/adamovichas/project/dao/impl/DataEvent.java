@@ -1,10 +1,10 @@
 package com.github.adamovichas.project.dao.impl;
 
+import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.entity.League;
-import com.github.adamovichas.project.entity.Team;
-import com.github.adamovichas.project.entity.Event;
-import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.dto.LeagueDTO;
+import com.github.adamovichas.project.model.dto.TeamDTO;
+import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.IDataConnect;
 import com.github.adamovichas.project.IDataEvent;
@@ -26,7 +26,7 @@ public enum DataEvent implements IDataEvent {
     }
 
     @Override
-    public Long addEvent(Event event) {
+    public Long addEvent(EventDTO event) {
         Connection connection = null;
         try {
             connection = CONNECTION.connect();
@@ -41,8 +41,8 @@ public enum DataEvent implements IDataEvent {
                 try(ResultSet generatedKeys = statementEvent.getGeneratedKeys()) {
                     generatedKeys.next();
                     long idEvent = generatedKeys.getLong(1);
-                    List<Factor> factors = event.getFactors();
-                    for (Factor factor : factors) {
+                    List<FactorDTO> factors = event.getFactors();
+                    for (FactorDTO factor : factors) {
                         statementFactor.setString(1, factor.getName().toString());
                         statementFactor.setDouble(2, factor.getValue());
                         statementFactor.setLong(3, idEvent);
@@ -54,11 +54,11 @@ public enum DataEvent implements IDataEvent {
                 }
             }
         } catch (Exception e) {
-            log.error("AddEvent exception, Event {}", event);
+            log.error("AddEvent exception, EventDTO {}", event);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                log.error("Sql exception, Event {}", event, ex);
+                log.error("Sql exception, EventDTO {}", event, ex);
                 throw new RuntimeException(e);
             }
 
@@ -68,15 +68,15 @@ public enum DataEvent implements IDataEvent {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    log.error("close connection exception, Event {}", event);
+                    log.error("close connection exception, EventDTO {}", event);
                 }
             }
         }
     }
 
     @Override
-    public Event eventIsExist(Event event) {
-        Event result = null;
+    public EventDTO eventIsExist(EventDTO event) {
+        EventDTO result = null;
         try (Connection connect = CONNECTION.connect();
              PreparedStatement preparedStatement = connect.prepareStatement("SELECT team_one,team_two, start_time, end_time FROM  event WHERE team_one = ? AND team_two =? AND start_time = ?;")) {
             preparedStatement.setLong(1, event.getTeamOneId());
@@ -84,7 +84,7 @@ public enum DataEvent implements IDataEvent {
             preparedStatement.setTimestamp(3, event.getStartTime());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    result = new Event();
+                    result = new EventDTO();
                     result.setTeamOneId(resultSet.getLong("team_one"));
                     result.setTeamTwoId(resultSet.getLong("team_two"));
                     result.setStartTime(resultSet.getTimestamp("start_time"));
@@ -94,7 +94,7 @@ public enum DataEvent implements IDataEvent {
             }
 
         } catch (SQLException e) {
-            log.error("eventIsExist Sql exception, Event {}", event);
+            log.error("eventIsExist Sql exception, EventDTO {}", event);
         }
         throw new RuntimeException();
     }
@@ -113,7 +113,7 @@ public enum DataEvent implements IDataEvent {
                              "WHERE e.result IS NULL AND (fe1.name != fe2.name) AND (fe1.name!= fe3.name) AND (fe2.name != fe3.name) group by e.id;;")) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 EventView view;
-                List<Factor> factors;
+                List<FactorDTO> factors;
                 while (resultSet.next()) {
                     view = new EventView();
                     factors = new ArrayList<>();
@@ -125,14 +125,14 @@ public enum DataEvent implements IDataEvent {
                     view.setEndTime(resultSet.getTimestamp("end_time"));
                     String factor1 = resultSet.getString("factor1");
                     double factor1Val = resultSet.getDouble("factor1_val");
-                    factors.add(new Factor(FactorName.valueOf(factor1), factor1Val));
+                    factors.add(new FactorDTO(FactorName.valueOf(factor1), factor1Val));
                     String factor2 = resultSet.getString("factor2");
                     double factor2Val = resultSet.getDouble("factor2_val");
-                    factors.add(new Factor(FactorName.valueOf(factor2), factor2Val));
+                    factors.add(new FactorDTO(FactorName.valueOf(factor2), factor2Val));
                     String factor3 = resultSet.getString("factor3");
                     double factor3Val = resultSet.getDouble("factor3_val");
-                    factors.add(new Factor(FactorName.valueOf(factor3), factor3Val));
-                    view.setFactors(factors);
+                    factors.add(new FactorDTO(FactorName.valueOf(factor3), factor3Val));
+                    view.setFactorDTOS(factors);
                     result.add(view);
                 }
                 return result;
@@ -156,7 +156,7 @@ public enum DataEvent implements IDataEvent {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 result = new EventView();
-                List<Factor> factors = new ArrayList<>();
+                List<FactorDTO> factors = new ArrayList<>();
                 while (resultSet.next()) {
                     result.setId(resultSet.getLong("id"));
                     String teamOne = resultSet.getString("team_one");
@@ -167,9 +167,9 @@ public enum DataEvent implements IDataEvent {
                     long factor_id = resultSet.getLong("factor_id");
                     String factorName = resultSet.getString("factor_name");
                     double factorValue = resultSet.getDouble("factor_value");
-                    factors.add(new Factor(factor_id, FactorName.valueOf(factorName), factorValue));
+                    factors.add(new FactorDTO(factor_id, FactorName.valueOf(factorName), factorValue));
                 }
-                result.setFactors(factors);
+                result.setFactorDTOS(factors);
                 return result;
             }
         } catch (SQLException e) {
@@ -180,15 +180,15 @@ public enum DataEvent implements IDataEvent {
 
 
     @Override
-    public List<League> getAllLeagues() {
-        List<League> leagues = new ArrayList<>();
+    public List<LeagueDTO> getAllLeagues() {
+        List<LeagueDTO> leagues = new ArrayList<>();
         try (Connection connect = CONNECTION.connect();
              PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM league;")) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     Long id = resultSet.getLong("id");
                     String name = resultSet.getString("name");
-                    leagues.add(new League(id, name));
+                    leagues.add(new LeagueDTO(id, name));
                 }
                 return leagues;
             }
@@ -199,8 +199,8 @@ public enum DataEvent implements IDataEvent {
     }
 
     @Override
-    public List<Team> getAllTeamsByLeague(Long idLeague) {
-        List<Team> teams = new ArrayList<>();
+    public List<TeamDTO> getAllTeamsByLeague(Long idLeague) {
+        List<TeamDTO> teams = new ArrayList<>();
         try (Connection connect = CONNECTION.connect();
              PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM team WHERE team.id_league =?;")) {
             preparedStatement.setLong(1, idLeague);
@@ -208,7 +208,7 @@ public enum DataEvent implements IDataEvent {
                 while (resultSet.next()) {
                     Long id = resultSet.getLong("id");
                     String name = resultSet.getString("name");
-                    teams.add(new Team(id, name));
+                    teams.add(new TeamDTO(id, name));
                 }
                 return teams;
             }

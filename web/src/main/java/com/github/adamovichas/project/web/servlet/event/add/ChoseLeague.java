@@ -2,7 +2,7 @@ package com.github.adamovichas.project.web.servlet.event.add;
 
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IdataEventService;
-import com.github.adamovichas.project.entity.League;
+import com.github.adamovichas.project.model.dto.LeagueDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +21,8 @@ public class ChoseLeague extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<League> allLeagues = dataEvent.getAllLeagues();
-        req.setAttribute("allLeagues",allLeagues);
+        List<LeagueDTO> allLeagueDTOS = dataEvent.getAllLeagues();
+        req.setAttribute("allLeagueDTOS", allLeagueDTOS);
         req.getRequestDispatcher("/add_event.jsp").forward(req,resp);
     }
 

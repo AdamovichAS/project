@@ -12,6 +12,7 @@ public class MoneyEntity {
     private int value;
     private UserEntity userEntity;
 
+
     public MoneyEntity() {
     }
 

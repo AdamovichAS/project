@@ -2,7 +2,7 @@ package com.github.adamovichas.project.model.dto;
 
 
 
-import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.factor.FactorDTO;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -13,7 +13,7 @@ public class EventView {
     private String name;
     private Timestamp startTime;
     private Timestamp endTime;
-    private List<Factor> factors;
+    private List<FactorDTO> factorDTOS;
     private double resultFactorValue;
 
     public EventView() {
@@ -58,12 +58,12 @@ public class EventView {
         this.endTime = endTime;
     }
 
-    public List<Factor> getFactors() {
-        return factors;
+    public List<FactorDTO> getFactorDTOS() {
+        return factorDTOS;
     }
 
-    public void setFactors(List<Factor> factors) {
-        this.factors = factors;
+    public void setFactorDTOS(List<FactorDTO> factorDTOS) {
+        this.factorDTOS = factorDTOS;
     }
 
     public double getResultFactorValue() {

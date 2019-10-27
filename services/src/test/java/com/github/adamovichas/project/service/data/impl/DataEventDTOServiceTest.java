@@ -1,10 +1,10 @@
 package com.github.adamovichas.project.service.data.impl;
 
+import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.entity.League;
-import com.github.adamovichas.project.entity.Team;
-import com.github.adamovichas.project.entity.Event;
-import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.dto.LeagueDTO;
+import com.github.adamovichas.project.model.dto.TeamDTO;
+import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.dao.impl.DataEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
-public class DataEventServiceTest {
+public class DataEventDTOServiceTest {
 
     @Mock
     public DataEvent dataEvent;
@@ -37,29 +37,29 @@ public class DataEventServiceTest {
     }
 
 
-    Event createEventTest(){
-        Event event = new Event(1L,2L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
-        List<Factor> factors= new ArrayList<>();
-        event.setId(50L);
-        factors.add(new Factor(FactorName.win,2.5));
-        factors.add(new Factor(FactorName.draw,3));
-        factors.add(new Factor(FactorName.lose,2.1));
-        event.setFactors(factors);
-        return event;
+    EventDTO createEventTest(){
+        EventDTO eventDTO = new EventDTO(1L,2L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
+        List<FactorDTO> factorDTOS = new ArrayList<>();
+        eventDTO.setId(50L);
+        factorDTOS.add(new FactorDTO(FactorName.win,2.5));
+        factorDTOS.add(new FactorDTO(FactorName.draw,3));
+        factorDTOS.add(new FactorDTO(FactorName.lose,2.1));
+        eventDTO.setFactors(factorDTOS);
+        return eventDTO;
     }
 
     @Test
     public void eventIsExist(){
-        Event eventTest = createEventTest();
-        dataEventService.eventIsExist(eventTest);
-        Mockito.verify(dataEvent,times(1)).eventIsExist(eventTest);
+        EventDTO eventDTOTest = createEventTest();
+        dataEventService.eventIsExist(eventDTOTest);
+        Mockito.verify(dataEvent,times(1)).eventIsExist(eventDTOTest);
     }
 
     @Test
     public void addEvent(){
-        Event eventTest = createEventTest();
-        dataEventService.addEvent(eventTest);
-        Mockito.verify(dataEvent,times(1)).addEvent(eventTest);
+        EventDTO eventDTOTest = createEventTest();
+        dataEventService.addEvent(eventDTOTest);
+        Mockito.verify(dataEvent,times(1)).addEvent(eventDTOTest);
     }
 
     @Test
@@ -72,18 +72,18 @@ public class DataEventServiceTest {
 
     @Test
     public void getAllLeagues(){
-        List<League>leagues = new ArrayList<>(Arrays.asList(new League(),new League(),new League()));
-        when(dataEvent.getAllLeagues()).thenReturn(leagues);
-        List<League> allLeagues = dataEventService.getAllLeagues();
-        assertEquals(allLeagues.size(),leagues.size());
+        List<LeagueDTO> leagueDTOS = new ArrayList<>(Arrays.asList(new LeagueDTO(),new LeagueDTO(),new LeagueDTO()));
+        when(dataEvent.getAllLeagues()).thenReturn(leagueDTOS);
+        List<LeagueDTO> allLeagueDTOS = dataEventService.getAllLeagues();
+        assertEquals(allLeagueDTOS.size(), leagueDTOS.size());
     }
 
     @Test
     public void getAllTeamsByLeague(){
-        List<Team>teams = new ArrayList<>(Arrays.asList(new Team(12L,"Test"),new Team(13L,"Test")));
-        when(dataEvent.getAllTeamsByLeague(Mockito.any())).thenReturn(teams);
-        List<Team> allTeamsByLeague = dataEventService.getAllTeamsByLeague(10L);
-        assertEquals(allTeamsByLeague.size(),teams.size());
+        List<TeamDTO> teamDTOS = new ArrayList<>(Arrays.asList(new TeamDTO(12L,"Test"),new TeamDTO(13L,"Test")));
+        when(dataEvent.getAllTeamsByLeague(Mockito.any())).thenReturn(teamDTOS);
+        List<TeamDTO> allTeamsByLeague = dataEventService.getAllTeamsByLeague(10L);
+        assertEquals(allTeamsByLeague.size(), teamDTOS.size());
     }
 
     @Test

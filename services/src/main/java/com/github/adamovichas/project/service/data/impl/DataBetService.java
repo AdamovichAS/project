@@ -2,7 +2,7 @@ package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.service.data.IDataBetService;
-import com.github.adamovichas.project.entity.Bet;
+import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.IBetData;
 import com.github.adamovichas.project.dao.impl.BetData;
@@ -38,8 +38,8 @@ public class DataBetService implements IDataBetService {
     }
 
     @Override
-    public Long addBet(Bet bet) {
-        return data.addBet(bet);
+    public Long addBet(BetDTO betDTO) {
+        return data.addBet(betDTO);
     }
 
     @Override

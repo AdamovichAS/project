@@ -5,10 +5,10 @@ import com.github.adamovichas.project.service.data.impl.DataBetService;
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IDataBetService;
 import com.github.adamovichas.project.service.data.IdataEventService;
-import com.github.adamovichas.project.entity.Bet;
+import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.service.util.EventUtil;
 import com.github.adamovichas.project.service.util.IEventUtil;
@@ -49,18 +49,18 @@ public class BetServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long eventId = Long.valueOf(req.getParameter("factor"));
+        Long eventId = Long.valueOf(req.getParameter("factorDTO"));
         int moneyForBet = Integer.parseInt(req.getParameter("money_for_bet"));
         EventView eventView = dataEvent.getEventById(eventId);
-        String factorName = req.getParameter("factor");
-        Factor factor = util.getFactorByName(eventView, factorName);
-        Long idFactor = factor.getId();
+        String factorName = req.getParameter("factorDTO");
+        FactorDTO factorDTO = util.getFactorByName(eventView, factorName);
+        Long idFactor = factorDTO.getId();
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
-        Bet bet = new Bet(authUser.getLogin(), idFactor, moneyForBet);
-        Long idBet = dataBet.addBet(bet);
+        BetDTO betDTO = new BetDTO(authUser.getLogin(), idFactor, moneyForBet);
+        Long idBet = dataBet.addBet(betDTO);
         BetView view = dataBet.getViewById(idBet);
-        log.info("Bet saved {}",view);
-        req.setAttribute("bet", view);
+        log.info("BetDTO saved {}",view);
+        req.setAttribute("betDTO", view);
         doGet(req,resp);
 
     }

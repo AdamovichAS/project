@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.entity.Bet;
+import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.model.dto.MoneyDTO;
@@ -41,7 +41,7 @@ public enum BetData implements IBetData {
     }
 
     @Override
-    public Long addBet(Bet bet) {
+    public Long addBet(BetDTO bet) {
         Connection connection = null;
         Long idBet = null;
         try {
@@ -66,11 +66,11 @@ public enum BetData implements IBetData {
                 }
             }
         } catch (Exception e) {
-            log.error("AddBet exception, Bet {}",bet);
+            log.error("AddBet exception, BetDTO {}",bet);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                log.error("AddBet rollback exception, Bet {}",bet);
+                log.error("AddBet rollback exception, BetDTO {}",bet);
                 throw new RuntimeException(e);
             }
 
@@ -80,7 +80,7 @@ public enum BetData implements IBetData {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    log.error("AddBet connection.close exception, Bet {}",bet);
+                    log.error("AddBet connection.close exception, BetDTO {}",bet);
                 }
             }
         }

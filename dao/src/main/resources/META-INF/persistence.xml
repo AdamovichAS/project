@@ -5,11 +5,11 @@
              version="2.0">
     <persistence-unit name="com.github.adamovichas.project" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.github.adamovichas.project.entity.Event</class>
+        <class>com.github.adamovichas.project.model.dto.EventDTO</class>
         <class>com.github.adamovichas.project.entity.MoneyEntity</class>
         <class>com.github.adamovichas.project.entity.UserEntity</class>
-        <class>com.github.adamovichas.project.entity.Bet</class>
-        <class>com.github.adamovichas.project.model.factor.Factor</class>
+        <class>com.github.adamovichas.project.model.dto.BetDTO</class>
+        <class>com.github.adamovichas.project.model.factorDTO.FactorDTO</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.service.util;
 
 import com.github.adamovichas.project.model.dto.EventView;
-import com.github.adamovichas.project.model.factor.Factor;
+import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 
 import java.util.ArrayList;
@@ -13,23 +13,23 @@ public enum EventUtil implements IEventUtil{
 
 
     @Override
-    public List<Factor> createFactors(double winFactor, double loseFactor, double drawFactor) {
-        Factor factorWin = new Factor(FactorName.win,winFactor);
-        Factor factorLose = new Factor(FactorName.lose,loseFactor);
-        Factor factorDraw = new Factor(FactorName.draw,drawFactor);
-        return new ArrayList<>(Arrays.asList(factorWin,factorLose,factorDraw));
+    public List<FactorDTO> createFactors(double winFactor, double loseFactor, double drawFactor) {
+        FactorDTO factorDTOWin = new FactorDTO(FactorName.win,winFactor);
+        FactorDTO factorDTOLose = new FactorDTO(FactorName.lose,loseFactor);
+        FactorDTO factorDTODraw = new FactorDTO(FactorName.draw,drawFactor);
+        return new ArrayList<>(Arrays.asList(factorDTOWin, factorDTOLose, factorDTODraw));
     }
 
     @Override
-    public Factor getFactorByName(EventView eventView, String factorName) {
-        Factor factorEv = null;
-        for (Factor factor : eventView.getFactors()) {
-            if (factor.getName().toString().equals(factorName)) {
-                factorEv = new Factor(factor.getId(),factor.getName(),factor.getValue());
+    public FactorDTO getFactorByName(EventView eventView, String factorName) {
+        FactorDTO factorDTOEv = null;
+        for (FactorDTO factorDTO : eventView.getFactorDTOS()) {
+            if (factorDTO.getName().toString().equals(factorName)) {
+                factorDTOEv = new FactorDTO(factorDTO.getId(), factorDTO.getName(), factorDTO.getValue());
                 break;
             }
         }
-        return factorEv;
+        return factorDTOEv;
     }
 
 

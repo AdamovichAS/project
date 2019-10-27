@@ -26,7 +26,7 @@ public class CancelBetServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long betId = Long.valueOf(req.getParameter("betId"));
         betData.cancelBetById(betId);
-        log.info("Bet with Id {} cancel", betId);
+        log.info("BetDTO with Id {} cancel", betId);
         req.getRequestDispatcher("/redirect").forward(req,resp);
     }
 }

@@ -1,23 +1,23 @@
 package com.github.adamovichas.project.model.factor;
 
-public class Factor {
+public class FactorDTO {
     private Long id;
     private FactorName name;
     private double value;
     private Long eventID;
 
-    public Factor(FactorName name, double value) {
+    public FactorDTO(FactorName name, double value) {
         this.name = name;
         this.value = value;
     }
 
-    public Factor(Long id, FactorName name, double value) {
+    public FactorDTO(Long id, FactorName name, double value) {
         this.id = id;
         this.name = name;
         this.value = value;
     }
 
-    public Factor() {
+    public FactorDTO() {
     }
 
     public Long getId() {

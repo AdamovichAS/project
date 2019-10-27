@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.entity.Bet;
+import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.BetView;
 import com.github.adamovichas.project.dao.impl.BetData;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class DataBetServiceTest {
+public class DataBetDTOServiceTest {
 
     @Mock
     public BetData dataBet;
@@ -40,7 +40,7 @@ public class DataBetServiceTest {
 
     @Test
     public void addBet(){
-        Bet testBet = new Bet("test",100L,1000);
+        BetDTO testBet = new BetDTO("test",100L,1000);
         testBet.setId(50L);
         when(dataBet.addBet(testBet)).thenReturn(testBet.getId());
         Long id = dataBetService.addBet(testBet);

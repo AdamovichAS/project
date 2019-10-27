@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.validation;
 
-import com.github.adamovichas.project.entity.Event;
+import com.github.adamovichas.project.model.dto.EventDTO;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -27,13 +27,13 @@ public enum EventValidation implements IEventValidation {
     }
 
     @Override
-    public String checkEventParam(Event event){
+    public String checkEventParam(EventDTO eventDTO){
         String errorMessage = null;
-        if(isEqualsTeamOneAndTwo(event.getTeamOneId(),event.getTeamTwoId())){
+        if(isEqualsTeamOneAndTwo(eventDTO.getTeamOneId(), eventDTO.getTeamTwoId())){
             errorMessage = "add_event.error_teams";
             return errorMessage;
         }
-        if(!isStartTimeEarlierEndTime(event.getStartTime(),event.getEndTime())){
+        if(!isStartTimeEarlierEndTime(eventDTO.getStartTime(), eventDTO.getEndTime())){
             errorMessage = "add_event.error_time";
         }
         return errorMessage;

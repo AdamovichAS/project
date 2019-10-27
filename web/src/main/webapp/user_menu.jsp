@@ -23,7 +23,7 @@
     <a href="${pageContext.request.contextPath}/update" ><fmt:message key="update.button" bundle="${messages}"/></a>
     <br>
 
-        <a href="${pageContext.request.contextPath}/bet" ><fmt:message key="my_page.bet" bundle="${messages}"/></a>
+        <a href="${pageContext.request.contextPath}/betDTO" ><fmt:message key="my_page.betDTO" bundle="${messages}"/></a>
 
     <c:if test="${userBets ne null}">
         <H3>Your bets</H3>
