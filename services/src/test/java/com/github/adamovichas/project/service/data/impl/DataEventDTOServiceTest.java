@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.model.dto.EventView;
+import com.github.adamovichas.project.model.view.EventView;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;

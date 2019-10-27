@@ -1,8 +1,10 @@
 package com.github.adamovichas.project.entity;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
-
+@Entity
+@Table(name = "event")
 public class EventEntity {
     private Long id;
     private Long teamOneId;
@@ -11,6 +13,7 @@ public class EventEntity {
     private Timestamp endTime;
     private List<FactorEntity> factors;
     private Long resultFactorId;
+    private List<TeamEntity> teams;
 
     public EventEntity(Long teamOneId, Long teamTwoId, Timestamp startTime, Timestamp endTime) {
         this.teamOneId = teamOneId;
@@ -22,7 +25,9 @@ public class EventEntity {
 
     public EventEntity() {
     }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -31,6 +36,7 @@ public class EventEntity {
         this.id = id;
     }
 
+    @Column(name = "team_one", nullable = false)
     public Long getTeamOneId() {
         return teamOneId;
     }
@@ -39,6 +45,7 @@ public class EventEntity {
         this.teamOneId = teamOneId;
     }
 
+    @Column(name = "team_two", nullable = false)
     public Long getTeamTwoId() {
         return teamTwoId;
     }
@@ -47,6 +54,8 @@ public class EventEntity {
         this.teamTwoId = teamTwoId;
     }
 
+    @Column(name = "start_time", nullable = false)
+  //  @Temporal(TemporalType.TIMESTAMP)
     public Timestamp getStartTime() {
         return startTime;
     }
@@ -55,6 +64,8 @@ public class EventEntity {
         this.startTime = startTime;
     }
 
+    @Column(name = "end_time", nullable = false)
+ //   @Temporal(TemporalType.TIMESTAMP)
     public Timestamp getEndTime() {
         return endTime;
     }
@@ -63,6 +74,16 @@ public class EventEntity {
         this.endTime = endTime;
     }
 
+    @Column(name = "result")
+    public Long getResultFactorId() {
+        return resultFactorId;
+    }
+
+    public void setResultFactorId(Long resultFactorId) {
+        this.resultFactorId = resultFactorId;
+    }
+
+    @OneToMany(mappedBy = "event")
     public List<FactorEntity> getFactors() {
         return factors;
     }
@@ -71,12 +92,17 @@ public class EventEntity {
         this.factors = factors;
     }
 
-    public Long getResultFactorId() {
-        return resultFactorId;
+
+    @ManyToMany
+    @JoinTable(name = "event_team_relation", joinColumns = {@JoinColumn(name = "id_team")},
+            inverseJoinColumns = {@JoinColumn(name = "id_event")}
+    )
+    public List<TeamEntity> getTeams() {
+        return teams;
     }
 
-    public void setResultFactorId(Long resultFactorId) {
-        this.resultFactorId = resultFactorId;
+    public void setTeams(List<TeamEntity> teams) {
+        this.teams = teams;
     }
 
     @Override

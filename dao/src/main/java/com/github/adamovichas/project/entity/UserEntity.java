@@ -32,7 +32,7 @@ public class UserEntity {
         this.login = login;
     }
 
-    @OneToOne(mappedBy = "userEntity")
+    @OneToOne(mappedBy = "userEntity",fetch = FetchType.EAGER)
     public MoneyEntity getMoney() {
         return money;
     }

@@ -1,4 +1,4 @@
-package com.github.adamovichas.project.model.dto;
+package com.github.adamovichas.project.model.view;
 
 
 
@@ -13,7 +13,7 @@ public class EventView {
     private String name;
     private Timestamp startTime;
     private Timestamp endTime;
-    private List<FactorDTO> factorDTOS;
+    private List<FactorDTO> factors;
     private double resultFactorValue;
 
     public EventView() {
@@ -58,12 +58,12 @@ public class EventView {
         this.endTime = endTime;
     }
 
-    public List<FactorDTO> getFactorDTOS() {
-        return factorDTOS;
+    public List<FactorDTO> getFactors() {
+        return factors;
     }
 
-    public void setFactorDTOS(List<FactorDTO> factorDTOS) {
-        this.factorDTOS = factorDTOS;
+    public void setFactors(List<FactorDTO> factorDTOS) {
+        this.factors = factorDTOS;
     }
 
     public double getResultFactorValue() {

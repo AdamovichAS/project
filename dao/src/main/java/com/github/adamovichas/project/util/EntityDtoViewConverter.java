@@ -3,11 +3,12 @@ package com.github.adamovichas.project.util;
 import com.github.adamovichas.project.entity.*;
 import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
+import com.github.adamovichas.project.model.view.EventView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityDtoConverter {
+public class EntityDtoViewConverter {
 
     public static UserEntity getEntity(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
@@ -65,11 +66,11 @@ public class EntityDtoConverter {
     }
 
     public static TeamEntity getEntity(TeamDTO teamDTO){
-        return new TeamEntity(teamDTO.getId(),teamDTO.getName());
+        return new TeamEntity(teamDTO.getId(), teamDTO.getIdLeague(),teamDTO.getName());
     }
 
     public static TeamDTO getDTO(TeamEntity teamEntity){
-        return new TeamDTO(teamEntity.getId(),teamEntity.getName());
+        return new TeamDTO(teamEntity.getId(), teamEntity.getIdLeague(),teamEntity.getName());
     }
 
     public static EventEntity getEntity(EventDTO eventDTO){
@@ -78,12 +79,14 @@ public class EntityDtoConverter {
         eventEntity.setTeamOneId(eventDTO.getTeamOneId());
         eventEntity.setTeamTwoId(eventDTO.getTeamTwoId());
         eventEntity.setStartTime(eventDTO.getStartTime());
+        eventEntity.setEndTime(eventDTO.getEndTime());
         eventEntity.setResultFactorId(eventDTO.getResultFactorId());
         List<FactorEntity>factorEntities = new ArrayList<>();
         for (FactorDTO dtoFactor : eventDTO.getFactors()) {
             factorEntities.add(getEntity(dtoFactor));
         }
         eventEntity.setFactors(factorEntities);
+        eventEntity.setTeams(new ArrayList<>());
         return eventEntity;
     }
 
@@ -95,12 +98,44 @@ public class EntityDtoConverter {
         eventDTO.setStartTime(eventEntity.getStartTime());
         eventDTO.setEndTime(eventEntity.getEndTime());
         eventDTO.setResultFactorId(eventEntity.getResultFactorId());
+        List<FactorDTO> factorsDTO = getFactorsDTO(eventEntity);
+        eventDTO.setFactors(factorsDTO);
+        return eventDTO;
+    }
+
+    private static List<FactorDTO> getFactorsDTO(EventEntity eventEntity) {
         List<FactorDTO>factorsDTO = new ArrayList<>();
         for (FactorEntity entityFactor : eventEntity.getFactors()) {
             factorsDTO.add(getDTO(entityFactor));
         }
-        eventDTO.setFactors(factorsDTO);
-        return eventDTO;
+        return factorsDTO;
+    }
+
+    public static EventView getView(EventEntity entity, String teamOneName, String teamTwoName){
+        EventView eventView = new EventView();
+//        String teamOneName = null;
+//        String teamTwoName = null;
+//        for (TeamEntity team : entity.getTeams()) {
+//            if(entity.getTeamOneId().equals(team.getId())){
+//                teamOneName = team.getName();
+//            }else {
+//                teamTwoName = team.getName();
+//            }
+//        }
+        String eventName = teamOneName + " - " + teamTwoName;
+        eventView.setName(eventName);
+        eventView.setId(entity.getId());
+        eventView.setStartTime(entity.getStartTime());
+        eventView.setEndTime(entity.getEndTime());
+        List<FactorDTO> factorsDTO = getFactorsDTO(entity);
+        eventView.setFactors(factorsDTO);
+        for (FactorEntity factor : entity.getFactors()) {
+            if(factor.getId().equals(entity.getResultFactorId())){
+                eventView.setResultFactorValue(factor.getValue());
+                break;
+            }
+        }
+        return eventView;
     }
 
     public static BetEntity getEntity(BetDTO betDTO){

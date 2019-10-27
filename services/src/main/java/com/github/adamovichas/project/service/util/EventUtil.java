@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.util;
 
-import com.github.adamovichas.project.model.dto.EventView;
+import com.github.adamovichas.project.model.view.EventView;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 
@@ -23,7 +23,7 @@ public enum EventUtil implements IEventUtil{
     @Override
     public FactorDTO getFactorByName(EventView eventView, String factorName) {
         FactorDTO factorDTOEv = null;
-        for (FactorDTO factorDTO : eventView.getFactorDTOS()) {
+        for (FactorDTO factorDTO : eventView.getFactors()) {
             if (factorDTO.getName().toString().equals(factorName)) {
                 factorDTOEv = new FactorDTO(factorDTO.getId(), factorDTO.getName(), factorDTO.getValue());
                 break;

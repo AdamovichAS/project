@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.model.dto.EventView;
+import com.github.adamovichas.project.model.view.EventView;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 
-public class DataEventDTOTest {
+public class DataEventTest {
 
     private DataEvent dataEvent = DataEvent.DATA_EVENT;
     private UtilTest util = UtilTest.UTIL_TEST;
@@ -25,13 +25,19 @@ public class DataEventDTOTest {
     }
 
     @Test
+    public void eventIsExistNull(){
+        EventDTO eventTest = util.createEventTest();
+        boolean result = dataEvent.eventIsExist(eventTest);
+        assertFalse(result);
+
+    }
+
+    @Test
     public void eventIsExist(){
         EventDTO eventTest = util.createEventTest();
-        EventDTO eventNull = dataEvent.eventIsExist(eventTest);
-        assertNull(eventNull);
         Long id = dataEvent.addEvent(eventTest);
-        EventDTO event = dataEvent.eventIsExist(eventTest);
-        assertNotNull(event);
+        boolean result = dataEvent.eventIsExist(eventTest);
+        assertTrue(result);
         util.deleteEvent(id);
     }
 
@@ -40,8 +46,9 @@ public class DataEventDTOTest {
         EventDTO eventTest = util.createEventTest();
         Long id = dataEvent.addEvent(eventTest);
         EventView savedEventById = dataEvent.getSavedEventById(id);
-        assertNotNull(savedEventById);
         util.deleteEvent(id);
+        assertNotNull(savedEventById);
+        assertEquals(savedEventById.getName(),"Arsenal - Aston Vila");
     }
 
     @Test
@@ -53,7 +60,7 @@ public class DataEventDTOTest {
 
     @Test
     void getAllLeagues(){
-        int countLeagues = 1;
+        int countLeagues = 2;
         List<LeagueDTO> allLeagues = dataEvent.getAllLeagues();
         assertEquals(countLeagues,allLeagues.size());
     }

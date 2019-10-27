@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.util;
 
-import com.github.adamovichas.project.model.dto.EventView;
+import com.github.adamovichas.project.model.view.EventView;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 
 import java.util.List;

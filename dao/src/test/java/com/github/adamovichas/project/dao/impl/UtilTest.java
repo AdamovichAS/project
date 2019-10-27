@@ -34,12 +34,7 @@ public enum UtilTest {
     void deleteTestUser(UserEntity user){
         EntityManager em = HibernateUtil.getEntityManager();
         em.getTransaction().begin();
-        user = em.merge(user);
-        MoneyEntity money = em.find(MoneyEntity.class, user.getLogin());
-        user.setMoney(money);
-        money.setUserEntity(user);
-        em.remove(money);
-//        em.remove(em.contains(user) ? user : em.merge(user));
+        em.remove(em.contains(user) ? user : em.merge(user));
         em.getTransaction().commit();
         em.close();
     }

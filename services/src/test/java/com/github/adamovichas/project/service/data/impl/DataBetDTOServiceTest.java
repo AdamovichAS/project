@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.model.dto.BetDTO;
-import com.github.adamovichas.project.model.dto.BetView;
+import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.dao.impl.BetData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

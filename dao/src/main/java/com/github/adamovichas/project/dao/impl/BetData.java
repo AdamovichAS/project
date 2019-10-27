@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.model.dto.BetDTO;
-import com.github.adamovichas.project.model.dto.BetView;
+import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.IBetData;

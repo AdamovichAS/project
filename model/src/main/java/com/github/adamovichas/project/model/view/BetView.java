@@ -1,4 +1,4 @@
-package com.github.adamovichas.project.model.dto;
+package com.github.adamovichas.project.model.view;
 
 import com.github.adamovichas.project.model.factor.FactorName;
 

@@ -1,12 +1,10 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.entity.MoneyEntity;
-import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.IDataUser;
 import com.github.adamovichas.project.IDataConnect;
-import com.github.adamovichas.project.util.EntityDtoConverter;
+import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,21 +25,21 @@ public enum DataUser implements IDataUser {
 
     @Override
     public boolean addUser(UserDTO userDTO) {
-        UserEntity userEntity = EntityDtoConverter.getEntity(userDTO);
+        UserEntity userEntity = EntityDtoViewConverter.getEntity(userDTO);
         boolean result = false;
         EntityManager entityManager = HibernateUtil.getEntityManager();
         try {
-            MoneyEntity money = new MoneyEntity();
-            money.setValue(0);
-            money.setUserEntity(userEntity);
-            userEntity.setMoney(money);
+//            MoneyEntity money = new MoneyEntity();
+//            money.setValue(0);
+//            money.setUserEntity(userEntity);
+//            userEntity.setMoney(money);
             entityManager.getTransaction().begin();
             entityManager.persist(userEntity);
-            entityManager.persist(money);
+//            entityManager.persist(money);
             entityManager.getTransaction().commit();
             result = true;
         }catch (RollbackException e){
-            log.error("addUser exception User {}",userDTO);
+            log.error("addUser exception User - {}",userDTO);
             entityManager.getTransaction().rollback();
         }finally {
             entityManager.close();
@@ -53,11 +51,18 @@ public enum DataUser implements IDataUser {
     @Override
     public UserDTO getUserByLogin(String login) {
         EntityManager em = HibernateUtil.getEntityManager();
-        em.getTransaction().begin();
-        UserDTO user = em.find(UserDTO.class, login);
-        em.getTransaction().commit();
-        em.close();
-        return user;
+        try {
+            em.getTransaction().begin();
+            UserEntity user = em.find(UserEntity.class, login);
+            em.getTransaction().commit();
+            return EntityDtoViewConverter.getDTO(user);
+        }catch (RollbackException e){
+            log.error("getUserByLogin exception Login - {}",login);
+            em.getTransaction().rollback();
+        }finally {
+            em.close();
+        }
+        throw new RuntimeException();
     }
 
     @Override
