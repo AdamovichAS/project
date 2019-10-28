@@ -37,7 +37,7 @@ public class LeagueEntity {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "league")
+    @OneToMany(mappedBy = "league", fetch = FetchType.LAZY)
     public List<TeamEntity> getTeams() {
         return teams;
     }

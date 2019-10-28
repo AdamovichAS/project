@@ -2,6 +2,7 @@ package com.github.adamovichas.project.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "team")
@@ -69,6 +70,21 @@ public class TeamEntity {
 
     public void setEvents(List<EventEntity> events) {
         this.events = events;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TeamEntity)) return false;
+        TeamEntity that = (TeamEntity) o;
+        return getId().equals(that.getId()) &&
+                getIdLeague().equals(that.getIdLeague()) &&
+                getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getIdLeague(), getName());
     }
 
     @Override
