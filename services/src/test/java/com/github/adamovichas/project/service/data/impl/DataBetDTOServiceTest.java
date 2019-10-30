@@ -1,6 +1,7 @@
 package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.model.dto.BetDTO;
+import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.dao.impl.BetData;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,13 +31,6 @@ public class DataBetDTOServiceTest {
     }
 
 
-    @Test
-    public void getMoneyByLogin(){
-//        MoneyDTO money = new MoneyDTO("Test",1000);
-//        when(dataBet.getMoneyByLogin("Test")).thenReturn(money);
-//        MoneyDTO test = dataBetService.getMoneyByLogin("Test");
-//        assertEquals(test.getValue(),money.getValue());
-    }
 
     @Test
     public void addBet(){

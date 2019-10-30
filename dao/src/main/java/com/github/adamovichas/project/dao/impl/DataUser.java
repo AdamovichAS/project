@@ -12,14 +12,23 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 
-public enum DataUser implements IDataUser {
-    DATA;
+public class DataUser implements IDataUser {
 
     private static final Logger log = LoggerFactory.getLogger(DataUser.class);
-    private IDataConnect CONNECTION;
 
-    DataUser() {
-        CONNECTION = DataConnect.CONNECT;
+    private static volatile IDataUser instance;
+
+    public static IDataUser getInstance() {
+        IDataUser localInstance = instance;
+        if (localInstance == null) {
+            synchronized (IDataUser.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new DataUser();
+                }
+            }
+        }
+        return localInstance;
     }
 
 
@@ -38,10 +47,10 @@ public enum DataUser implements IDataUser {
 //            entityManager.persist(money);
             entityManager.getTransaction().commit();
             result = true;
-        }catch (RollbackException e){
-            log.error("addUser exception User - {}",userDTO);
+        } catch (RollbackException e) {
+            log.error("addUser exception User - {}", userDTO);
             entityManager.getTransaction().rollback();
-        }finally {
+        } finally {
             entityManager.close();
         }
         return result;
@@ -56,10 +65,10 @@ public enum DataUser implements IDataUser {
             UserEntity user = em.find(UserEntity.class, login);
             em.getTransaction().commit();
             return EntityDtoViewConverter.getDTO(user);
-        }catch (RollbackException e){
-            log.error("getUserByLogin exception Login - {}",login);
+        } catch (RollbackException e) {
+            log.error("getUserByLogin exception Login - {}", login);
             em.getTransaction().rollback();
-        }finally {
+        } finally {
             em.close();
         }
         throw new RuntimeException();
@@ -73,13 +82,13 @@ public enum DataUser implements IDataUser {
             em.getTransaction().begin();
             em.persist(em.contains(user) ? user : em.merge(user));
             em.getTransaction().commit();
-            result =true;
-        }catch (RollbackException e){
+            result = true;
+        } catch (RollbackException e) {
             em.getTransaction().rollback();
-            log.error("updateUserInfo exception User {}",user);
-        }finally {
+            log.error("updateUserInfo exception User {}", user);
+        } finally {
             em.close();
         }
         return result;
-        }
     }
+}

@@ -1,6 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
 
+import com.github.adamovichas.project.IDataUser;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DataUserTest {
 
-    private DataUser dataUser = DataUser.DATA;
+    private DataUser dataUser = (DataUser) DataUser.getInstance();
     private UtilTest util = UtilTest.UTIL_TEST;
 
     @AfterAll

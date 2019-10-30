@@ -3,7 +3,8 @@ package com.github.adamovichas.project.util;
 import com.github.adamovichas.project.entity.*;
 import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
-import com.github.adamovichas.project.model.view.EventView;
+import com.github.adamovichas.project.model.view.BetView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,18 +67,18 @@ public class EntityDtoViewConverter {
     }
 
     public static TeamEntity getEntity(TeamDTO teamDTO){
-        return new TeamEntity(teamDTO.getId(), teamDTO.getIdLeague(),teamDTO.getName());
+        return new TeamEntity(teamDTO.getName(), teamDTO.getIdLeague());
     }
 
     public static TeamDTO getDTO(TeamEntity teamEntity){
-        return new TeamDTO(teamEntity.getId(), teamEntity.getIdLeague(),teamEntity.getName());
+        return new TeamDTO(teamEntity.getName(), teamEntity.getIdLeague());
     }
 
     public static EventEntity getEntity(EventDTO eventDTO){
         EventEntity eventEntity = new EventEntity();
         eventEntity.setId(eventDTO.getId());
-        eventEntity.setTeamOneId(eventDTO.getTeamOneId());
-        eventEntity.setTeamTwoId(eventDTO.getTeamTwoId());
+        eventEntity.setTeamOneId(eventDTO.getTeamOne());
+        eventEntity.setTeamTwoId(eventDTO.getTeamTwo());
         eventEntity.setStartTime(eventDTO.getStartTime());
         eventEntity.setEndTime(eventDTO.getEndTime());
         eventEntity.setResultFactorId(eventDTO.getResultFactorId());
@@ -86,15 +87,14 @@ public class EntityDtoViewConverter {
             factorEntities.add(getEntity(dtoFactor));
         }
         eventEntity.setFactors(factorEntities);
-        eventEntity.setTeams(new ArrayList<>());
         return eventEntity;
     }
 
     public static EventDTO getDTO(EventEntity eventEntity){
         EventDTO eventDTO = new EventDTO();
         eventDTO.setId(eventEntity.getId());
-        eventDTO.setTeamOneId(eventEntity.getTeamOneId());
-        eventDTO.setTeamTwoId(eventEntity.getTeamTwoId());
+        eventDTO.setTeamOne(eventEntity.getTeamOneId());
+        eventDTO.setTeamTwo(eventEntity.getTeamTwoId());
         eventDTO.setStartTime(eventEntity.getStartTime());
         eventDTO.setEndTime(eventEntity.getEndTime());
         eventDTO.setResultFactorId(eventEntity.getResultFactorId());
@@ -111,32 +111,32 @@ public class EntityDtoViewConverter {
         return factorsDTO;
     }
 
-    public static EventView getView(EventEntity entity, String teamOneName, String teamTwoName){
-        EventView eventView = new EventView();
+//    public static EventDTO getView(EventEntity entity, String teamOneName, String teamTwoName){
+//        EventDTO eventDTO = new EventDTO();
 //        String teamOneName = null;
 //        String teamTwoName = null;
 //        for (TeamEntity team : entity.getTeams()) {
-//            if(entity.getTeamOneId().equals(team.getId())){
+//            if(entity.getTeamOne().equals(team.getId())){
 //                teamOneName = team.getName();
 //            }else {
 //                teamTwoName = team.getName();
 //            }
 //        }
-        String eventName = teamOneName + " - " + teamTwoName;
-        eventView.setName(eventName);
-        eventView.setId(entity.getId());
-        eventView.setStartTime(entity.getStartTime());
-        eventView.setEndTime(entity.getEndTime());
-        List<FactorDTO> factorsDTO = getFactorsDTO(entity);
-        eventView.setFactors(factorsDTO);
-        for (FactorEntity factor : entity.getFactors()) {
-            if(factor.getId().equals(entity.getResultFactorId())){
-                eventView.setResultFactorValue(factor.getValue());
-                break;
-            }
-        }
-        return eventView;
-    }
+//        String eventName = teamOneName + " - " + teamTwoName;
+//        eventDTO.setName(eventName);
+//        eventDTO.setId(entity.getId());
+//        eventDTO.setStartTime(entity.getStartTime());
+//        eventDTO.setEndTime(entity.getEndTime());
+//        List<FactorDTO> factorsDTO = getFactorsDTO(entity);
+//        eventDTO.setFactors(factorsDTO);
+//        for (FactorEntity factor : entity.getFactors()) {
+//            if(factor.getId().equals(entity.getResultFactorId())){
+//                eventDTO.setResultFactorValue(factor.getValue());
+//                break;
+//            }
+//        }
+//        return eventDTO;
+//    }
 
     public static BetEntity getEntity(BetDTO betDTO){
         BetEntity betEntity = new BetEntity();
@@ -154,5 +154,30 @@ public class EntityDtoViewConverter {
         betDTO.setFactorId(betEntity.getFactorId());
         betDTO.setMoney(betEntity.getMoney());
         return betDTO;
+    }
+
+    public static MoneyDTO getDTO(MoneyEntity moneyEntity){
+        MoneyDTO moneyDTO = new MoneyDTO();
+        moneyDTO.setLogin(moneyEntity.getLogin());
+        moneyDTO.setValue(moneyEntity.getValue());
+        return moneyDTO;
+    }
+
+    public static MoneyEntity getEntity(MoneyDTO moneyDTO){
+        MoneyEntity moneyEntity = new MoneyEntity();
+        moneyEntity.setLogin(moneyDTO.getLogin());
+        moneyEntity.setValue(moneyDTO.getValue());
+        return moneyEntity;
+    }
+
+    public static BetView getView(BetEntity betEntity){
+        BetView betView = new BetView();
+        betView.setId(betEntity.getId());
+        betView.setEvent(betEntity.getFactor().getEvent().getName());
+        FactorDTO factorDTO = getDTO(betEntity.getFactor());
+        betView.setFactor(factorDTO);
+        betView.setLogin(betEntity.getUserLogin());
+        betView.setMoney(betEntity.getMoney());
+        return betView;
     }
 }

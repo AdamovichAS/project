@@ -3,7 +3,6 @@ package com.github.adamovichas.project.web.servlet.event.add;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IdataEventService;
-import com.github.adamovichas.project.model.view.EventView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,11 +25,11 @@ public class AddEvent extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        EventDTO eventDTO = (EventDTO) req.getAttribute("factor");
+        com.github.adamovichas.project.model.dto.EventDTO eventDTO = (com.github.adamovichas.project.model.dto.EventDTO) req.getAttribute("factor");
         boolean isExist = data.eventIsExist(eventDTO);
         if(!isExist){
             Long eventId = data.addEvent(eventDTO);
-            EventView eventView = data.getEventById(eventId);
+            EventDTO eventView = data.getEventById(eventId);
             log.info("EventDTO saved {}",eventView);
             req.setAttribute("savedEvent",eventView);
         }else {

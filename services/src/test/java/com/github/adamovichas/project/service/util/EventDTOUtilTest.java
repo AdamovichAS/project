@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.util;
 
-import com.github.adamovichas.project.model.view.EventView;
+import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import org.junit.jupiter.api.Test;
@@ -29,14 +29,14 @@ public class EventDTOUtilTest {
 
     @Test
     public void getFactorsByName(){
-        EventView event = new EventView(100L,"Test", Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
+        EventDTO event = new EventDTO("Test2","Test", Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
         List<FactorDTO> factorDTOS = new ArrayList<>();
         String factorName = FactorName.win.toString();
         double factorValue = 2.5;
         factorDTOS.add(new FactorDTO(FactorName.win,factorValue));
         factorDTOS.add(new FactorDTO(FactorName.draw,3));
         factorDTOS.add(new FactorDTO(FactorName.lose,2.1));
-        event.setFactorDTOS(factorDTOS);
+        event.setFactors(factorDTOS);
 
         FactorDTO factorDTOByName = util.getFactorByName(event, factorName);
         assertEquals(factorDTOByName.getName().toString(),factorName);

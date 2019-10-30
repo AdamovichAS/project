@@ -5,13 +5,21 @@ package com.github.adamovichas.project.model.dto;
 
 public class TeamDTO {
 
-    private Long id;
+
     private Long idLeague;
     private String name;
 
-    public TeamDTO(Long id, Long idLeague, String name) {
-        this.id = id;
+    public TeamDTO(String name, Long idLeague) {
+
         this.idLeague = idLeague;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -21,22 +29,6 @@ public class TeamDTO {
 
     public void setIdLeague(Long idLeague) {
         this.idLeague = idLeague;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

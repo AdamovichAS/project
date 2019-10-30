@@ -8,14 +8,12 @@ import java.util.Objects;
 @Table(name = "team")
 public class TeamEntity {
 
-    private Long id;
-    private Long idLeague;
     private String name;
+    private Long idLeague;
     private LeagueEntity league;
-    private List<EventEntity> events;
+//    private List<EventEntity> events;
 
-    public TeamEntity(Long id, Long idLeague, String name) {
-        this.id = id;
+    public TeamEntity(String name, Long idLeague) {
         this.idLeague = idLeague;
         this.name = name;
     }
@@ -24,15 +22,15 @@ public class TeamEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public Long getId() {
-        return id;
+    @Column(name = "name",nullable = false)
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
+
 
     @Column(name = "league_id", insertable=false, updatable=false)
     public Long getIdLeague() {
@@ -41,15 +39,6 @@ public class TeamEntity {
 
     public void setIdLeague(Long idLeague) {
         this.idLeague = idLeague;
-    }
-
-    @Column(name = "name",nullable = false)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 
@@ -63,29 +52,15 @@ public class TeamEntity {
         this.league = league;
     }
 
-    @ManyToMany(mappedBy = "teams")
-    public List<EventEntity> getEvents() {
-        return events;
-    }
+//    @ManyToMany(mappedBy = "teams")
+//    public List<EventEntity> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(List<EventEntity> events) {
+//        this.events = events;
+//    }
 
-    public void setEvents(List<EventEntity> events) {
-        this.events = events;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TeamEntity)) return false;
-        TeamEntity that = (TeamEntity) o;
-        return getId().equals(that.getId()) &&
-                getIdLeague().equals(that.getIdLeague()) &&
-                getName().equals(that.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getIdLeague(), getName());
-    }
 
     @Override
     public String toString() {

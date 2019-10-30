@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
+import com.github.adamovichas.project.IDataEvent;
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.model.view.EventView;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataEventTest {
 
-    private DataEvent dataEvent = DataEvent.DATA_EVENT;
+    private DataEvent dataEvent = (DataEvent) DataEvent.getInstance();
     private UtilTest util = UtilTest.UTIL_TEST;
 
 
@@ -45,7 +45,7 @@ public class DataEventTest {
     public void getSavedEventById(){
         EventDTO eventTest = util.createEventTest();
         Long id = dataEvent.addEvent(eventTest);
-        EventView savedEventById = dataEvent.getSavedEventById(id);
+        EventDTO savedEventById = dataEvent.getSavedEventById(id);
         util.deleteEvent(id);
         assertNotNull(savedEventById);
         assertEquals(savedEventById.getName(),"Arsenal - Aston Vila");
@@ -54,7 +54,7 @@ public class DataEventTest {
     @Test
     void getAllNotFinishedEvents(){
         int countAllNotFinishedEvents = util.getCountAllNotFinishedEvents();
-        final List<EventView> events = dataEvent.getAllNotFinishedEvents();
+        final List<EventDTO> events = dataEvent.getAllNotFinishedEvents();
         assertEquals(events.size(),countAllNotFinishedEvents);
     }
 

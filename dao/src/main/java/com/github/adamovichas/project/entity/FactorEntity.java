@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "factor_event")
@@ -14,6 +15,7 @@ public class FactorEntity {
     private double value;
     private Long eventID;
     private EventEntity event;
+    private List<BetEntity>bets;
 
     public FactorEntity(FactorName name, double value) {
         this.name = name;
@@ -76,5 +78,14 @@ public class FactorEntity {
 
     public void setEvent(EventEntity event) {
         this.event = event;
+    }
+
+    @OneToMany(mappedBy = "factor")
+    public List<BetEntity> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<BetEntity> bets) {
+        this.bets = bets;
     }
 }

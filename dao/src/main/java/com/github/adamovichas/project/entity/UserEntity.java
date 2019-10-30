@@ -4,6 +4,7 @@ package com.github.adamovichas.project.entity;
 import com.github.adamovichas.project.model.user.Role;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -19,6 +20,7 @@ public class UserEntity {
     private String country;
     private Role role;
     private MoneyEntity money;
+    private List<BetEntity>bets;
 
     public UserEntity() {
     }
@@ -107,4 +109,12 @@ public class UserEntity {
         this.country = country;
     }
 
+    @OneToMany(mappedBy = "user")
+    public List<BetEntity> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<BetEntity> bets) {
+        this.bets = bets;
+    }
 }

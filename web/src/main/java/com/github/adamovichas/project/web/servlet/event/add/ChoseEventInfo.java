@@ -47,10 +47,10 @@ public class ChoseEventInfo extends HttpServlet {
         if (teamOneId == null) {
             doGet(req, resp);
         }
-        Long teamTwoId = Long.valueOf(req.getParameter("teamTwoId"));
+        String teamTwoId = req.getParameter("teamTwoId");
         Timestamp start = eventVal.formatDate(req.getParameter("start"));
         Timestamp end = eventVal.formatDate(req.getParameter("end"));
-        EventDTO eventDTO = new EventDTO(Long.valueOf(teamOneId),teamTwoId,start,end);
+        EventDTO eventDTO = new EventDTO(teamOneId,teamTwoId,start,end);
         double win = Double.valueOf(req.getParameter("win"));
         double lose = Double.valueOf(req.getParameter("lose"));
         double draw = Double.valueOf(req.getParameter("draw"));

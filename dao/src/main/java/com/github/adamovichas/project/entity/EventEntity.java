@@ -3,28 +3,30 @@ package com.github.adamovichas.project.entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+
 @Entity
 @Table(name = "event")
 public class EventEntity {
     private Long id;
-    private Long teamOneId;
-    private Long teamTwoId;
+    private String teamOneId;
+    private String teamTwoId;
     private Timestamp startTime;
     private Timestamp endTime;
     private List<FactorEntity> factors;
     private Long resultFactorId;
-    private List<TeamEntity> teams;
+//    private List<TeamEntity> teams;
 
-    public EventEntity(Long teamOneId, Long teamTwoId, Timestamp startTime, Timestamp endTime) {
-        this.teamOneId = teamOneId;
-        this.teamTwoId = teamTwoId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
+//    public EventEntity(Long teamOneId, Long teamTwoId, Timestamp startTime, Timestamp endTime) {
+//        this.teamOneId = teamOneId;
+//        this.teamTwoId = teamTwoId;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
+//    }
 
 
     public EventEntity() {
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,20 +39,20 @@ public class EventEntity {
     }
 
     @Column(name = "team_one", nullable = false)
-    public Long getTeamOneId() {
+    public String getTeamOneId() {
         return teamOneId;
     }
 
-    public void setTeamOneId(Long teamOneId) {
+    public void setTeamOneId(String teamOneId) {
         this.teamOneId = teamOneId;
     }
 
     @Column(name = "team_two", nullable = false)
-    public Long getTeamTwoId() {
+    public String getTeamTwoId() {
         return teamTwoId;
     }
 
-    public void setTeamTwoId(Long teamTwoId) {
+    public void setTeamTwoId(String teamTwoId) {
         this.teamTwoId = teamTwoId;
     }
 
@@ -92,18 +94,23 @@ public class EventEntity {
         this.factors = factors;
     }
 
-
-    @ManyToMany
-    @JoinTable(name = "event_team_relation", joinColumns = {@JoinColumn(name = "id_team")},
-            inverseJoinColumns = {@JoinColumn(name = "id_event")}
-    )
-    public List<TeamEntity> getTeams() {
-        return teams;
+    @Transient
+    public String getName(){
+        return teamOneId + " - " + teamTwoId;
     }
 
-    public void setTeams(List<TeamEntity> teams) {
-        this.teams = teams;
-    }
+
+//    @ManyToMany
+//    @JoinTable(name = "event_team_relation", joinColumns = {@JoinColumn(name = "id_team")},
+//            inverseJoinColumns = {@JoinColumn(name = "id_event")}
+//    )
+//    public List<TeamEntity> getTeams() {
+//        return teams;
+//    }
+//
+//    public void setTeams(List<TeamEntity> teams) {
+//        this.teams = teams;
+//    }
 
     @Override
     public String toString() {

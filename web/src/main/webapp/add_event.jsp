@@ -23,13 +23,13 @@
 
         <form action="${pageContext.request.contextPath}/new_event/chose_league/chose_event_info" method="POST">
             <label><fmt:message key="add_event.team_one" bundle="${messages}"/></label>
-            <select name="teamOneId">
+            <select name="teamOne">
                 <c:forEach items="${allTeams}" var="item">
                     <option value="${item.id}">${item}</option>
                 </c:forEach>
             </select>
             <label><fmt:message key="add_event.team_two" bundle="${messages}"/></label>
-            <select name="teamTwoId">
+            <select name="teamTwo">
                 <c:forEach items="${allTeams}" var="item">
                     <option value="${item.id}">${item}</option>
                 </c:forEach>

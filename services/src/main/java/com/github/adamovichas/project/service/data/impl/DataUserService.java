@@ -13,7 +13,7 @@ import static java.util.Objects.nonNull;
 
 public class DataUserService implements IdataUserService {
 
-    private IDataUser data =DataUser.DATA;
+    private IDataUser data =DataUser.getInstance();
 
     private static volatile IdataUserService instance;
 

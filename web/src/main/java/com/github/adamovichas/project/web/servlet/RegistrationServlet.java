@@ -26,7 +26,6 @@ public class RegistrationServlet extends HttpServlet {
         String repeatedPassword = req.getParameter("repeatedPassword");
         if(daoUser.loginIsExist(login) || !password.equals(repeatedPassword)){
             req.setAttribute("loginError","A user with this login already exists or the passwords do not match");
-            log.info("Login {} password {} repeated password {}", login, password, repeatedPassword);
             req.getRequestDispatcher("registration.jsp").forward(req, resp);
         }else{
             Map<String,String> userParam = new HashMap<>();

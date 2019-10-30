@@ -16,7 +16,7 @@ public class DataBetService implements IDataBetService {
     private IBetData data;
 
     private DataBetService() {
-        data = BetData.BET_DATA;
+        data = BetData.getInstance();
     }
 
     public static IDataBetService getInstance() {
@@ -32,10 +32,6 @@ public class DataBetService implements IDataBetService {
         return localInstance;
     }
 
-    @Override
-    public MoneyDTO getMoneyByLogin(String userLogin) {
-        return data.getMoneyByLogin(userLogin);
-    }
 
     @Override
     public Long addBet(BetDTO betDTO) {

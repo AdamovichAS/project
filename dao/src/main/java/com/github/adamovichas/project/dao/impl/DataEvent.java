@@ -5,16 +5,12 @@ import com.github.adamovichas.project.entity.FactorEntity;
 import com.github.adamovichas.project.entity.LeagueEntity;
 import com.github.adamovichas.project.entity.TeamEntity;
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.model.view.EventView;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
-import com.github.adamovichas.project.model.factor.FactorDTO;
-import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.IDataConnect;
 import com.github.adamovichas.project.IDataEvent;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -23,22 +19,26 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import static java.util.Objects.nonNull;
+public class DataEvent implements IDataEvent {
 
-public enum DataEvent implements IDataEvent {
-    DATA_EVENT;
 
     private static final Logger log = LoggerFactory.getLogger(DataEvent.class);
-    private IDataConnect CONNECTION;
+    private static volatile IDataEvent instance;
 
-    DataEvent() {
-        CONNECTION = DataConnect.CONNECT;
+    public static IDataEvent getInstance() {
+        IDataEvent localInstance = instance;
+        if (localInstance == null) {
+            synchronized (IDataEvent.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new DataEvent();
+                }
+            }
+        }
+        return localInstance;
     }
 
     @Override
@@ -48,12 +48,6 @@ public enum DataEvent implements IDataEvent {
             session.getTransaction().begin();
             EventEntity eventEntity = EntityDtoViewConverter.getEntity(event);
             Long id = (Long) session.save(eventEntity);
-//            TeamEntity teamOne = session.find(TeamEntity.class, eventEntity.getTeamOneId());
-//            TeamEntity teamTwo = session.find(TeamEntity.class, eventEntity.getTeamTwoId());
-//            teamOne.getEvents().add(eventEntity);
-//            teamTwo.getEvents().add(eventEntity);
-//            eventEntity.getTeams().add(teamOne);
-//            eventEntity.getTeams().add(teamTwo);
             for (FactorEntity factor : eventEntity.getFactors()) {
                 factor.setEvent(eventEntity);
                 session.save(factor);
@@ -76,8 +70,8 @@ public enum DataEvent implements IDataEvent {
         try {
             session.getTransaction().begin();
             final Query query = session.createQuery("FROM EventEntity e where e.teamOneId = :teamOneId AND e.teamTwoId = :teamTwoId AND e.startTime = :startTime")
-                    .setParameter("teamOneId", event.getTeamOneId())
-                    .setParameter("teamTwoId", event.getTeamTwoId())
+                    .setParameter("teamOneId", event.getTeamOne())
+                    .setParameter("teamTwoId", event.getTeamTwo())
                     .setParameter("startTime", event.getStartTime());
             List<EventEntity> entity = query.list();
             session.getTransaction().commit();
@@ -95,34 +89,28 @@ public enum DataEvent implements IDataEvent {
     }
 
     @Override
-    public List<EventView> getAllNotFinishedEvents() {
+    public List<EventDTO> getAllNotFinishedEvents() {
         Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
         session.getTransaction().begin();
         List<EventEntity> eventEntities = session.createQuery("FROM EventEntity e WHERE e.resultFactorId = null").list();
-        List<EventView> views = new ArrayList<>();
-        String teamOne;
-        String teamtwo;
+        List<EventDTO> views = new ArrayList<>();
         for (EventEntity entity : eventEntities) {
-            teamOne = session.find(TeamEntity.class, entity.getTeamOneId()).getName();
-            teamtwo = session.find(TeamEntity.class, entity.getTeamTwoId()).getName();
-            views.add(EntityDtoViewConverter.getView(entity, teamOne, teamtwo));
+            views.add(EntityDtoViewConverter.getDTO(entity));
         }
         session.getTransaction().commit();
         return views;
     }
 
     @Override
-    public EventView getSavedEventById(Long id) {
+    public EventDTO getSavedEventById(Long id) {
         EntityManager em = HibernateUtil.getEntityManager();
         Session session = em.unwrap(Session.class);
         session.getTransaction().begin();
         EventEntity eventEntity = session.find(EventEntity.class, id);
         Hibernate.initialize(eventEntity.getFactors());
-        String teamOneName = session.find(TeamEntity.class, eventEntity.getTeamOneId()).getName();
-        String teamTwoName = session.find(TeamEntity.class, eventEntity.getTeamTwoId()).getName();
         session.getTransaction().commit();
         session.close();
-        return EntityDtoViewConverter.getView(eventEntity, teamOneName, teamTwoName);
+        return EntityDtoViewConverter.getDTO(eventEntity);
     }
 
 

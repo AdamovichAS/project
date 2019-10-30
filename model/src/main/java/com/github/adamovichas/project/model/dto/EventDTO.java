@@ -9,16 +9,16 @@ import java.util.List;
 
 public class EventDTO {
     private Long id;
-    private Long teamOneId;
-    private Long teamTwoId;
+    private String teamOne;
+    private String teamTwo;
     private Timestamp startTime;
     private Timestamp endTime;
     private List<FactorDTO>factors;
     private Long resultFactorId;
 
-    public EventDTO(Long teamOneId, Long teamTwoId, Timestamp startTime, Timestamp endTime) {
-        this.teamOneId = teamOneId;
-        this.teamTwoId = teamTwoId;
+    public EventDTO(String teamOne, String teamTwo, Timestamp startTime, Timestamp endTime) {
+        this.teamOne = teamOne;
+        this.teamTwo = teamTwo;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -35,20 +35,20 @@ public class EventDTO {
         this.id = id;
     }
 
-    public Long getTeamOneId() {
-        return teamOneId;
+    public String getTeamOne() {
+        return teamOne;
     }
 
-    public void setTeamOneId(Long teamOneId) {
-        this.teamOneId = teamOneId;
+    public void setTeamOne(String teamOne) {
+        this.teamOne = teamOne;
     }
 
-    public Long getTeamTwoId() {
-        return teamTwoId;
+    public String getTeamTwo() {
+        return teamTwo;
     }
 
-    public void setTeamTwoId(Long teamTwoId) {
-        this.teamTwoId = teamTwoId;
+    public void setTeamTwo(String teamTwo) {
+        this.teamTwo = teamTwo;
     }
 
     public Timestamp getStartTime() {
@@ -83,12 +83,16 @@ public class EventDTO {
         this.resultFactorId = resultFactorId;
     }
 
+    public String getName(){
+        return teamOne + " - " + teamTwo;
+    }
+
     @Override
     public String toString() {
         return "EventDTO{" +
                 "id=" + id +
-                ", teamOneId=" + teamOneId +
-                ", teamTwoId=" + teamTwoId +
+                ", teamOne=" + teamOne +
+                ", teamTwo=" + teamTwo +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", factors=" + factors +

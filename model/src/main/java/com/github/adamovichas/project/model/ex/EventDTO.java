@@ -1,4 +1,4 @@
-package com.github.adamovichas.project.model.view;
+package com.github.adamovichas.project.model.ex;
 
 
 
@@ -7,7 +7,7 @@ import com.github.adamovichas.project.model.factor.FactorDTO;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class EventView {
+public class EventDTO {
 
     private Long id;
     private String name;
@@ -16,10 +16,10 @@ public class EventView {
     private List<FactorDTO> factors;
     private double resultFactorValue;
 
-    public EventView() {
+    public EventDTO() {
     }
 
-    public EventView(Long id, String name, Timestamp startTime, Timestamp endTime) {
+    public EventDTO(Long id, String name, Timestamp startTime, Timestamp endTime) {
         this.id = id;
         this.name = name;
         this.startTime = startTime;

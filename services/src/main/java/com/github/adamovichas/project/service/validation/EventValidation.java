@@ -19,7 +19,7 @@ public enum EventValidation implements IEventValidation {
     }
 
 
-    public boolean isEqualsTeamOneAndTwo(Long oneId, Long twoId) {
+    public boolean isEqualsTeamOneAndTwo(String oneId, String twoId) {
         if(oneId.equals(twoId)) {
             return true;
         }
@@ -29,7 +29,7 @@ public enum EventValidation implements IEventValidation {
     @Override
     public String checkEventParam(EventDTO eventDTO){
         String errorMessage = null;
-        if(isEqualsTeamOneAndTwo(eventDTO.getTeamOneId(), eventDTO.getTeamTwoId())){
+        if(isEqualsTeamOneAndTwo(eventDTO.getTeamOne(), eventDTO.getTeamTwo())){
             errorMessage = "add_event.error_teams";
             return errorMessage;
         }

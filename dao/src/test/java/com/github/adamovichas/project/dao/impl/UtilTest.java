@@ -1,5 +1,6 @@
 package com.github.adamovichas.project.dao.impl;
 
+import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.entity.MoneyEntity;
 import com.github.adamovichas.project.entity.UserEntity;
@@ -8,6 +9,7 @@ import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.util.HibernateUtil;
+import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import java.sql.*;
@@ -39,8 +41,35 @@ public enum UtilTest {
         em.close();
     }
 
+    void deleteDeposit(String login){
+        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        session.getTransaction().begin();
+        MoneyEntity moneyEntity = session.get(MoneyEntity.class, login);
+        session.delete(moneyEntity);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    BetDTO createFinishedBet(){
+        final UserDTO testUser = createTestUser();
+        BetDTO betDTO = new BetDTO();
+        betDTO.setUserLogin(testUser.getLogin());
+        betDTO.setMoney(100);
+        betDTO.setFactorId(1L);
+        return betDTO;
+    }
+
+    BetDTO createNotFinishedBet(){
+        final UserDTO testUser = createTestUser();
+        BetDTO betDTO = new BetDTO();
+        betDTO.setUserLogin(testUser.getLogin());
+        betDTO.setMoney(100);
+        betDTO.setFactorId(5L);
+        return betDTO;
+    }
+
      EventDTO createEventTest(){
-        EventDTO event = new EventDTO(1L,2L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
+        EventDTO event = new EventDTO("Arsenal","Aston Vila", Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
         List<FactorDTO> factors= new ArrayList<>();
         factors.add(new FactorDTO(FactorName.win,2.5));
         factors.add(new FactorDTO(FactorName.draw,3));

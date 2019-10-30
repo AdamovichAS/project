@@ -1,6 +1,11 @@
 package com.github.adamovichas.project.web.service;
 
 
+import com.github.adamovichas.project.IMoneyData;
+import com.github.adamovichas.project.service.data.IDataBetService;
+import com.github.adamovichas.project.service.data.IDataMoneyService;
+import com.github.adamovichas.project.service.data.impl.DataBetService;
+import com.github.adamovichas.project.service.data.impl.DataMoneyService;
 import com.github.adamovichas.project.service.data.impl.DataUserService;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import com.github.adamovichas.project.model.view.BetView;
@@ -19,7 +24,8 @@ import java.util.List;
 public final class Util {
 
     private static final IdataUserService serviceDAO = DataUserService.getInstance();
-    private static final IBetData betData = BetData.BET_DATA;
+    private static final IDataBetService betData = DataBetService.getInstance();
+    private static final IDataMoneyService moneyService = DataMoneyService.getInstance();
 
     private Util() {
     }
@@ -46,7 +52,7 @@ public final class Util {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         String login = authUser.getLogin();
         List<BetView> betViews = betData.getNotFinishedBetByLogin(login);
-        MoneyDTO deposit = betData.getMoneyByLogin(authUser.getLogin());
+        MoneyDTO deposit = moneyService.getMoneyByLogin(authUser.getLogin());
         if(!betViews.isEmpty()) {
             req.setAttribute("userBets", betViews);
         }

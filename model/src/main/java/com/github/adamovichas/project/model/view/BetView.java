@@ -1,13 +1,15 @@
 package com.github.adamovichas.project.model.view;
 
+import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 
 public class BetView {
     private Long id;
     private String login;
     private String event;
-    private FactorName factorName;
-    private double factorValue;
+//    private FactorName factorName;
+//    private double factorValue;
+    private FactorDTO factor;
     private int money;
 
     public BetView() {
@@ -37,20 +39,29 @@ public class BetView {
         this.event = event;
     }
 
-    public FactorName getFactorName() {
-        return factorName;
+//    public FactorName getFactorName() {
+//        return factorName;
+//    }
+//
+//    public void setFactorName(FactorName factorName) {
+//        this.factorName = factorName;
+//    }
+//
+//    public double getFactorValue() {
+//        return factorValue;
+//    }
+//
+//    public void setFactorValue(double factorValue) {
+//        this.factorValue = factorValue;
+//    }
+
+
+    public FactorDTO getFactor() {
+        return factor;
     }
 
-    public void setFactorName(FactorName factorName) {
-        this.factorName = factorName;
-    }
-
-    public double getFactorValue() {
-        return factorValue;
-    }
-
-    public void setFactorValue(double factorValue) {
-        this.factorValue = factorValue;
+    public void setFactor(FactorDTO factor) {
+        this.factor = factor;
     }
 
     public int getMoney() {
@@ -63,6 +74,6 @@ public class BetView {
 
     @Override
     public String toString() {
-        return String.format("BET ID: %d | Login: %s | EventDTO: %s | %s: %.2f | MoneyDTO in bet: %d",id,login,event,factorName,factorValue,money);
+        return String.format("BET ID: %d | Login: %s | EventDTO: %s | %s: %.2f | MoneyDTO in bet: %d",id,login,event,factor.getName(),factor.getValue(),money);
     }
 }
