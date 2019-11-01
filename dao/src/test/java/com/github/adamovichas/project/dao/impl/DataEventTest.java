@@ -1,10 +1,15 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.IDataEvent;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
+import com.github.adamovichas.project.util.HibernateUtil;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import javax.persistence.EntityManager;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -13,8 +18,18 @@ import java.util.List;
 public class DataEventTest {
 
     private DataEvent dataEvent = (DataEvent) DataEvent.getInstance();
-    private UtilTest util = UtilTest.UTIL_TEST;
+    private Util util = Util.UTIL_TEST;
+    private static EntityManager entityManager;
 
+    @BeforeAll
+    static void init() {
+        entityManager = HibernateUtil.getEntityManager();
+    }
+
+    @AfterAll
+    public static void cleanUp() {
+        entityManager.close();
+    }
 
     @Test
     public void addEvent(){
@@ -53,7 +68,7 @@ public class DataEventTest {
 
     @Test
     void getAllNotFinishedEvents(){
-        int countAllNotFinishedEvents = util.getCountAllNotFinishedEvents();
+        Long countAllNotFinishedEvents = util.getCountAllNotFinishedEvents();
         final List<EventDTO> events = dataEvent.getAllNotFinishedEvents();
         assertEquals(events.size(),countAllNotFinishedEvents);
     }

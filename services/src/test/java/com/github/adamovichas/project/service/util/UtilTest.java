@@ -1,5 +1,7 @@
 package com.github.adamovichas.project.service.util;
 
+import com.github.adamovichas.project.model.dto.UserDTO;
+import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.service.util.Util;
 import org.junit.jupiter.api.Test;
 
@@ -25,4 +27,5 @@ public class UtilTest {
         util.removeEmptyValue(map);
         assertEquals(3,map.size());
     }
+
 }

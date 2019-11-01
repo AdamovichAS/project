@@ -1,24 +1,33 @@
 package com.github.adamovichas.project.dao.impl;
 
 
-import com.github.adamovichas.project.IDataUser;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import javax.persistence.EntityManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DataUserTest {
 
     private DataUser dataUser = (DataUser) DataUser.getInstance();
-    private UtilTest util = UtilTest.UTIL_TEST;
+    private Util util = Util.UTIL_TEST;
+
+    private static EntityManager entityManager;
+
+    @BeforeAll
+    static void init() {
+        entityManager = HibernateUtil.getEntityManager();
+    }
 
     @AfterAll
     public static void cleanUp() {
-        HibernateUtil.closeEMFactory();
+        entityManager.close();
     }
 
     @Test
@@ -40,6 +49,20 @@ public class DataUserTest {
         assertEquals(testUser.getLogin(), userByLogin.getLogin());
         assertEquals(testUser.getPassword(), userByLogin.getPassword());
         util.deleteTestUser(entity);
+    }
+
+    @Test
+    public void updateUserInfo(){
+        UserDTO userDTO = util.createTestUser();
+        dataUser.addUser(userDTO);
+        userDTO.setPassword("newPas");
+        userDTO.setEmail("newMail");
+        dataUser.updateUserInfo(userDTO);
+        UserDTO userByLogin = dataUser.getUserByLogin(userDTO.getLogin());
+        UserEntity entity = EntityDtoViewConverter.getEntity(userDTO);
+        util.deleteTestUser(entity);
+        assertEquals(userByLogin.getPassword(), userDTO.getPassword());
+        assertEquals(userByLogin.getEmail(), userDTO.getEmail());
     }
 
 

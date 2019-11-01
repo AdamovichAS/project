@@ -1,6 +1,10 @@
 package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.dao.impl.DataUser;
+import com.github.adamovichas.project.model.dto.UserDTO;
+import com.github.adamovichas.project.model.user.Role;
+import com.github.adamovichas.project.service.user.UserCreater;
+import com.github.adamovichas.project.service.util.UtilTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,43 +30,58 @@ public class DataUserServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-//    @Test
-//    public void loginIsExist(){
-//        String login = "test";
-//        when(dataUser.loginIsExist(login)).thenReturn(login);
-//        boolean isExist = dataUserService.loginIsExist(login);
-//        assertTrue(isExist);
-//    }
-//
-//    @Test
-//    public void userIsExist(){
-//        List<String>logPas = new ArrayList<>(Arrays.asList("login","password"));
-//        when(dataUser.userIsExist(logPas.get(0),logPas.get(1))).thenReturn(logPas);
-//        boolean isExist = dataUserService.userIsExist(logPas.get(0), logPas.get(1));
-//        assertTrue(isExist);
-//    }
-
-  /*  @Test
-    public void addNewUser(){
-        Map<String,String>userFields = new HashMap<>();
-        userFields.put("login","login");
-        userFields.put("password","password");
-        User user = new User();
-        user.setUser("login");
-        user.setPassword("password");
-        when(userCreater.createUser(userFields)).thenReturn(user);
-        when(dataUser.addUser(user)).thenReturn(true);
-        boolean addNewUser = dataUserService.addNewUser(userFields);
-        assertTrue(addNewUser);
+    @Test
+    public void loginIsExist(){
+        final UserDTO testUser = createTestUser();
+        when(dataUser.getUserByLogin(testUser.getLogin())).thenReturn(testUser);
+        boolean isExist = dataUserService.loginIsExist(testUser.getLogin());
+        assertTrue(isExist);
     }
 
     @Test
-    public void getUserByLogin(){
-        String login = "login";
-        User user = new User();
-        user.setUser(login);
-        dataUserService.getUserByLogin(login);
-        verify(dataUser,times(1)).addUser(user);
+    public void userIsExist(){
+        final UserDTO testUser = createTestUser();
+        when(dataUser.getUserByLogin(testUser.getLogin())).thenReturn(testUser);
+        boolean isExist = dataUserService.userIsExist(testUser.getLogin(),testUser.getPassword());
+        assertTrue(isExist);
+    }
 
-    }*/
+//    @Test
+//    public void addNewUser(){
+//        Map<String,String>userFields = new HashMap<>();
+//        userFields.put("login","login");
+//        userFields.put("password","password");
+//        UserDTO user = new UserDTO();
+//        user.setLogin("login");
+//        user.setPassword("password");
+//        when(UserCreater.CREATER.createUser(userFields)).thenReturn(user);
+//        when(dataUser.addUser(user)).thenReturn(true);
+//        boolean addNewUser = dataUserService.addNewUser(userFields);
+//        assertTrue(addNewUser);
+//    }
+//
+//    @Test
+//    public void getUserByLogin(){
+//        String login = "login";
+//        UserDTO user = new UserDTO();
+//        user.setLogin(login);
+//        dataUserService.getUserByLogin(login);
+//        verify(dataUser,times(1)).addUser(user);
+//
+//    }
+
+
+    UserDTO createTestUser(){
+        UserDTO user = new UserDTO();
+        user.setLogin("test");
+        user.setPassword("123");
+        user.setFirstName("name");
+        user.setLastName("lastName");
+        user.setPhone("567");
+        user.setEmail("mail");
+        user.setAge(18);
+        user.setCountry("bel");
+        user.setRole(Role.USER_VER);
+        return  user;
+    }
 }

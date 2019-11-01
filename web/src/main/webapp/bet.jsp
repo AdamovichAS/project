@@ -21,12 +21,12 @@
     </c:if>
     <h3><fmt:message key="betDTO.new_bet" bundle="${messages}"/></h3>
     <form action="${pageContext.request.contextPath}/betDTO" method="POST">
-        <select name="eventDTO">
+        <select name="eventId">
             <c:forEach items="${events}" var="item">
                 <option value="${item.id}" >${item.name} | Start: ${item.startTime} | ${item.getFactors().get(0)} | ${item.getFactors().get(1)} | ${item.getFactors().get(2)} |</option><br>
             </c:forEach>
         </select>
-        <select name="factorDTO">
+        <select name="factorName">
             <option value="win">WIN</option>
             <option value="lose">LOSE</option>
             <option value="draw">DRAW</option>

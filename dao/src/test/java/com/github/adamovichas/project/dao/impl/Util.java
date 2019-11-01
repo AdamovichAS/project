@@ -1,5 +1,6 @@
 package com.github.adamovichas.project.dao.impl;
 
+import com.github.adamovichas.project.entity.EventEntity;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.entity.MoneyEntity;
@@ -10,14 +11,20 @@ import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.RollbackException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum UtilTest {
+public enum Util {
     UTIL_TEST;
+
+    private static final Logger log = LoggerFactory.getLogger(DataUser.class);
 
     UserDTO createTestUser(){
         UserDTO user = new UserDTO();
@@ -79,48 +86,28 @@ public enum UtilTest {
     }
 
      void deleteEvent(Long id) {
-        Connection connection;
-        try {
-            connection = DataConnect.CONNECT.connect();
-            connection.setAutoCommit(false);
-            try (PreparedStatement statementFactor = connection.prepareStatement("DELETE FROM factor_event WHERE event_id = ?;");
-                 PreparedStatement statementEvent = connection.prepareStatement("DELETE FROM event WHERE id = ?;")) {
-                statementEvent.setLong(1, id);
-                statementFactor.setLong(1, id);
-                statementFactor.executeUpdate();
-                statementEvent.executeUpdate();
-                connection.commit();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                } finally {
-                    try {
-                        connection.close();
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+         Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+         try{
+             session.getTransaction().begin();
+             EventEntity eventEntity = session.find(EventEntity.class, id);
+            session.delete(eventEntity);
+            session.getTransaction().commit();
+         }catch (RollbackException e){
+             log.error("deleteEvent exception, Id -  {}",id);
+             session.getTransaction().rollback();
+         }finally {
+             session.close();
+         }
+     }
 
-    int getCountAllNotFinishedEvents(){
-        Integer count = null;
-        try (Connection connect = DataConnect.CONNECT.connect();
-             PreparedStatement preparedStatement = connect.prepareStatement("SELECT count(*) as count from event where result is null;")){
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                while (resultSet.next()){
-                    count = resultSet.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    Long getCountAllNotFinishedEvents(){
+        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        session.getTransaction().begin();
+        Query query = session.createQuery("SELECT count(*) FROM EventEntity e WHERE e.resultFactorId = null");
+        List list = query.list();
+        if (list.isEmpty()){
+            return 0L;
         }
-        return count;
+        return (Long) list.get(0);
     }
 }

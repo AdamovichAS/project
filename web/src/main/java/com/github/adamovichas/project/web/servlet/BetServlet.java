@@ -53,10 +53,10 @@ public class BetServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long eventId = Long.valueOf(req.getParameter("factorDTO"));
+        Long eventId = Long.valueOf(req.getParameter("eventId"));
         int moneyForBet = Integer.parseInt(req.getParameter("money_for_bet"));
         EventDTO eventDTO = dataEvent.getEventById(eventId);
-        String factorName = req.getParameter("factorDTO");
+        String factorName = req.getParameter("factorName");
         FactorDTO factorDTO = util.getFactorByName(eventDTO, factorName);
         Long idFactor = factorDTO.getId();
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");

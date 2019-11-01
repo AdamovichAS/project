@@ -53,7 +53,7 @@
 
     <servlet>
         <servlet-name>ChoseEventInfo</servlet-name>
-        <servlet-class>com.github.adamovichas.project.web.servlet.eventDTO.add.ChoseEventInfo</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.event.add.ChoseEventInfo</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChoseEventInfo</servlet-name>
@@ -62,7 +62,7 @@
 
     <servlet>
         <servlet-name>ChoseLeague</servlet-name>
-        <servlet-class>com.github.adamovichas.project.web.servlet.eventDTO.add.ChoseLeague</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.event.add.ChoseLeague</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChoseLeague</servlet-name>
@@ -71,7 +71,7 @@
 
     <servlet>
         <servlet-name>addEvent</servlet-name>
-        <servlet-class>com.github.adamovichas.project.web.servlet.eventDTO.add.AddEvent</servlet-class>
+        <servlet-class>com.github.adamovichas.project.web.servlet.event.add.AddEvent</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addEvent</servlet-name>

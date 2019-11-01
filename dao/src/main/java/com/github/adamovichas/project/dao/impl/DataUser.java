@@ -6,11 +6,15 @@ import com.github.adamovichas.project.IDataUser;
 import com.github.adamovichas.project.IDataConnect;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
+
+import static java.util.Objects.nonNull;
 
 public class DataUser implements IDataUser {
 
@@ -60,11 +64,15 @@ public class DataUser implements IDataUser {
     @Override
     public UserDTO getUserByLogin(String login) {
         EntityManager em = HibernateUtil.getEntityManager();
+        UserDTO userDTO = null;
         try {
             em.getTransaction().begin();
             UserEntity user = em.find(UserEntity.class, login);
             em.getTransaction().commit();
-            return EntityDtoViewConverter.getDTO(user);
+            if(nonNull(user)){
+                userDTO = EntityDtoViewConverter.getDTO(user);
+            }
+            return userDTO;
         } catch (RollbackException e) {
             log.error("getUserByLogin exception Login - {}", login);
             em.getTransaction().rollback();
@@ -77,18 +85,31 @@ public class DataUser implements IDataUser {
     @Override
     public boolean updateUserInfo(UserDTO user) {
         boolean result = false;
-        EntityManager em = HibernateUtil.getEntityManager();
+        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
         try {
-            em.getTransaction().begin();
-            em.persist(em.contains(user) ? user : em.merge(user));
-            em.getTransaction().commit();
+            session.getTransaction().begin();
+            UserEntity userEntity = session.find(UserEntity.class, user.getLogin());
+            setDTOfieldsToEntity(userEntity,user);
+            session.update(userEntity);
+            session.getTransaction().commit();
             result = true;
         } catch (RollbackException e) {
-            em.getTransaction().rollback();
+            session.getTransaction().rollback();
             log.error("updateUserInfo exception User {}", user);
         } finally {
-            em.close();
+            session.close();
         }
         return result;
+    }
+
+    private void setDTOfieldsToEntity(UserEntity userEntity, UserDTO userDTO){
+        userEntity.setFirstName(userDTO.getFirstName());
+        userEntity.setLastName(userDTO.getLastName());
+        userEntity.setCountry(userDTO.getCountry());
+        userEntity.setRole(userDTO.getRole());
+        userEntity.setAge(userDTO.getAge());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setPhone(userDTO.getPhone());
+        userEntity.setPassword(userDTO.getPassword());
     }
 }

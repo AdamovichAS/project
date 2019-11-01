@@ -1,25 +1,32 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.IDataUser;
-import com.github.adamovichas.project.IMoneyData;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import javax.persistence.EntityManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MoneyDataTest {
     private MoneyData moneyData = (MoneyData) MoneyData.getInstance();
     private DataUser dataUser = (DataUser) DataUser.getInstance();
-    private UtilTest util = UtilTest.UTIL_TEST;
+    private Util util = Util.UTIL_TEST;
+    private static EntityManager entityManager;
+
+    @BeforeAll
+    static void init() {
+        entityManager = HibernateUtil.getEntityManager();
+    }
 
     @AfterAll
     public static void cleanUp() {
-        HibernateUtil.closeEMFactory();
+        entityManager.close();
     }
 
     @Test

@@ -25,13 +25,13 @@
             <label><fmt:message key="add_event.team_one" bundle="${messages}"/></label>
             <select name="teamOne">
                 <c:forEach items="${allTeams}" var="item">
-                    <option value="${item.id}">${item}</option>
+                    <option value="${item.name}">${item}</option>
                 </c:forEach>
             </select>
             <label><fmt:message key="add_event.team_two" bundle="${messages}"/></label>
             <select name="teamTwo">
                 <c:forEach items="${allTeams}" var="item">
-                    <option value="${item.id}">${item}</option>
+                    <option value="${item.name}">${item}</option>
                 </c:forEach>
             </select>
             <div>
@@ -58,7 +58,7 @@
         <c:out value="Name - ${savedEvent.name}"/><br>
         <c:out value="Start time - ${savedEvent.startTime}"/><br>
         <c:out value="End time - ${savedEvent.endTime}"/><br>
-        <c:forEach items="${savedEvent.factorDTOS}" var="item">
+        <c:forEach items="${savedEvent.factors}" var="item">
             <c:out value="${item}"/>
         </c:forEach>
         <br> <a href="${pageContext.request.contextPath}/redirect"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
@@ -68,7 +68,7 @@
         <form action="${pageContext.request.contextPath}/new_event/chose_league/" method="POST">
             <label><fmt:message key="add_event.select_league" bundle="${messages}"/></label>
             <select name="league">
-                <c:forEach items="${allLeagueDTOS}" var="item">
+                <c:forEach items="${allLeagues}" var="item">
                     <option value="${item.id}">${item}</option>
                 </c:forEach>
             </select>

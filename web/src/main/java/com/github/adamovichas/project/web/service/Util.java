@@ -51,12 +51,12 @@ public final class Util {
     public static void setUserBetsAndDepositInReq(HttpServletRequest req){
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         String login = authUser.getLogin();
-        List<BetView> betViews = betData.getNotFinishedBetByLogin(login);
-        MoneyDTO deposit = moneyService.getMoneyByLogin(authUser.getLogin());
-        if(!betViews.isEmpty()) {
-            req.setAttribute("userBets", betViews);
-        }
         if(authUser.getRole().equals(Role.USER_VER)) {
+            List<BetView> betViews = betData.getNotFinishedBetByLogin(login);
+            if(!betViews.isEmpty()) {
+                req.setAttribute("userBets", betViews);
+            }
+            MoneyDTO deposit = moneyService.getMoneyByLogin(authUser.getLogin());
             req.setAttribute("deposit", deposit.getValue());
         }
     }

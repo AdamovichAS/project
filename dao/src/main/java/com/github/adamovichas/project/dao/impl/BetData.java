@@ -2,6 +2,7 @@ package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.entity.BetEntity;
 import com.github.adamovichas.project.entity.FactorEntity;
+import com.github.adamovichas.project.entity.MoneyEntity;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
@@ -49,6 +50,9 @@ public class BetData implements IBetData {
             session.getTransaction().begin();
             UserEntity userEntity = session.find(UserEntity.class, betEntity.getUserLogin());
             FactorEntity factorEntity = session.find(FactorEntity.class, betEntity.getFactorId());
+            MoneyEntity moneyEntity = session.find(MoneyEntity.class, bet.getUserLogin());
+            moneyEntity.setValue(moneyEntity.getValue()- bet.getMoney());
+            session.saveOrUpdate(moneyEntity);
             betEntity.setFactor(factorEntity);
             betEntity.setUser(userEntity);
             userEntity.getBets().add(betEntity);
@@ -103,6 +107,8 @@ public class BetData implements IBetData {
             session.getTransaction().begin();
             BetEntity betEntity = session.get(BetEntity.class, idBet);
             session.delete(betEntity);
+            MoneyEntity moneyEntity = session.find(MoneyEntity.class, betEntity.getUserLogin());
+            moneyEntity.setValue(moneyEntity.getValue() + betEntity.getMoney());
             session.getTransaction().commit();
         }catch (RollbackException e){
             log.error("CancelBetById exception, idBet {}",idBet);

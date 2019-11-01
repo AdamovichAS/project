@@ -5,12 +5,10 @@ package com.github.adamovichas.project.model.dto;
 
 public class TeamDTO {
 
-
-    private Long idLeague;
     private String name;
+    private Long idLeague;
 
     public TeamDTO(String name, Long idLeague) {
-
         this.idLeague = idLeague;
         this.name = name;
     }

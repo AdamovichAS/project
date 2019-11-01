@@ -16,7 +16,7 @@ public enum  UserCreater {
 
     public UserDTO createUser(Map<String,String> userFieldsAndValues){
         UserDTO user = new UserDTO();
-        user.setRole(Role.USER_VER);
+        user.setRole(Role.USER_NOT_VER);
         SETTER.SetFields(user,userFieldsAndValues);
         return user;
     }

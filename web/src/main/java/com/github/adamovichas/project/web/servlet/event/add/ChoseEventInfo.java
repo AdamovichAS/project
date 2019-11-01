@@ -43,11 +43,11 @@ public class ChoseEventInfo extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String teamOneId = req.getParameter("teamOneId");
+        String teamOneId = req.getParameter("teamOne");
         if (teamOneId == null) {
             doGet(req, resp);
         }
-        String teamTwoId = req.getParameter("teamTwoId");
+        String teamTwoId = req.getParameter("teamTwo");
         Timestamp start = eventVal.formatDate(req.getParameter("start"));
         Timestamp end = eventVal.formatDate(req.getParameter("end"));
         EventDTO eventDTO = new EventDTO(teamOneId,teamTwoId,start,end);

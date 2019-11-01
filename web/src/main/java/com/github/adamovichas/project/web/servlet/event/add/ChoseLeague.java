@@ -22,7 +22,7 @@ public class ChoseLeague extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<LeagueDTO> allLeagueDTOS = dataEvent.getAllLeagues();
-        req.setAttribute("allLeagueDTOS", allLeagueDTOS);
+        req.setAttribute("allLeagues", allLeagueDTOS);
         req.getRequestDispatcher("/add_event.jsp").forward(req,resp);
     }
 
