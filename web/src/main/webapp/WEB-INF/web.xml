@@ -78,6 +78,15 @@
         <url-pattern>/new_event/add_event/</url-pattern>
     </servlet-mapping>
 
+<!--    <servlet>-->
+<!--        <servlet-name>EventPagination</servlet-name>-->
+<!--        <servlet-class>com.github.adamovichas.project.web.servlet.event.EventPaginationServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>EventPagination</servlet-name>-->
+<!--        <url-pattern>/event_pag</url-pattern>-->
+<!--    </servlet-mapping>-->
+
     <servlet>
         <servlet-name>BetServlet</servlet-name>
         <servlet-class>com.github.adamovichas.project.web.servlet.BetServlet</servlet-class>
@@ -104,6 +113,17 @@
         <filter-name>EncodeFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>EventPaginationFilter</filter-name>
+        <filter-class>com.github.adamovichas.project.web.filter.EventPaginationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EventPaginationFilter</filter-name>
+        <url-pattern>/index.jsp</url-pattern>
+        <url-pattern>/event_pagination.jsp</url-pattern>
+    </filter-mapping>
+
     <filter>
         <filter-name>LocaleFilter</filter-name>
         <filter-class>com.github.adamovichas.project.web.filter.LocaleFilter</filter-class>

@@ -1,10 +1,13 @@
 package com.github.adamovichas.project.entity;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "league")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class LeagueEntity {
     private Long id;
     private String name;

@@ -3,9 +3,12 @@ package com.github.adamovichas.project.entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "event")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class EventEntity {
     private Long id;
     private String teamOneId;

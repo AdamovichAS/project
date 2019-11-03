@@ -13,4 +13,6 @@ public interface IdataEventService {
     Long addEvent(com.github.adamovichas.project.model.dto.EventDTO eventDTO);
     List<EventDTO> getAllNotFinishedEvents();
     EventDTO getEventById(Long id);
+    Long getEventMaxPages();
+    List<EventDTO> getEventsOnCurrentPage(int page);
 }

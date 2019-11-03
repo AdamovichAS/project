@@ -6,6 +6,7 @@
 <fmt:setBundle basename = "translations" var = "messages"/>
 <html>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
     <title>Title</title>
 </head>
 <body>

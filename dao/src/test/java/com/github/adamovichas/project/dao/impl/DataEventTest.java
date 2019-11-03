@@ -83,6 +83,13 @@ public class DataEventTest {
     }
 
     @Test
+    void cacheTest(){
+        dataEvent.getAllLeagues();
+        dataEvent.getAllLeagues();
+        dataEvent.getAllLeagues();
+    }
+
+    @Test
     void getAllTeamsByLeague(){
         Long idLeague = 1L;
         int countTeamsInLeague = 20;

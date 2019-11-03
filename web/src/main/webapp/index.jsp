@@ -20,6 +20,6 @@
         <a href="${pageContext.request.contextPath}/registration.jsp"><fmt:message key="index.registration" bundle="${messages}"/></a><br>
     </c:otherwise>
 </c:choose>
-
+<jsp:include page="event_pagination.jsp"/>
 </body>
 </html>

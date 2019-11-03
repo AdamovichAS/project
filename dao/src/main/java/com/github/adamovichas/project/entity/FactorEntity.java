@@ -1,14 +1,15 @@
 package com.github.adamovichas.project.entity;
 
 import com.github.adamovichas.project.model.factor.FactorName;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "factor_event")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class FactorEntity {
     private Long id;
     private FactorName name;

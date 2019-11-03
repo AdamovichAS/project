@@ -97,6 +97,14 @@ public class EventDTO {
         return teamOne + " - " + teamTwo;
     }
 
+    public String getFactorsView(){
+        StringBuilder sb = new StringBuilder();
+        for (FactorDTO factor : getFactors()) {
+            sb.append(factor.toString()).append(" | ");
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         return "EventDTO{" +

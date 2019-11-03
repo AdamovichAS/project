@@ -12,6 +12,7 @@ import java.util.List;
 
 public class DataEventService implements IdataEventService {
 
+    private static final int PAGE_SIZE = 5;
 
     private IDataEvent dataEvent = DataEvent.getInstance();
 
@@ -58,5 +59,20 @@ public class DataEventService implements IdataEventService {
     @Override
     public EventDTO getEventById(Long id) {
         return dataEvent.getSavedEventById(id);
+    }
+
+    @Override
+    public Long getEventMaxPages() {
+        Long rowsNews = dataEvent.getCountEvents();
+        Long maxPages = rowsNews / PAGE_SIZE;
+        if (rowsNews % PAGE_SIZE > 0) {
+            maxPages++;
+        }
+        return maxPages;
+    }
+
+    @Override
+    public List<EventDTO> getEventsOnCurrentPage(int page) {
+        return dataEvent.getEventsOnPage(page, PAGE_SIZE);
     }
 }

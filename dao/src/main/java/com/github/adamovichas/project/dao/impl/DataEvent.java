@@ -17,7 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.RollbackException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,6 +117,41 @@ public class DataEvent implements IDataEvent {
         return EntityDtoViewConverter.getDTO(eventEntity);
     }
 
+    @Override
+    public Long getCountEvents() {
+        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        session.getTransaction().begin();
+        Long countEvents = session.createQuery("SELECT count (*) from EventEntity", Long.class).getSingleResult();
+        session.getTransaction().commit();
+        session.close();
+        return countEvents;
+    }
+
+    @Override
+    public List<EventDTO> getEventsOnPage(int page, int pageSize) {
+        List<EventDTO>events = new ArrayList<>();
+        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        try {
+            session.getTransaction().begin();
+            final Query query = session.createQuery("FROM EventEntity e ORDER BY e.id asc")
+                    .setMaxResults(pageSize)
+                    .setFirstResult(page - 1)
+                    .setReadOnly(true);
+            List<EventEntity> eventEntities = query.list();
+            for (EventEntity entity : eventEntities) {
+                EventDTO dto = EntityDtoViewConverter.getDTO(entity);
+                events.add(dto);
+            }
+            session.getTransaction().commit();
+        }catch (PersistenceException e){
+            log.error("Fail to get list of events from DB at: {}", LocalDateTime.now(), e);
+            throw new RuntimeException(e);
+        }finally {
+            session.close();
+        }
+        return events;
+    }
+
 
     @Override
     public List<LeagueDTO> getAllLeagues() {
@@ -122,6 +159,7 @@ public class DataEvent implements IDataEvent {
         Session session = em.unwrap(Session.class);
         session.beginTransaction();
         Query query = session.createQuery("FROM LeagueEntity");
+        query.setCacheable(true);
         List<LeagueEntity> leagueEn = (List<LeagueEntity>) query.list();
         session.getTransaction().commit();
         session.close();

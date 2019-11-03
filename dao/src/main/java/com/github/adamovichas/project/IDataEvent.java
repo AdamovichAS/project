@@ -14,4 +14,6 @@ public interface IDataEvent {
     boolean eventIsExist(com.github.adamovichas.project.model.dto.EventDTO eventDTO);
     List<EventDTO> getAllNotFinishedEvents();
     EventDTO getSavedEventById(Long id);
+    Long getCountEvents();
+    List<EventDTO>getEventsOnPage(int page, int pageSize);
 }
