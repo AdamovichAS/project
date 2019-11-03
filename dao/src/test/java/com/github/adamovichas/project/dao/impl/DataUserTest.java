@@ -65,5 +65,11 @@ public class DataUserTest {
         assertEquals(userByLogin.getEmail(), userDTO.getEmail());
     }
 
+    @Test
+    public void cacheTest(){
+        dataUser.getUserByLogin("alexey");
+        dataUser.getUserByLogin("alexey");
+        dataUser.getUserByLogin("alexey");
+    }
 
 }

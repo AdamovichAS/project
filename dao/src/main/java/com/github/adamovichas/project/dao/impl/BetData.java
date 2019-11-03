@@ -43,7 +43,7 @@ public class BetData implements IBetData {
 
     @Override
     public Long addBet(BetDTO bet) {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         Long id = null;
         try {
             BetEntity betEntity = EntityDtoViewConverter.getEntity(bet);
@@ -70,7 +70,7 @@ public class BetData implements IBetData {
 
     @Override
     public BetView getViewById(Long idBet) {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         session.getTransaction().begin();
         BetEntity betEntity = session.get(BetEntity.class, idBet);
         Hibernate.initialize(betEntity.getFactor().getEvent());
@@ -82,7 +82,7 @@ public class BetData implements IBetData {
 
     @Override
     public List<BetView> getNotFinishedBetByLogin(String login) {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         List<BetView>views = new ArrayList<>();
         BetView betView;
         session.getTransaction().begin();
@@ -102,7 +102,7 @@ public class BetData implements IBetData {
 
     @Override
     public void CancelBetById(Long idBet) {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         try {
             session.getTransaction().begin();
             BetEntity betEntity = session.get(BetEntity.class, idBet);

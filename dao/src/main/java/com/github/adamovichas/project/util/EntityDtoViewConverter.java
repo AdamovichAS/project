@@ -9,7 +9,7 @@ import com.github.adamovichas.project.model.view.BetView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityDtoViewConverter {
+public abstract class EntityDtoViewConverter {
 
     public static UserEntity getEntity(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();

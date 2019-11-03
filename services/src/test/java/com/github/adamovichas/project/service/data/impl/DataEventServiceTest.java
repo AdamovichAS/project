@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
-public class DataEventDTOServiceTest {
+public class DataEventServiceTest {
 
     @Mock
     public DataEvent dataEvent;
@@ -49,14 +49,14 @@ public class DataEventDTOServiceTest {
 
     @Test
     public void eventIsExist(){
-        com.github.adamovichas.project.model.dto.EventDTO eventDTOTest = createEventTest();
+        EventDTO eventDTOTest = createEventTest();
         dataEventService.eventIsExist(eventDTOTest);
         Mockito.verify(dataEvent,times(1)).eventIsExist(eventDTOTest);
     }
 
     @Test
     public void addEvent(){
-        com.github.adamovichas.project.model.dto.EventDTO eventDTOTest = createEventTest();
+        EventDTO eventDTOTest = createEventTest();
         dataEventService.addEvent(eventDTOTest);
         Mockito.verify(dataEvent,times(1)).addEvent(eventDTOTest);
     }
@@ -92,5 +92,12 @@ public class DataEventDTOServiceTest {
         when(dataEvent.getSavedEventById(eventTest.getId())).thenReturn(eventTest);
         EventDTO eventById = dataEventService.getEventById(10L);
         assertEquals(eventById.getId(),eventTest.getId());
+    }
+
+    @Test
+    public void getEventMaxPages(){
+        when(dataEvent.getCountEvents()).thenReturn(10L);
+        Long pages = dataEventService.getEventMaxPages();
+        assertEquals(pages,2L);
     }
 }

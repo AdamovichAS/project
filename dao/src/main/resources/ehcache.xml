@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache>
-    <defaultCache maxEntriesLocalHeap="20"
+    <defaultCache maxEntriesLocalHeap="100"
                   eternal="false"
                   timeToIdleSeconds="120"
                   timeToLiveSeconds="200"
@@ -29,6 +29,10 @@
            timeToIdleSeconds="300"
            timeToLiveSeconds="600">
         <persistence strategy="localTempSwap"/>
+    </cache>
+    <cache name="com.github.adamovichas.project.entity.FactorEntity"
+           maxEntriesLocalHeap="20"
+           eternal="true">
     </cache>
     <cache name="com.github.adamovichas.project.entity.TeamEntity"
            maxEntriesLocalHeap="20"

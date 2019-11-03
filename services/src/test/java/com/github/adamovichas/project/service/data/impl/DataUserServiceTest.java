@@ -21,6 +21,8 @@ public class DataUserServiceTest {
     @Mock
     public DataUser dataUser;
 
+    @Mock
+    public UserCreater userCreater;
 
     @InjectMocks
     public DataUserService dataUserService;
@@ -46,29 +48,30 @@ public class DataUserServiceTest {
         assertTrue(isExist);
     }
 
-//    @Test
-//    public void addNewUser(){
-//        Map<String,String>userFields = new HashMap<>();
-//        userFields.put("login","login");
-//        userFields.put("password","password");
-//        UserDTO user = new UserDTO();
-//        user.setLogin("login");
-//        user.setPassword("password");
-//        when(UserCreater.CREATER.createUser(userFields)).thenReturn(user);
-//        when(dataUser.addUser(user)).thenReturn(true);
-//        boolean addNewUser = dataUserService.addNewUser(userFields);
-//        assertTrue(addNewUser);
-//    }
-//
-//    @Test
-//    public void getUserByLogin(){
-//        String login = "login";
-//        UserDTO user = new UserDTO();
-//        user.setLogin(login);
-//        dataUserService.getUserByLogin(login);
-//        verify(dataUser,times(1)).addUser(user);
-//
-//    }
+    @Test
+    public void addNewUser(){
+        Map<String,String>userFields = new HashMap<>();
+        userFields.put("login","login");
+        userFields.put("password","password");
+        UserDTO user = new UserDTO();
+        user.setLogin("login");
+        user.setPassword("password");
+        when(userCreater.createUser(userFields)).thenReturn(user);
+        when(dataUser.addUser(user)).thenReturn(true);
+        boolean addNewUser = dataUserService.addNewUser(userFields);
+        assertTrue(addNewUser);
+    }
+
+    @Test
+    public void getUserByLogin(){
+        String login = "login";
+        UserDTO user = new UserDTO();
+        user.setLogin(login);
+        when(dataUser.getUserByLogin(login)).thenReturn(user);
+        dataUserService.getUserByLogin(login);
+        verify(dataUser,times(1)).getUserByLogin(login);
+
+    }
 
 
     UserDTO createTestUser(){

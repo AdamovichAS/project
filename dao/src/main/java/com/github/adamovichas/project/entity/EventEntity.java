@@ -109,7 +109,7 @@ public class EventEntity {
         this.resultFactorId = resultFactorId;
     }
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     public List<FactorEntity> getFactors() {
         return factors;
     }

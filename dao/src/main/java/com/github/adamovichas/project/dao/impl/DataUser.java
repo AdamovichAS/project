@@ -85,7 +85,7 @@ public class DataUser implements IDataUser {
     @Override
     public boolean updateUserInfo(UserDTO user) {
         boolean result = false;
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         try {
             session.getTransaction().begin();
             UserEntity userEntity = session.find(UserEntity.class, user.getLogin());

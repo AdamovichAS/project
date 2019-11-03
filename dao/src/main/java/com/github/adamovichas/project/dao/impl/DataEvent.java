@@ -19,6 +19,9 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.RollbackException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +47,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public Long addEvent(EventDTO event) {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         try {
             session.getTransaction().begin();
             EventEntity eventEntity = EntityDtoViewConverter.getEntity(event);
@@ -69,7 +72,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public boolean eventIsExist(EventDTO event) {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         boolean result = false;
         try {
             session.getTransaction().begin();
@@ -94,7 +97,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public List<EventDTO> getAllNotFinishedEvents() {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         session.getTransaction().begin();
         List<EventEntity> eventEntities = session.createQuery("FROM EventEntity e WHERE e.resultFactorId = null").list();
         List<EventDTO> views = new ArrayList<>();
@@ -110,8 +113,12 @@ public class DataEvent implements IDataEvent {
         EntityManager em = HibernateUtil.getEntityManager();
         Session session = em.unwrap(Session.class);
         session.getTransaction().begin();
-        EventEntity eventEntity = session.find(EventEntity.class, id);
-        Hibernate.initialize(eventEntity.getFactors());
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<EventEntity> criteria = criteriaBuilder.createQuery(EventEntity.class);
+        Root<EventEntity> event = criteria.from(EventEntity.class);
+        criteria.select(event)
+                .where(criteriaBuilder.equal(event.get("id"),id));
+        EventEntity eventEntity = session.createQuery(criteria).getSingleResult();
         session.getTransaction().commit();
         session.close();
         return EntityDtoViewConverter.getDTO(eventEntity);
@@ -119,7 +126,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public Long getCountEvents() {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         session.getTransaction().begin();
         Long countEvents = session.createQuery("SELECT count (*) from EventEntity", Long.class).getSingleResult();
         session.getTransaction().commit();
@@ -130,12 +137,12 @@ public class DataEvent implements IDataEvent {
     @Override
     public List<EventDTO> getEventsOnPage(int page, int pageSize) {
         List<EventDTO>events = new ArrayList<>();
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         try {
             session.getTransaction().begin();
             final Query query = session.createQuery("FROM EventEntity e ORDER BY e.id asc")
                     .setMaxResults(pageSize)
-                    .setFirstResult(page - 1)
+                    .setFirstResult((page - 1)*pageSize)
                     .setReadOnly(true);
             List<EventEntity> eventEntities = query.list();
             for (EventEntity entity : eventEntities) {
@@ -155,8 +162,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public List<LeagueDTO> getAllLeagues() {
-        EntityManager em = HibernateUtil.getEntityManager();
-        Session session = em.unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         session.beginTransaction();
         Query query = session.createQuery("FROM LeagueEntity");
         query.setCacheable(true);
@@ -172,8 +178,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public List<TeamDTO> getAllTeamsByLeague(Long idLeague) {
-        EntityManager em = HibernateUtil.getEntityManager();
-        Session session = em.unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         session.getTransaction().begin();
         LeagueEntity leagueEntity = session.find(LeagueEntity.class, idLeague);
         Hibernate.initialize(leagueEntity.getTeams());

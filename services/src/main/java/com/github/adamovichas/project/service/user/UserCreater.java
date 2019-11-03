@@ -5,12 +5,11 @@ import com.github.adamovichas.project.model.dto.UserDTO;
 
 import java.util.Map;
 
-public enum  UserCreater {
-    CREATER;
+public class  UserCreater {
 
     private UserFieldsSetter SETTER;
 
-    UserCreater() {
+    public UserCreater() {
         SETTER = UserFieldsSetter.SETTER;
     }
 
@@ -21,10 +20,4 @@ public enum  UserCreater {
         return user;
     }
 
-    public UserDTO createAdmin(Map<String,String> userFieldsAndValues){
-        UserDTO user = new UserDTO();
-        user.setRole(Role.ADMIN);
-        SETTER.SetFields(user,userFieldsAndValues);
-        return user;
-    }
 }

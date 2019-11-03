@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class EventDTOUtilTest {
+public class EventUtilTest {
 
     private EventUtil util = EventUtil.EVENT_UTIL;
 

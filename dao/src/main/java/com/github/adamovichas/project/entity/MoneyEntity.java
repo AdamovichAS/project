@@ -1,11 +1,14 @@
 package com.github.adamovichas.project.entity;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Cache;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "money")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MoneyEntity {
 
     private String login;

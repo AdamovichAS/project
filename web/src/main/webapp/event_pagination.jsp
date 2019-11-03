@@ -1,12 +1,11 @@
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 03.11.2019
-  Time: 14:56
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:setLocale value= "${locale}"/>
+<fmt:setBundle basename = "translations" var = "messages"/>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,10 +16,11 @@
 
 <div class="row col-md-6">
     <table class="table table-striped table-bordered table-sm">
+        <H3><fmt:message key="event_pagination.title" bundle="${messages}"/></H3>
         <tr>
-            <th>Name</th>
-            <th>Start Time</th>
-            <th>Factors</th>
+            <th><fmt:message key="event_pagination.name" bundle="${messages}"/></th>
+            <th><fmt:message key="event_pagination.start" bundle="${messages}"/></th>
+            <th><fmt:message key="event_pagination.factors" bundle="${messages}"/></th>
         </tr>
 
         <c:forEach items="${eventsList}" var="event">
@@ -38,7 +38,7 @@
         <c:if test="${currentPage > 1}">
             <li class="page-item">
                 <a class="page-link"
-                   href="${pageContext.request.contextPath}/event_pagination.jsp?currentPage=${currentPage-1}"
+                   href="${pageContext.request.contextPath}/index.jsp?currentPage=${currentPage-1}"
                    aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
@@ -54,14 +54,14 @@
                 <c:otherwise>
                     <li class="page-item">
                         <a class="page-link"
-                           href="${pageContext.request.contextPath}/event_pagination.jsp?currentPage=${page}">${page}</a></li>
+                           href="${pageContext.request.contextPath}/index.jsp?currentPage=${page}">${page}</a></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
         <c:if test="${currentPage < maxPages}">
             <li class="page-item">
                 <a class="page-link"
-                   href="${pageContext.request.contextPath}/event_pagination.jsp?currentPage=${currentPage+1}"
+                   href="${pageContext.request.contextPath}/index.jsp?currentPage=${currentPage+1}"
                    aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

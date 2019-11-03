@@ -87,6 +87,7 @@ public class DataEventTest {
         dataEvent.getAllLeagues();
         dataEvent.getAllLeagues();
         dataEvent.getAllLeagues();
+
     }
 
     @Test
@@ -97,15 +98,9 @@ public class DataEventTest {
         assertEquals(countTeamsInLeague,allTeamsByLeague.size());
     }
 
-//    @Test
-//    void addLeagueAndTeam(){
-//        final boolean b = dataEvent.saveLeagueTeam();
-//        assertTrue(b);
-//    }
-//
-//    @Test
-//    void deleteLeague(){
-//        final boolean b = dataEvent.deleteLeague();
-//        assertTrue(b);
-//    }
+    @Test
+    void getEventsOnPage(){
+        List<EventDTO> events = dataEvent.getEventsOnPage(1, 5);
+        assertEquals(events.size(),5);
+    }
 }

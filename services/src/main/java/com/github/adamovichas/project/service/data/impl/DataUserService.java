@@ -13,7 +13,8 @@ import static java.util.Objects.nonNull;
 
 public class DataUserService implements IdataUserService {
 
-    private IDataUser data =DataUser.getInstance();
+    private IDataUser data = DataUser.getInstance();
+    private UserCreater userCreater = new UserCreater();
 
     private static volatile IdataUserService instance;
 
@@ -48,7 +49,7 @@ public class DataUserService implements IdataUserService {
         if(loginIsExist(login)){
             return false;
         }
-        UserDTO user = UserCreater.CREATER.createUser(userFieldsAndValues);
+        UserDTO user = userCreater.createUser(userFieldsAndValues);
         return data.addUser(user);
     }
 

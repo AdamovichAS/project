@@ -36,7 +36,7 @@ public class MoneyData implements IMoneyData {
     @Override
     public boolean createMoney(String login) {
         boolean result = false;
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         MoneyEntity moneyEntity = new MoneyEntity();
         moneyEntity.setValue(0);
         moneyEntity.setLogin(login);
@@ -60,9 +60,11 @@ public class MoneyData implements IMoneyData {
 
     @Override
     public MoneyDTO getMoneyByLogin(String login) {
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = HibernateUtil.getSession();
         session.getTransaction().begin();
         MoneyEntity moneyEntity = session.find(MoneyEntity.class, login);
+        session.getTransaction().commit();
+        session.close();
         return EntityDtoViewConverter.getDTO(moneyEntity);
     }
 }

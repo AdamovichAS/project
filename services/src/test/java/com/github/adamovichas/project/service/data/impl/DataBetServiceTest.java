@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -14,9 +15,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
-public class DataBetDTOServiceTest {
+public class DataBetServiceTest {
 
     @Mock
     public BetData dataBet;
@@ -57,5 +59,11 @@ public class DataBetDTOServiceTest {
         when(dataBet.getNotFinishedBetByLogin(login)).thenReturn(betViews);
         List<BetView> notFinishedBetByLogin = dataBetService.getNotFinishedBetByLogin(login);
         assertEquals(notFinishedBetByLogin.size(),betViews.size());
+    }
+
+    @Test
+    public void cancelBetById(){
+        dataBetService.cancelBetById(1L);
+        Mockito.verify(dataBet,times(1)).CancelBetById(1L);
     }
 }
