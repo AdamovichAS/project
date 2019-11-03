@@ -36,8 +36,8 @@ public class DataEventDTOServiceTest {
     }
 
 
-    com.github.adamovichas.project.model.dto.EventDTO createEventTest(){
-        com.github.adamovichas.project.model.dto.EventDTO eventDTO = new com.github.adamovichas.project.model.dto.EventDTO("Arsenal","Liverpool", Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
+    EventDTO createEventTest(){
+        EventDTO eventDTO = new EventDTO("Arsenal","Liverpool",1L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
         List<FactorDTO> factorDTOS = new ArrayList<>();
         eventDTO.setId(50L);
         factorDTOS.add(new FactorDTO(FactorName.win,2.5));
@@ -79,7 +79,7 @@ public class DataEventDTOServiceTest {
 
     @Test
     public void getAllTeamsByLeague(){
-        List<TeamDTO> teamDTOS = new ArrayList<>(Arrays.asList(new TeamDTO("Liverpool",10L),new TeamDTO("Arsenal",10L)));
+        List<TeamDTO> teamDTOS = new ArrayList<>(Arrays.asList(new TeamDTO("Liverpool"),new TeamDTO("Arsenal")));
         when(dataEvent.getAllTeamsByLeague(Mockito.any())).thenReturn(teamDTOS);
         List<TeamDTO> allTeamsByLeague = dataEventService.getAllTeamsByLeague(10L);
         assertEquals(allTeamsByLeague.size(), teamDTOS.size());

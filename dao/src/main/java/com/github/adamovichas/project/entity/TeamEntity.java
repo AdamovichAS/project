@@ -2,19 +2,18 @@ package com.github.adamovichas.project.entity;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "team")
 public class TeamEntity {
 
     private String name;
-    private Long idLeague;
-    private LeagueEntity league;
-//    private List<EventEntity> events;
+//    private Long idLeague;
+    private List<LeagueEntity> leagues;
 
-    public TeamEntity(String name, Long idLeague) {
-        this.idLeague = idLeague;
+
+    public TeamEntity(String name) {
+ //       this.idLeague = idLeague;
         this.name = name;
     }
 
@@ -32,24 +31,23 @@ public class TeamEntity {
     }
 
 
-    @Column(name = "league_id", insertable=false, updatable=false)
-    public Long getIdLeague() {
-        return idLeague;
+//    @Column(name = "league_id", insertable=false, updatable=false)
+//    public Long getIdLeague() {
+//        return idLeague;
+//    }
+//
+//    public void setIdLeague(Long idLeague) {
+//        this.idLeague = idLeague;
+//    }
+
+
+    @ManyToMany(mappedBy = "teams")
+    public List<LeagueEntity> getLeagues() {
+        return leagues;
     }
 
-    public void setIdLeague(Long idLeague) {
-        this.idLeague = idLeague;
-    }
-
-
-    @ManyToOne
-    @PrimaryKeyJoinColumn(name = "league_id")
-    public LeagueEntity getLeague() {
-        return league;
-    }
-
-    public void setLeague(LeagueEntity league) {
-        this.league = league;
+    public void setLeagues(List<LeagueEntity> league) {
+        this.leagues = league;
     }
 
 //    @ManyToMany(mappedBy = "teams")

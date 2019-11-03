@@ -10,10 +10,12 @@ public class EventEntity {
     private Long id;
     private String teamOneId;
     private String teamTwoId;
+    private Long leagueId;
     private Timestamp startTime;
     private Timestamp endTime;
     private List<FactorEntity> factors;
     private Long resultFactorId;
+    private LeagueEntity league;
 //    private List<TeamEntity> teams;
 
 //    public EventEntity(Long teamOneId, Long teamTwoId, Timestamp startTime, Timestamp endTime) {
@@ -54,6 +56,25 @@ public class EventEntity {
 
     public void setTeamTwoId(String teamTwoId) {
         this.teamTwoId = teamTwoId;
+    }
+
+    @Column(name = "league_id",nullable = false, updatable = false, insertable = false)
+    public Long getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(Long leagueId) {
+        this.leagueId = leagueId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "league_id", referencedColumnName = "id")
+    public LeagueEntity getLeague() {
+        return league;
+    }
+
+    public void setLeague(LeagueEntity league) {
+        this.league = league;
     }
 
     @Column(name = "start_time", nullable = false)

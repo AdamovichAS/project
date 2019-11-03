@@ -1,5 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
+import com.github.adamovichas.project.entity.LeagueEntity;
+import com.github.adamovichas.project.entity.TeamEntity;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
@@ -87,4 +89,16 @@ public class DataEventTest {
         List<TeamDTO> allTeamsByLeague = dataEvent.getAllTeamsByLeague(idLeague);
         assertEquals(countTeamsInLeague,allTeamsByLeague.size());
     }
+
+//    @Test
+//    void addLeagueAndTeam(){
+//        final boolean b = dataEvent.saveLeagueTeam();
+//        assertTrue(b);
+//    }
+//
+//    @Test
+//    void deleteLeague(){
+//        final boolean b = dataEvent.deleteLeague();
+//        assertTrue(b);
+//    }
 }

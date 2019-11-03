@@ -9,6 +9,7 @@ public class LeagueEntity {
     private Long id;
     private String name;
     private List<TeamEntity>teams;
+    private List<EventEntity>events;
 
     public LeagueEntity(Long id, String name) {
         this.id = id;
@@ -37,13 +38,25 @@ public class LeagueEntity {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "league", fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(name = "league_team_dependency", joinColumns = {@JoinColumn(name = "league_id")},
+            inverseJoinColumns = {@JoinColumn(name = "team")}
+    )
     public List<TeamEntity> getTeams() {
         return teams;
     }
 
     public void setTeams(List<TeamEntity> teams) {
         this.teams = teams;
+    }
+
+    @OneToMany(mappedBy = "league")
+    public List<EventEntity> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<EventEntity> events) {
+        this.events = events;
     }
 
     @Override

@@ -6,10 +6,10 @@ package com.github.adamovichas.project.model.dto;
 public class TeamDTO {
 
     private String name;
-    private Long idLeague;
+ //   private Long idLeague;
 
-    public TeamDTO(String name, Long idLeague) {
-        this.idLeague = idLeague;
+    public TeamDTO(String name) {
+ //       this.idLeague = idLeague;
         this.name = name;
     }
 
@@ -21,13 +21,6 @@ public class TeamDTO {
         this.name = name;
     }
 
-    public Long getIdLeague() {
-        return idLeague;
-    }
-
-    public void setIdLeague(Long idLeague) {
-        this.idLeague = idLeague;
-    }
 
     @Override
     public String toString() {

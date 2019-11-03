@@ -76,7 +76,7 @@ public enum Util {
     }
 
      EventDTO createEventTest(){
-        EventDTO event = new EventDTO("Arsenal","Aston Vila", Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
+        EventDTO event = new EventDTO("Arsenal","Aston Vila", 1L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
         List<FactorDTO> factors= new ArrayList<>();
         factors.add(new FactorDTO(FactorName.win,2.5));
         factors.add(new FactorDTO(FactorName.draw,3));

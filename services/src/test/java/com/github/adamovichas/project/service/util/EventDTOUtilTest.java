@@ -29,7 +29,7 @@ public class EventDTOUtilTest {
 
     @Test
     public void getFactorsByName(){
-        EventDTO event = new EventDTO("Test2","Test", Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
+        EventDTO event = new EventDTO("Test2","Test",1L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
         List<FactorDTO> factorDTOS = new ArrayList<>();
         String factorName = FactorName.win.toString();
         double factorValue = 2.5;

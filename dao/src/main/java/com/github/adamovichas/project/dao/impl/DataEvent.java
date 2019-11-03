@@ -7,7 +7,6 @@ import com.github.adamovichas.project.entity.TeamEntity;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
-import com.github.adamovichas.project.IDataConnect;
 import com.github.adamovichas.project.IDataEvent;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
@@ -47,6 +46,9 @@ public class DataEvent implements IDataEvent {
         try {
             session.getTransaction().begin();
             EventEntity eventEntity = EntityDtoViewConverter.getEntity(event);
+            LeagueEntity leagueEntity = session.find(LeagueEntity.class, event.getLeagueId());
+            leagueEntity.getEvents().add(eventEntity);
+            eventEntity.setLeague(leagueEntity);
             Long id = (Long) session.save(eventEntity);
             for (FactorEntity factor : eventEntity.getFactors()) {
                 factor.setEvent(eventEntity);
@@ -145,7 +147,33 @@ public class DataEvent implements IDataEvent {
             teamDTOS.add(EntityDtoViewConverter.getDTO(team));
         }
         return teamDTOS;
-
-
     }
+
+//    public boolean saveLeagueTeam(){
+//        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+//        LeagueEntity leagueEntity = new LeagueEntity();
+//        leagueEntity.setEvents(new ArrayList<>());
+//        leagueEntity.setTeams(new ArrayList<>());
+//        leagueEntity.setName("UFC");
+//        session.getTransaction().begin();
+//        TeamEntity teamEntity = session.find(TeamEntity.class, "Arsenal");
+//        leagueEntity.getTeams().add(teamEntity);
+//        teamEntity.getLeagues().add(leagueEntity);
+//        session.saveOrUpdate(leagueEntity);
+//        session.getTransaction().commit();
+//        session.close();
+//        return true;
+//    }
+//
+//    public boolean deleteLeague(){
+//        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+//        session.getTransaction().begin();
+//        LeagueEntity leagueEntity = session.find(LeagueEntity.class, 3L);
+//        Hibernate.initialize(leagueEntity.getTeams());
+//        Hibernate.initialize(leagueEntity.getEvents());
+//        session.delete(leagueEntity);
+//        session.getTransaction().commit();
+//        session.close();
+//        return true;
+//    }
 }

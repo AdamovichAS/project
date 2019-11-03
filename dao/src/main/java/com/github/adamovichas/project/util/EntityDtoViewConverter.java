@@ -67,11 +67,11 @@ public class EntityDtoViewConverter {
     }
 
     public static TeamEntity getEntity(TeamDTO teamDTO){
-        return new TeamEntity(teamDTO.getName(), teamDTO.getIdLeague());
+        return new TeamEntity(teamDTO.getName());
     }
 
     public static TeamDTO getDTO(TeamEntity teamEntity){
-        return new TeamDTO(teamEntity.getName(), teamEntity.getIdLeague());
+        return new TeamDTO(teamEntity.getName());
     }
 
     public static EventEntity getEntity(EventDTO eventDTO){
@@ -79,6 +79,7 @@ public class EntityDtoViewConverter {
         eventEntity.setId(eventDTO.getId());
         eventEntity.setTeamOneId(eventDTO.getTeamOne());
         eventEntity.setTeamTwoId(eventDTO.getTeamTwo());
+        eventEntity.setLeagueId(eventDTO.getLeagueId());
         eventEntity.setStartTime(eventDTO.getStartTime());
         eventEntity.setEndTime(eventDTO.getEndTime());
         eventEntity.setResultFactorId(eventDTO.getResultFactorId());
@@ -95,6 +96,7 @@ public class EntityDtoViewConverter {
         eventDTO.setId(eventEntity.getId());
         eventDTO.setTeamOne(eventEntity.getTeamOneId());
         eventDTO.setTeamTwo(eventEntity.getTeamTwoId());
+        eventDTO.setLeagueId(eventEntity.getLeagueId());
         eventDTO.setStartTime(eventEntity.getStartTime());
         eventDTO.setEndTime(eventEntity.getEndTime());
         eventDTO.setResultFactorId(eventEntity.getResultFactorId());

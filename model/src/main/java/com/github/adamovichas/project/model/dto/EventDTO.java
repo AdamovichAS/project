@@ -11,14 +11,16 @@ public class EventDTO {
     private Long id;
     private String teamOne;
     private String teamTwo;
+    private Long leagueId;
     private Timestamp startTime;
     private Timestamp endTime;
     private List<FactorDTO>factors;
     private Long resultFactorId;
 
-    public EventDTO(String teamOne, String teamTwo, Timestamp startTime, Timestamp endTime) {
+    public EventDTO(String teamOne, String teamTwo, Long leagueId, Timestamp startTime, Timestamp endTime) {
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;
+        this.leagueId = leagueId;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -49,6 +51,14 @@ public class EventDTO {
 
     public void setTeamTwo(String teamTwo) {
         this.teamTwo = teamTwo;
+    }
+
+    public Long getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(Long leagueId) {
+        this.leagueId = leagueId;
     }
 
     public Timestamp getStartTime() {

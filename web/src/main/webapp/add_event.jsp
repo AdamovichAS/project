@@ -45,6 +45,7 @@
                 <input type="number" step="0.01" min="0.01" required  placeholder="factor draw" name="draw">
                 <input type="number" step="0.01" min="0.01" required placeholder="factor lose first" name="lose">
             </div>
+            <input type="hidden" name="leagueId" value="${leagueId}">
             <input type="submit"  value="<fmt:message key="add_event.create_event" bundle="${messages}"/>"/>
         </form><br><br>
         <c:if test="${requestScope.get('error') != null}">

@@ -38,6 +38,7 @@ public class ChoseEventInfo extends HttpServlet {
         Long leagueId = (Long) req.getAttribute("leagueId");
         List<TeamDTO> allTeamsByLeague = dataEvent.getAllTeamsByLeague(leagueId);
         req.setAttribute("allTeams", allTeamsByLeague);
+        req.setAttribute("leagueId",leagueId);
         req.getRequestDispatcher("/add_event.jsp").forward(req,resp);
     }
 
@@ -48,9 +49,10 @@ public class ChoseEventInfo extends HttpServlet {
             doGet(req, resp);
         }
         String teamTwoId = req.getParameter("teamTwo");
+        Long leagueId = Long.valueOf(req.getParameter("leagueId"));
         Timestamp start = eventVal.formatDate(req.getParameter("start"));
         Timestamp end = eventVal.formatDate(req.getParameter("end"));
-        EventDTO eventDTO = new EventDTO(teamOneId,teamTwoId,start,end);
+        EventDTO eventDTO = new EventDTO(teamOneId,teamTwoId, leagueId, start,end);
         double win = Double.valueOf(req.getParameter("win"));
         double lose = Double.valueOf(req.getParameter("lose"));
         double draw = Double.valueOf(req.getParameter("draw"));
