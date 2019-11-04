@@ -42,13 +42,8 @@ public class DataUser implements IDataUser {
         boolean result = false;
         EntityManager entityManager = HibernateUtil.getEntityManager();
         try {
-//            MoneyEntity money = new MoneyEntity();
-//            money.setValue(0);
-//            money.setUserEntity(userEntity);
-//            userEntity.setMoney(money);
             entityManager.getTransaction().begin();
             entityManager.persist(userEntity);
-//            entityManager.persist(money);
             entityManager.getTransaction().commit();
             result = true;
         } catch (RollbackException e) {

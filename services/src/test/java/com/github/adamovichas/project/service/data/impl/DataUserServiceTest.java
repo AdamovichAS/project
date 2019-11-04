@@ -13,6 +13,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.*;
 
+import static java.util.Objects.nonNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -35,7 +37,10 @@ public class DataUserServiceTest {
     @Test
     public void loginIsExist(){
         final UserDTO testUser = createTestUser();
+        final String password = testUser.getPassword();
         when(dataUser.getUserByLogin(testUser.getLogin())).thenReturn(testUser);
+        assertTrue(testUser !=null);
+        assertEquals(password,testUser.getPassword());
         boolean isExist = dataUserService.loginIsExist(testUser.getLogin());
         assertTrue(isExist);
     }
