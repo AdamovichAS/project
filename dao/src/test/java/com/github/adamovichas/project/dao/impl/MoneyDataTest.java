@@ -33,7 +33,7 @@ public class MoneyDataTest {
     public void createDepositTrue(){
         UserDTO userDTO = util.createTestUser();
         dataUser.addUser(userDTO);
-        boolean deposit = moneyData.createMoney(userDTO.getLogin());
+        boolean deposit = moneyData.verification(userDTO.getLogin());
         util.deleteDeposit(userDTO.getLogin());
         UserEntity entity = EntityDtoViewConverter.getEntity(userDTO);
         util.deleteTestUser(entity);
@@ -43,7 +43,7 @@ public class MoneyDataTest {
     @Test
     public void createDepositFalse(){
         UserDTO userDTO = util.createTestUser();
-        boolean deposit = moneyData.createMoney(userDTO.getLogin());
+        boolean deposit = moneyData.verification(userDTO.getLogin());
         assertFalse(deposit);
     }
 
@@ -51,7 +51,7 @@ public class MoneyDataTest {
     public void getMoneyByLogin(){
         UserDTO userDTO = util.createTestUser();
         dataUser.addUser(userDTO);
-        moneyData.createMoney(userDTO.getLogin());
+        moneyData.verification(userDTO.getLogin());
         MoneyDTO moneyByLogin = moneyData.getMoneyByLogin(userDTO.getLogin());
         UserEntity entity = EntityDtoViewConverter.getEntity(userDTO);
         util.deleteDeposit(userDTO.getLogin());

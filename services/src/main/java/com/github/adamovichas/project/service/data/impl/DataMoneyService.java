@@ -29,12 +29,26 @@ public class DataMoneyService implements IDataMoneyService {
     }
 
     @Override
-    public boolean createMoney(String login) {
-        return data.createMoney(login);
+    public boolean verification(String login) {
+        return data.verification(login);
     }
 
     @Override
     public MoneyDTO getMoneyByLogin(String login) {
         return data.getMoneyByLogin(login);
+    }
+
+    @Override
+    public boolean deposit(String login, double depositValue) {
+        MoneyDTO moneyDTO = data.getMoneyByLogin(login);
+        moneyDTO.setValue(moneyDTO.getValue() + depositValue);
+        return data.updateMoneyValue(moneyDTO);
+    }
+
+    @Override
+    public boolean withdrawal(String login, double withdrawalValue) {
+        MoneyDTO moneyDTO = data.getMoneyByLogin(login);
+        moneyDTO.setValue(moneyDTO.getValue() - withdrawalValue);
+        return data.updateMoneyValue(moneyDTO);
     }
 }

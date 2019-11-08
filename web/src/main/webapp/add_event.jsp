@@ -42,9 +42,9 @@
             </div>
             <div>
                 <label><fmt:message key="add_event.factorDTOS" bundle="${messages}"/></label>
-                <input type="number" step="0.01" min="0.01" placeholder="factor win first" required name="win">
-                <input type="number" step="0.01" min="0.01" required  placeholder="factor draw" name="draw">
-                <input type="number" step="0.01" min="0.01" required placeholder="factor lose first" name="lose">
+                <input type="number" step="0.01" min="1" placeholder="factor win first" required name="win">
+                <input type="number" step="0.01" min="1" required  placeholder="factor draw" name="draw">
+                <input type="number" step="0.01" min="1" required placeholder="factor lose first" name="lose">
             </div>
             <input type="hidden" name="leagueId" value="${leagueId}">
             <input type="submit"  value="<fmt:message key="add_event.create_event" bundle="${messages}"/>"/>

@@ -4,7 +4,7 @@ package com.github.adamovichas.project.model.dto;
 public class MoneyDTO {
 
     private String login;
-    private int value;
+    private double value;
 
     public MoneyDTO() {
     }
@@ -17,11 +17,11 @@ public class MoneyDTO {
         this.login = login;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

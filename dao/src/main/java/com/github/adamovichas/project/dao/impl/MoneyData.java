@@ -4,6 +4,7 @@ import com.github.adamovichas.project.IMoneyData;
 import com.github.adamovichas.project.entity.MoneyEntity;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.MoneyDTO;
+import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
 import org.hibernate.Session;
@@ -34,7 +35,7 @@ public class MoneyData implements IMoneyData {
     }
 
     @Override
-    public boolean createMoney(String login) {
+    public boolean verification(String login) {
         boolean result = false;
         Session session = HibernateUtil.getSession();
         MoneyEntity moneyEntity = new MoneyEntity();
@@ -43,6 +44,7 @@ public class MoneyData implements IMoneyData {
         try {
             session.getTransaction().begin();
             UserEntity userEntity = session.get(UserEntity.class, login);
+            userEntity.setRole(Role.USER_VER);
                 moneyEntity.setUserEntity(userEntity);
                 userEntity.setMoney(moneyEntity);
 
@@ -50,7 +52,7 @@ public class MoneyData implements IMoneyData {
             session.getTransaction().commit();
             result = true;
         }catch (RollbackException | NullPointerException | IdentifierGenerationException e){
-            log.error("createMoney exception Login - {}", login);
+            log.error("verification exception Login - {}", login);
             session.getTransaction().rollback();
         }finally {
             session.close();
@@ -66,5 +68,23 @@ public class MoneyData implements IMoneyData {
         session.getTransaction().commit();
         session.close();
         return EntityDtoViewConverter.getDTO(moneyEntity);
+    }
+
+    @Override
+    public boolean updateMoneyValue(MoneyDTO money) {
+        Session session = HibernateUtil.getSession();
+        try {
+            session.getTransaction().begin();
+            final MoneyEntity moneyEntity = session.find(MoneyEntity.class, money.getLogin());
+            moneyEntity.setValue(money.getValue());
+            session.getTransaction().commit();
+            return true;
+        }catch (RollbackException e){
+            log.error("updateMoney exception Login - {}", money);
+            session.getTransaction().rollback();
+        }finally {
+            session.close();
+        }
+        return false;
     }
 }

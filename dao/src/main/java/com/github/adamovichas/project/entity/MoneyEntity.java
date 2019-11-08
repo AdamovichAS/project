@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class MoneyEntity {
 
     private String login;
-    private int value;
+    private double value;
     private UserEntity userEntity;
 
 
@@ -37,11 +37,11 @@ public class MoneyEntity {
 
 
     @Column(name = "value")
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

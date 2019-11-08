@@ -5,7 +5,7 @@ public class BetDTO {
     private Long id;
     private String userLogin;
     private Long factorId;
-    private int money;
+    private double money;
 
     public BetDTO(String userLogin, Long factorId, int money) {
         this.userLogin = userLogin;
@@ -40,11 +40,11 @@ public class BetDTO {
         this.factorId = factorId;
     }
 
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 }

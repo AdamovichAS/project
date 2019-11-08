@@ -105,6 +105,42 @@
         <url-pattern>/cancel_bet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>VerificationServlet</servlet-name>
+        <servlet-class>com.github.adamovichas.project.web.servlet.VereficationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VerificationServlet</servlet-name>
+        <url-pattern>/verification</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CashierServlet</servlet-name>
+        <servlet-class>com.github.adamovichas.project.web.servlet.CashierServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CashierServlet</servlet-name>
+        <url-pattern>/cashier</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DepositServlet</servlet-name>
+        <servlet-class>com.github.adamovichas.project.web.servlet.DepositServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DepositServlet</servlet-name>
+        <url-pattern>/deposit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>WithdrawalServlet</servlet-name>
+        <servlet-class>com.github.adamovichas.project.web.servlet.WithdrawalServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WithdrawalServlet</servlet-name>
+        <url-pattern>/withdrawal</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>EncodeFilter</filter-name>
         <filter-class>com.github.adamovichas.project.web.filter.EncodeFilter</filter-class>

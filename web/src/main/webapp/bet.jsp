@@ -33,7 +33,7 @@
             <option value="draw">DRAW</option>
         </select>
 
-        <input type="number" step="1" min="1" max="${user_money}" placeholder="<fmt:message key="betDTO.moneyDTO" bundle="${messages}"/>" name="money_for_bet" required><br>
+        <input type="number" step="0.01" min="1" max="${user_money}" placeholder="<fmt:message key="betDTO.moneyDTO" bundle="${messages}"/>" name="money_for_bet" required><br>
         <input type="submit" name="submit" value="<fmt:message key="my_page.betDTO" bundle="${messages}"/>" />
     </form>
     <br>

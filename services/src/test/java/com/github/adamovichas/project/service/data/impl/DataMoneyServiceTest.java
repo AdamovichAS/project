@@ -26,8 +26,8 @@ public class DataMoneyServiceTest {
 
     @Test
     public void createMoney(){
-        when(dataMoney.createMoney("test")).thenReturn(true);
-        final boolean test = dataMoneyService.createMoney("test");
+        when(dataMoney.verification("test")).thenReturn(true);
+        final boolean test = dataMoneyService.verification("test");
         assertTrue(test);
     }
 }

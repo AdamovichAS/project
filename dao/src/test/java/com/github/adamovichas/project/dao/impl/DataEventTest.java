@@ -98,9 +98,5 @@ public class DataEventTest {
         assertEquals(countTeamsInLeague,allTeamsByLeague.size());
     }
 
-    @Test
-    void getEventsOnPage(){
-        List<EventDTO> events = dataEvent.getEventsOnPage(1, 5);
-        assertEquals(events.size(),5);
-    }
+
 }

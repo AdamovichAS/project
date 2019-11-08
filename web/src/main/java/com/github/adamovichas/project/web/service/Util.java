@@ -25,7 +25,7 @@ public final class Util {
 
     private static final IdataUserService serviceDAO = DataUserService.getInstance();
     private static final IDataBetService betData = DataBetService.getInstance();
-    private static final IDataMoneyService moneyService = DataMoneyService.getInstance();
+
 
     private Util() {
     }
@@ -48,7 +48,7 @@ public final class Util {
 
     }
 
-    public static void setUserBetsAndDepositInReq(HttpServletRequest req){
+    public static void setUserBetsInReq(HttpServletRequest req){
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         String login = authUser.getLogin();
         if(authUser.getRole().equals(Role.USER_VER)) {
@@ -56,8 +56,6 @@ public final class Util {
             if(!betViews.isEmpty()) {
                 req.setAttribute("userBets", betViews);
             }
-            MoneyDTO deposit = moneyService.getMoneyByLogin(authUser.getLogin());
-            req.setAttribute("deposit", deposit.getValue());
         }
     }
 

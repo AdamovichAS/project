@@ -9,8 +9,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<fmt:setLocale value= "${locale}"/>
-<fmt:setBundle basename = "translations" var = "messages"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="translations" var="messages"/>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
@@ -18,25 +18,17 @@
 </head>
 <body>
 
-<h4><fmt:message key="my_page.hello" bundle="${messages}"/> ${authUser.login} <fmt:message key="my_page.role" bundle="${messages}"/> ${authUser.role}, <fmt:message key="my_page.deposit" bundle="${messages}"/> ${deposit}</h4><br>
-    <a href="${pageContext.request.contextPath}/logout" ><fmt:message key="index.logout" bundle="${messages}"/></a>
-    <br>
-    <a href="${pageContext.request.contextPath}/update" ><fmt:message key="update.button" bundle="${messages}"/></a>
-    <br>
+<h4><fmt:message key="my_page.hello" bundle="${messages}"/> ${authUser.login} <fmt:message key="my_page.role" bundle="${messages}"/> ${authUser.role}</h4>
+<br>
+<a href="${pageContext.request.contextPath}/logout"><fmt:message key="index.logout" bundle="${messages}"/></a>
+<br>
+<a href="${pageContext.request.contextPath}/update"><fmt:message key="update.button" bundle="${messages}"/></a>
+<br>
+<a href="${pageContext.request.contextPath}/cashier" target="_blank"><fmt:message key="cashier.button" bundle="${messages}"/></a>
+<br>
+<c:if test="${authUser.role eq 'USER_VER'}">
+    <jsp:include page="user_bet.jsp"/>
+</c:if>
 
-        <a href="${pageContext.request.contextPath}/betDTO" ><fmt:message key="my_page.betDTO" bundle="${messages}"/></a>
-
-    <c:if test="${userBets ne null}">
-        <H3>Your bets</H3>
-        <form action="${pageContext.request.contextPath}/cancel_bet" method="POST">
-            <select name="betId">
-                <c:forEach items="${userBets}" var="item">
-                    <option value="${item.id}" >${item}</option>
-                </c:forEach>
-                <input type="submit" name="submit"  value="<fmt:message key="my_page.cancel_bet" bundle="${messages}"/>" /><br>
-            </select>
-
-        </form>
-    </c:if>
 </body>
 </html>
