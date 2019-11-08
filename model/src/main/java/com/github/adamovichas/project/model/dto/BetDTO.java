@@ -7,7 +7,7 @@ public class BetDTO {
     private Long factorId;
     private double money;
 
-    public BetDTO(String userLogin, Long factorId, int money) {
+    public BetDTO(String userLogin, Long factorId, double money) {
         this.userLogin = userLogin;
         this.factorId = factorId;
         this.money = money;

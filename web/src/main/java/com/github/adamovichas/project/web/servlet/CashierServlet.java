@@ -2,6 +2,7 @@ package com.github.adamovichas.project.web.servlet;
 
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.dto.MoneyDTO;
+import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.service.data.IDataMoneyService;
 import com.github.adamovichas.project.service.data.impl.DataMoneyService;
 
@@ -20,8 +21,10 @@ public class CashierServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
-        MoneyDTO account = moneyService.getMoneyByLogin(authUser.getLogin());
-        req.setAttribute("account",account);
+        if(authUser.getRole().equals(Role.USER_VER)) {
+            MoneyDTO account = moneyService.getMoneyByLogin(authUser.getLogin());
+            req.setAttribute("account", account);
+        }
         String action = req.getParameter("action");
         if(nonNull(action)){
             req.setAttribute("action",action);

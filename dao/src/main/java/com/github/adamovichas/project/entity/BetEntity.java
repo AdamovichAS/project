@@ -13,7 +13,7 @@ public class BetEntity {
     private FactorEntity factor;
     private UserEntity user;
 
-    public BetEntity(String userLogin, Long factorId, int money) {
+    public BetEntity(String userLogin, Long factorId, double money) {
         this.userLogin = userLogin;
         this.factorId = factorId;
         this.money = money;
