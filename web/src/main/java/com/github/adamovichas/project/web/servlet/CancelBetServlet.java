@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Objects.nonNull;
 
 public class CancelBetServlet extends HttpServlet{
 
@@ -24,9 +28,17 @@ public class CancelBetServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long betId = Long.valueOf(req.getParameter("betId"));
-        betData.cancelBetById(betId);
-        log.info("BetDTO with Id {} cancel", betId);
-        req.getRequestDispatcher("/redirect").forward(req,resp);
+  //      Long betId = Long.valueOf(req.getParameter("betId"));
+        final String[] betIds = req.getParameterValues("betId");
+        if(nonNull(betIds)) {
+            List<Long> betsId = new ArrayList<>();
+            for (String id : betIds) {
+                betsId.add(Long.valueOf(id));
+            }
+            betData.cancelBetById(betsId);
+        }
+  //      betData.cancelBetById(betId);
+ //       log.info("BetDTO with Id {} cancel", betId);
+        req.getRequestDispatcher("/bet_pagination").forward(req,resp);
     }
 }

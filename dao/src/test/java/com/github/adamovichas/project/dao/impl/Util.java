@@ -3,7 +3,7 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.entity.EventEntity;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.entity.MoneyEntity;
+import com.github.adamovichas.project.entity.CashAccountEntity;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
@@ -51,8 +51,8 @@ public enum Util {
     void deleteDeposit(String login){
         Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
         session.getTransaction().begin();
-        MoneyEntity moneyEntity = session.get(MoneyEntity.class, login);
-        session.delete(moneyEntity);
+        CashAccountEntity cashAccountEntity = session.get(CashAccountEntity.class, login);
+        session.delete(cashAccountEntity);
         session.getTransaction().commit();
         session.close();
     }

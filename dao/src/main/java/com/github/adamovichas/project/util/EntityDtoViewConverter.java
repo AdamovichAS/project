@@ -158,18 +158,18 @@ public abstract class EntityDtoViewConverter {
         return betDTO;
     }
 
-    public static MoneyDTO getDTO(MoneyEntity moneyEntity){
-        MoneyDTO moneyDTO = new MoneyDTO();
-        moneyDTO.setLogin(moneyEntity.getLogin());
-        moneyDTO.setValue(moneyEntity.getValue());
-        return moneyDTO;
+    public static CashAccountDTO getDTO(CashAccountEntity cashAccountEntity){
+        CashAccountDTO cashAccountDTO = new CashAccountDTO();
+        cashAccountDTO.setLogin(cashAccountEntity.getLogin());
+        cashAccountDTO.setValue(cashAccountEntity.getValue());
+        return cashAccountDTO;
     }
 
-    public static MoneyEntity getEntity(MoneyDTO moneyDTO){
-        MoneyEntity moneyEntity = new MoneyEntity();
-        moneyEntity.setLogin(moneyDTO.getLogin());
-        moneyEntity.setValue(moneyDTO.getValue());
-        return moneyEntity;
+    public static CashAccountEntity getEntity(CashAccountDTO cashAccountDTO){
+        CashAccountEntity cashAccountEntity = new CashAccountEntity();
+        cashAccountEntity.setLogin(cashAccountDTO.getLogin());
+        cashAccountEntity.setValue(cashAccountDTO.getValue());
+        return cashAccountEntity;
     }
 
     public static BetView getView(BetEntity betEntity){

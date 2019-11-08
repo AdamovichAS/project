@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.web.servlet;
 
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.service.data.IDataMoneyService;
-import com.github.adamovichas.project.service.data.impl.DataMoneyService;
+import com.github.adamovichas.project.service.data.IDataCashAccountService;
+import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,18 +12,18 @@ import java.io.IOException;
 
 public class DepositServlet extends HttpServlet {
 
-    private IDataMoneyService moneyService = DataMoneyService.getInstance();
+    private IDataCashAccountService moneyService = DataCashAccountService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer deposit = Integer.parseInt(req.getParameter("deposit"));
+        double deposit = Double.parseDouble(req.getParameter("deposit"));
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
-        boolean isDepositDone = moneyService.deposit(authUser.getLogin(), deposit);
+        boolean isDepositDone = moneyService.makeDeposit(authUser.getLogin(), deposit);
         String message;
         if(isDepositDone){
             message = String.format("deposit.done",deposit);
         }else {
-            message = "deposit.failed";
+            message = "makeDeposit.failed";
         }
         req.setAttribute("message",message);
         req.getRequestDispatcher("/cashier").include(req,resp);

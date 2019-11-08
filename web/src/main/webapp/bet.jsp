@@ -33,11 +33,11 @@
             <option value="draw">DRAW</option>
         </select>
 
-        <input type="number" step="0.01" min="1" max="${user_money}" placeholder="<fmt:message key="betDTO.moneyDTO" bundle="${messages}"/>" name="money_for_bet" required><br>
+        <input type="number" step="0.01" min="1" max="${user_money}" placeholder="<fmt:message key="betDTO.cashAccountDTO" bundle="${messages}"/>" name="money_for_bet" required><br>
         <input type="submit" name="submit" value="<fmt:message key="my_page.betDTO" bundle="${messages}"/>" />
     </form>
     <br>
-    <a href="${pageContext.request.contextPath}/user_menu.jsp"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
+    <a href="${pageContext.request.contextPath}/redirect"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
 
 </body>
 </html>

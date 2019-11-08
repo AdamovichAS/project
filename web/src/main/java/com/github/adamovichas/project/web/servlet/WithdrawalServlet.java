@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.web.servlet;
 
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.service.data.IDataMoneyService;
-import com.github.adamovichas.project.service.data.impl.DataMoneyService;
+import com.github.adamovichas.project.service.data.IDataCashAccountService;
+import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class WithdrawalServlet extends HttpServlet {
 
-    private IDataMoneyService moneyService = DataMoneyService.getInstance();
+    private IDataCashAccountService moneyService = DataCashAccountService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

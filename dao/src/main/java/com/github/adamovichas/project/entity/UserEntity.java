@@ -22,7 +22,7 @@ public class UserEntity {
     private int age;
     private String country;
     private Role role;
-    private MoneyEntity money;
+    private CashAccountEntity money;
     private List<BetEntity>bets;
 
     public UserEntity() {
@@ -38,11 +38,11 @@ public class UserEntity {
     }
 
     @OneToOne(mappedBy = "userEntity",fetch = FetchType.EAGER)
-    public MoneyEntity getMoney() {
+    public CashAccountEntity getMoney() {
         return money;
     }
 
-    public void setMoney(MoneyEntity money) {
+    public void setMoney(CashAccountEntity money) {
         this.money = money;
     }
 

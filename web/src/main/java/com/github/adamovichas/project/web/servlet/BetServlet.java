@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.web.servlet;
 
-import com.github.adamovichas.project.model.dto.MoneyDTO;
+import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.service.data.IDataMoneyService;
+import com.github.adamovichas.project.service.data.IDataCashAccountService;
 import com.github.adamovichas.project.service.data.impl.DataBetService;
 import com.github.adamovichas.project.service.data.impl.DataEventService;
 import com.github.adamovichas.project.service.data.IDataBetService;
@@ -11,7 +11,7 @@ import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.service.data.impl.DataMoneyService;
+import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
 import com.github.adamovichas.project.service.util.EventUtil;
 import com.github.adamovichas.project.service.util.IEventUtil;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class BetServlet extends HttpServlet {
     private IdataEventService dataEvent;
     private IEventUtil util;
     private IDataBetService dataBet;
-    private IDataMoneyService dataMoney;
+    private IDataCashAccountService dataMoney;
 
     private static final Logger log = LoggerFactory.getLogger(BetServlet.class);
 
@@ -38,7 +38,7 @@ public class BetServlet extends HttpServlet {
         dataEvent = DataEventService.getInstance();
         util = EventUtil.EVENT_UTIL;
         dataBet = DataBetService.getInstance();
-        dataMoney = DataMoneyService.getInstance();
+        dataMoney = DataCashAccountService.getInstance();
     }
 
     @Override
@@ -46,8 +46,8 @@ public class BetServlet extends HttpServlet {
         List<EventDTO> events = dataEvent.getAllNotFinishedEvents();
         req.setAttribute("events", events);
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
-        MoneyDTO moneyDTOById = dataMoney.getMoneyByLogin(authUser.getLogin());
-        req.setAttribute("user_money", moneyDTOById);
+        CashAccountDTO cashAccountDTOById = dataMoney.getAccountByLogin(authUser.getLogin());
+        req.setAttribute("user_money", cashAccountDTOById);
         req.getRequestDispatcher("/bet.jsp").forward(req, resp);
     }
 

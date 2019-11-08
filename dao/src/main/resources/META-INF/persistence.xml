@@ -6,7 +6,7 @@
     <persistence-unit name="com.github.adamovichas.project" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.github.adamovichas.project.entity.EventEntity</class>
-        <class>com.github.adamovichas.project.entity.MoneyEntity</class>
+        <class>com.github.adamovichas.project.entity.CashAccountEntity</class>
         <class>com.github.adamovichas.project.entity.UserEntity</class>
         <class>com.github.adamovichas.project.entity.BetEntity</class>
         <class>com.github.adamovichas.project.entity.FactorEntity</class>

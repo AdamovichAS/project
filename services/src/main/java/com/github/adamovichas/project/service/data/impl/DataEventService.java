@@ -63,9 +63,9 @@ public class DataEventService implements IdataEventService {
 
     @Override
     public Long getEventMaxPages() {
-        Long rowsNews = dataEvent.getCountEvents();
-        Long maxPages = rowsNews / PAGE_SIZE;
-        if (rowsNews % PAGE_SIZE > 0) {
+        Long rowsEvent = dataEvent.getCountEvents();
+        Long maxPages = rowsEvent / PAGE_SIZE;
+        if (rowsEvent % PAGE_SIZE > 0) {
             maxPages++;
         }
         return maxPages;

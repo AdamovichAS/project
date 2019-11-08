@@ -20,7 +20,7 @@ public class DataBetTest {
 
     private BetData betData = (BetData) BetData.getInstance();
     private DataUser dataUser = (DataUser) DataUser.getInstance();
-    private MoneyData moneyData = (MoneyData) MoneyData.getInstance();
+    private CashAccountData cashAccountData = (CashAccountData) CashAccountData.getInstance();
     private Util util = Util.UTIL_TEST;
     private static EntityManager entityManager;
 
@@ -40,7 +40,7 @@ public class DataBetTest {
         UserDTO userDTO = util.createTestUser();
         BetDTO betDTO = util.createFinishedBet();
         dataUser.addUser(userDTO);
-        moneyData.verification(userDTO.getLogin());
+        cashAccountData.verification(userDTO.getLogin());
         Long idBet = betData.addBet(betDTO);
         betData.CancelBetById(idBet);
         util.deleteDeposit(userDTO.getLogin());
@@ -54,7 +54,7 @@ public class DataBetTest {
         UserDTO userDTO = util.createTestUser();
         BetDTO betDTO = util.createFinishedBet();
         dataUser.addUser(userDTO);
-        moneyData.verification(userDTO.getLogin());
+        cashAccountData.verification(userDTO.getLogin());
         Long idBet = betData.addBet(betDTO);
         BetView viewById = betData.getViewById(idBet);
         betData.CancelBetById(idBet);
@@ -72,7 +72,7 @@ public class DataBetTest {
         UserDTO userDTO = util.createTestUser();
         BetDTO betDTO = util.createFinishedBet();
         dataUser.addUser(userDTO);
-        moneyData.verification(userDTO.getLogin());
+        cashAccountData.verification(userDTO.getLogin());
         Long idBet = betData.addBet(betDTO);
         List<BetView> views = betData.getNotFinishedBetByLogin(userDTO.getLogin());
         betData.CancelBetById(idBet);
@@ -88,7 +88,7 @@ public class DataBetTest {
         BetDTO finishedBet = util.createFinishedBet();
         BetDTO notFinishedBet = util.createNotFinishedBet();
         dataUser.addUser(userDTO);
-        moneyData.verification(userDTO.getLogin());
+        cashAccountData.verification(userDTO.getLogin());
         Long idBet1 = betData.addBet(finishedBet);
         Long idBet2 = betData.addBet(notFinishedBet);
         List<BetView> views = betData.getNotFinishedBetByLogin(userDTO.getLogin());

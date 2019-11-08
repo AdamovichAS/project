@@ -1,10 +1,10 @@
 package com.github.adamovichas.project.web.servlet;
 
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.model.dto.MoneyDTO;
+import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.service.data.IDataMoneyService;
-import com.github.adamovichas.project.service.data.impl.DataMoneyService;
+import com.github.adamovichas.project.service.data.IDataCashAccountService;
+import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,13 +16,13 @@ import static java.util.Objects.nonNull;
 
 public class CashierServlet extends HttpServlet {
 
-    private static final IDataMoneyService moneyService = DataMoneyService.getInstance();
+    private static final IDataCashAccountService moneyService = DataCashAccountService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         if(authUser.getRole().equals(Role.USER_VER)) {
-            MoneyDTO account = moneyService.getMoneyByLogin(authUser.getLogin());
+            CashAccountDTO account = moneyService.getAccountByLogin(authUser.getLogin());
             req.setAttribute("account", account);
         }
         String action = req.getParameter("action");

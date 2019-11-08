@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.dao.impl.MoneyData;
+import com.github.adamovichas.project.dao.impl.CashAccountData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 
-public class DataMoneyServiceTest {
+public class DataCashAccountServiceTest {
 
     @Mock
-    public MoneyData dataMoney;
+    public CashAccountData dataMoney;
 
     @InjectMocks
-    public DataMoneyService dataMoneyService;
+    public DataCashAccountService dataCashAccountService;
 
     @BeforeEach
     public void initMock(){
@@ -27,7 +27,7 @@ public class DataMoneyServiceTest {
     @Test
     public void createMoney(){
         when(dataMoney.verification("test")).thenReturn(true);
-        final boolean test = dataMoneyService.verification("test");
+        final boolean test = dataCashAccountService.verification("test");
         assertTrue(test);
     }
 }

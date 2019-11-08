@@ -61,9 +61,9 @@ public class DataBetServiceTest {
         assertEquals(notFinishedBetByLogin.size(),betViews.size());
     }
 
-    @Test
-    public void cancelBetById(){
-        dataBetService.cancelBetById(1L);
-        Mockito.verify(dataBet,times(1)).CancelBetById(1L);
-    }
+//    @Test
+//    public void cancelBetById(){
+//        dataBetService.cancelBetById(1L);
+//        Mockito.verify(dataBet,times(1)).CancelBetById(1L);
+//    }
 }

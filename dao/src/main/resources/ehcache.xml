@@ -23,7 +23,7 @@
            maxEntriesLocalHeap="20"
            eternal="true">
     </cache>
-    <cache name="com.github.adamovichas.project.entity.MoneyEntity"
+    <cache name="com.github.adamovichas.project.entity.CashAccountEntity"
            maxEntriesLocalHeap="20"
            eternal="false"
            timeToIdleSeconds="300"

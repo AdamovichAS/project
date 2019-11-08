@@ -1,12 +1,12 @@
 package com.github.adamovichas.project.model.dto;
 
 
-public class MoneyDTO {
+public class CashAccountDTO {
 
     private String login;
     private double value;
 
-    public MoneyDTO() {
+    public CashAccountDTO() {
     }
 
     public String getLogin() {

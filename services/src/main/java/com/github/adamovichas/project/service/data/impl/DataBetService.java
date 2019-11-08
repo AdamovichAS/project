@@ -1,6 +1,5 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.service.data.IDataBetService;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
@@ -10,6 +9,8 @@ import com.github.adamovichas.project.dao.impl.BetData;
 import java.util.List;
 
 public class DataBetService implements IDataBetService {
+
+    private static final int PAGE_SIZE = 5;
 
     private static volatile IDataBetService instance;
 
@@ -49,7 +50,24 @@ public class DataBetService implements IDataBetService {
     }
 
     @Override
-    public void cancelBetById(Long idBet) {
-        data.CancelBetById(idBet);
+    public void cancelBetById(List<Long> idBets) {
+        for (Long bet : idBets) {
+            data.CancelBetById(bet);
+        }
+    }
+
+    @Override
+    public Long getBetMaxPagesByLogin(String login){
+        Long countBetsByLogin = data.getCountBetsByLogin(login);
+        Long maxPages = countBetsByLogin / PAGE_SIZE;
+        if(countBetsByLogin % PAGE_SIZE > 0){
+            maxPages++;
+        }
+        return maxPages;
+    }
+
+    @Override
+    public List<BetView> getBetsByLoginOnCorrentPage(String login, int page){
+        return data.getBetsOnPageByLogin(login,page,PAGE_SIZE);
     }
 }

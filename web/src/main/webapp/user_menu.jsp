@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<h4><fmt:message key="my_page.hello" bundle="${messages}"/> ${authUser.login} <fmt:message key="my_page.role" bundle="${messages}"/> ${authUser.role}</h4>
+<h4><fmt:message key="my_page.hello" bundle="${messages}"/> ${authUser.login} <fmt:message key="my_page.role" bundle="${messages}"/> ${authUser.role}, <fmt:message key="my_page.balance" bundle="${messages}"/> ${account}</h4>
 <br>
 <a href="${pageContext.request.contextPath}/logout"><fmt:message key="index.logout" bundle="${messages}"/></a>
 <br>
@@ -26,9 +26,13 @@
 <br>
 <a href="${pageContext.request.contextPath}/cashier" target="_blank"><fmt:message key="cashier.button" bundle="${messages}"/></a>
 <br>
-<c:if test="${authUser.role eq 'USER_VER'}">
-    <jsp:include page="user_bet.jsp"/>
-</c:if>
+<a href="${pageContext.request.contextPath}/betDTO"><fmt:message key="my_page.betDTO" bundle="${messages}"/></a>
+<br>
+<a href="${pageContext.request.contextPath}/bet_pagination" target="_blank">My bets</a>
+<br>
+<%--<c:if test="${authUser.role eq 'USER_VER'}">--%>
+<%--    <jsp:include page="user_bet.jsp"/>--%>
+<%--</c:if>--%>
 
 </body>
 </html>

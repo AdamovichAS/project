@@ -35,7 +35,7 @@ public class RoleRedirectServlet extends HttpServlet {
             // resp.sendRedirect("admin_menu.jsp");
             req.getRequestDispatcher("admin_menu.jsp").forward(req, resp);
         } else {
-            Util.setUserBetsInReq(req);
+            Util.setUserBetsInReq(req,resp);
             req.getRequestDispatcher("user_menu.jsp").forward(req, resp);
         }
     }

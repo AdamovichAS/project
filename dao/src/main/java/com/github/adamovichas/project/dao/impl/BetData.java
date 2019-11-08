@@ -2,23 +2,22 @@ package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.entity.BetEntity;
 import com.github.adamovichas.project.entity.FactorEntity;
-import com.github.adamovichas.project.entity.MoneyEntity;
+import com.github.adamovichas.project.entity.CashAccountEntity;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
-import com.github.adamovichas.project.model.factor.FactorName;
-import com.github.adamovichas.project.model.dto.MoneyDTO;
 import com.github.adamovichas.project.IBetData;
-import com.github.adamovichas.project.IDataConnect;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.PersistenceException;
 import javax.persistence.RollbackException;
-import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +49,9 @@ public class BetData implements IBetData {
             session.getTransaction().begin();
             UserEntity userEntity = session.find(UserEntity.class, betEntity.getUserLogin());
             FactorEntity factorEntity = session.find(FactorEntity.class, betEntity.getFactorId());
-            MoneyEntity moneyEntity = session.find(MoneyEntity.class, bet.getUserLogin());
-            moneyEntity.setValue(moneyEntity.getValue()- bet.getMoney());
-            session.saveOrUpdate(moneyEntity);
+            CashAccountEntity cashAccountEntity = session.find(CashAccountEntity.class, bet.getUserLogin());
+            cashAccountEntity.setValue(cashAccountEntity.getValue()- bet.getMoney());
+            session.saveOrUpdate(cashAccountEntity);
             betEntity.setFactor(factorEntity);
             betEntity.setUser(userEntity);
             userEntity.getBets().add(betEntity);
@@ -107,8 +106,8 @@ public class BetData implements IBetData {
             session.getTransaction().begin();
             BetEntity betEntity = session.get(BetEntity.class, idBet);
             session.delete(betEntity);
-            MoneyEntity moneyEntity = session.find(MoneyEntity.class, betEntity.getUserLogin());
-            moneyEntity.setValue(moneyEntity.getValue() + betEntity.getMoney());
+            CashAccountEntity cashAccountEntity = session.find(CashAccountEntity.class, betEntity.getUserLogin());
+            cashAccountEntity.setValue(cashAccountEntity.getValue() + betEntity.getMoney());
             session.getTransaction().commit();
         }catch (RollbackException e){
             log.error("CancelBetById exception, idBet {}",idBet);
@@ -117,6 +116,44 @@ public class BetData implements IBetData {
             session.close();
         }
 
+    }
+
+    @Override
+    public Long getCountBetsByLogin(String login){
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+        final Long count = session.createQuery("SELECT count (*) FROM BetEntity b WHERE b.userLogin = :login", Long.class)
+                .setParameter("login", login)
+                .getSingleResult();
+        session.getTransaction().commit();
+        session.close();
+        return count;
+    }
+
+    @Override
+    public List<BetView> getBetsOnPageByLogin(String login, int page, int pageSize){
+        List<BetView>betViews = new ArrayList<>();
+        final Session session = HibernateUtil.getSession();
+        try {
+            session.getTransaction().begin();
+            final Query query = session.createQuery("FROM BetEntity b WHERE b.userLogin = :login ORDER BY b.id asc")
+                    .setParameter("login", login)
+                    .setMaxResults(pageSize)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setReadOnly(true);
+            final List<BetEntity> betEntities = query.list();
+            for (BetEntity entity : betEntities) {
+                BetView view = EntityDtoViewConverter.getView(entity);
+                betViews.add(view);
+            }
+            session.getTransaction().commit();
+        }catch (PersistenceException e){
+            log.error("Fail to get list of events from DB at: {}", LocalDateTime.now(), e);
+            throw new RuntimeException(e);
+        }finally {
+            session.close();
+        }
+        return betViews;
     }
 
 

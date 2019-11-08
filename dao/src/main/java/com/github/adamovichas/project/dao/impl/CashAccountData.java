@@ -1,9 +1,9 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.IMoneyData;
-import com.github.adamovichas.project.entity.MoneyEntity;
+import com.github.adamovichas.project.ICashAccountData;
+import com.github.adamovichas.project.entity.CashAccountEntity;
 import com.github.adamovichas.project.entity.UserEntity;
-import com.github.adamovichas.project.model.dto.MoneyDTO;
+import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import com.github.adamovichas.project.util.HibernateUtil;
@@ -14,20 +14,18 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.RollbackException;
 
-import static java.util.Objects.nonNull;
-
-public class MoneyData implements IMoneyData {
+public class CashAccountData implements ICashAccountData {
 
     private static final Logger log = LoggerFactory.getLogger(DataUser.class);
-    private static volatile IMoneyData instance;
+    private static volatile ICashAccountData instance;
 
-    public static IMoneyData getInstance() {
-        IMoneyData localInstance = instance;
+    public static ICashAccountData getInstance() {
+        ICashAccountData localInstance = instance;
         if (localInstance == null) {
-            synchronized (IMoneyData.class) {
+            synchronized (ICashAccountData.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new MoneyData();
+                    instance = localInstance = new CashAccountData();
                 }
             }
         }
@@ -38,17 +36,17 @@ public class MoneyData implements IMoneyData {
     public boolean verification(String login) {
         boolean result = false;
         Session session = HibernateUtil.getSession();
-        MoneyEntity moneyEntity = new MoneyEntity();
-        moneyEntity.setValue(0);
-        moneyEntity.setLogin(login);
+        CashAccountEntity cashAccountEntity = new CashAccountEntity();
+        cashAccountEntity.setValue(0);
+        cashAccountEntity.setLogin(login);
         try {
             session.getTransaction().begin();
             UserEntity userEntity = session.get(UserEntity.class, login);
             userEntity.setRole(Role.USER_VER);
-                moneyEntity.setUserEntity(userEntity);
-                userEntity.setMoney(moneyEntity);
+                cashAccountEntity.setUserEntity(userEntity);
+                userEntity.setMoney(cashAccountEntity);
 
-            session.save(moneyEntity);
+            session.save(cashAccountEntity);
             session.getTransaction().commit();
             result = true;
         }catch (RollbackException | NullPointerException | IdentifierGenerationException e){
@@ -61,22 +59,22 @@ public class MoneyData implements IMoneyData {
     }
 
     @Override
-    public MoneyDTO getMoneyByLogin(String login) {
+    public CashAccountDTO getMoneyByLogin(String login) {
         Session session = HibernateUtil.getSession();
         session.getTransaction().begin();
-        MoneyEntity moneyEntity = session.find(MoneyEntity.class, login);
+        CashAccountEntity cashAccountEntity = session.find(CashAccountEntity.class, login);
         session.getTransaction().commit();
         session.close();
-        return EntityDtoViewConverter.getDTO(moneyEntity);
+        return EntityDtoViewConverter.getDTO(cashAccountEntity);
     }
 
     @Override
-    public boolean updateMoneyValue(MoneyDTO money) {
+    public boolean updateMoneyValue(CashAccountDTO money) {
         Session session = HibernateUtil.getSession();
         try {
             session.getTransaction().begin();
-            final MoneyEntity moneyEntity = session.find(MoneyEntity.class, money.getLogin());
-            moneyEntity.setValue(money.getValue());
+            final CashAccountEntity cashAccountEntity = session.find(CashAccountEntity.class, money.getLogin());
+            cashAccountEntity.setValue(money.getValue());
             session.getTransaction().commit();
             return true;
         }catch (RollbackException e){

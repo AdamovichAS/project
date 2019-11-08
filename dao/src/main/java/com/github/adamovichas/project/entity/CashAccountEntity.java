@@ -7,16 +7,16 @@ import org.hibernate.annotations.Cache;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "money")
+@Table(name = "cash_account")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class MoneyEntity {
+public class CashAccountEntity {
 
     private String login;
     private double value;
     private UserEntity userEntity;
 
 
-    public MoneyEntity() {
+    public CashAccountEntity() {
     }
 
     @Id

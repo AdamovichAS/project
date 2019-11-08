@@ -78,14 +78,14 @@
         <url-pattern>/new_event/add_event/</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>EventPagination</servlet-name>-->
-<!--        <servlet-class>com.github.adamovichas.project.web.servlet.event.EventPaginationServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>EventPagination</servlet-name>-->
-<!--        <url-pattern>/event_pag</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet>
+        <servlet-name>BetPagination</servlet-name>
+        <servlet-class>com.github.adamovichas.project.web.servlet.BetPaginationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BetPagination</servlet-name>
+        <url-pattern>/bet_pagination</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>BetServlet</servlet-name>

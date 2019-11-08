@@ -2,22 +2,18 @@ package com.github.adamovichas.project.web.servlet;
 
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.service.data.IDataMoneyService;
-import com.github.adamovichas.project.service.data.IdataUserService;
-import com.github.adamovichas.project.service.data.impl.DataMoneyService;
-import com.github.adamovichas.project.service.data.impl.DataUserService;
+import com.github.adamovichas.project.service.data.IDataCashAccountService;
+import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class VereficationServlet extends HttpServlet {
 
-    private IDataMoneyService moneyService = DataMoneyService.getInstance();
+    private IDataCashAccountService moneyService = DataCashAccountService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
