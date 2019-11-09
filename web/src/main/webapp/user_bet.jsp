@@ -40,13 +40,13 @@
         <H3>Your bets</H3>
         <tr>
             <th>bet</th>
-            <th>check box</th>
+            <th>check bet for cancel</th>
         </tr>
 
         <c:forEach items="${userBets}" var="bet">
             <tr>
                 <td>${bet}</td>
-                <td><input class="form-check-input" type="checkbox" name="betId" value="${bet.id}"></td>
+                <td align="center"><input class="form-check-input" type="checkbox" name="betId" value="${bet.id}"></td>
             </tr>
         </c:forEach>
     </table>
