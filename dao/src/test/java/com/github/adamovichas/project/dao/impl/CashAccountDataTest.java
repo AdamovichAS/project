@@ -1,33 +1,30 @@
 package com.github.adamovichas.project.dao.impl;
 
+import com.github.adamovichas.project.ICashAccountData;
+import com.github.adamovichas.project.IDataUser;
+import com.github.adamovichas.project.config.DaoConfig;
+import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
-import com.github.adamovichas.project.util.HibernateUtil;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import javax.persistence.EntityManager;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class})
+
 public class CashAccountDataTest {
-    private CashAccountData cashAccountData = (CashAccountData) CashAccountData.getInstance();
-    private DataUser dataUser = (DataUser) DataUser.getInstance();
-    private Util util = Util.UTIL_TEST;
-    private static EntityManager entityManager;
-
-    @BeforeAll
-    static void init() {
-        entityManager = HibernateUtil.getEntityManager();
-    }
-
-    @AfterAll
-    public static void cleanUp() {
-        entityManager.close();
-    }
+    @Autowired
+    private ICashAccountData cashAccountData;
+    @Autowired
+    private IDataUser dataUser;
+    private final Util util = new Util();
 
     @Test
     public void createDepositTrue(){

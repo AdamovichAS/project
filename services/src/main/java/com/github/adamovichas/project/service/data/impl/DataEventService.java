@@ -5,7 +5,6 @@ import com.github.adamovichas.project.service.data.IdataEventService;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
-import com.github.adamovichas.project.dao.impl.DataEvent;
 import com.github.adamovichas.project.IDataEvent;
 
 import java.util.List;
@@ -14,22 +13,12 @@ public class DataEventService implements IdataEventService {
 
     private static final int PAGE_SIZE = 5;
 
-    private IDataEvent dataEvent = DataEvent.getInstance();
+    private final IDataEvent dataEvent;
 
-    private static volatile IdataEventService instance;
-
-    public static IdataEventService getInstance() {
-        IdataEventService localInstance = instance;
-        if (localInstance == null) {
-            synchronized (IdataEventService.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new DataEventService();
-                }
-            }
-        }
-        return localInstance;
+    public DataEventService(IDataEvent dataEvent) {
+        this.dataEvent = dataEvent;
     }
+
 
     @Override
     public List<LeagueDTO> getAllLeagues() {

@@ -3,7 +3,6 @@ import com.github.adamovichas.project.service.user.UserCreater;
 import com.github.adamovichas.project.service.user.UserFieldsSetter;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import com.github.adamovichas.project.model.dto.UserDTO;
-import com.github.adamovichas.project.dao.impl.DataUser;
 import com.github.adamovichas.project.IDataUser;
 
 import java.util.Map;
@@ -13,22 +12,11 @@ import static java.util.Objects.nonNull;
 
 public class DataUserService implements IdataUserService {
 
-    private IDataUser data = DataUser.getInstance();
     private UserCreater userCreater = new UserCreater();
+    private final IDataUser data;
 
-    private static volatile IdataUserService instance;
-
-    public static IdataUserService getInstance() {
-        IdataUserService localInstance = instance;
-        if (localInstance == null) {
-            synchronized (IdataUserService.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new DataUserService();
-                }
-            }
-        }
-        return localInstance;
+    public DataUserService(IDataUser dataUser) {
+        this.data = dataUser;
     }
 
     @Override

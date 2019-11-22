@@ -1,5 +1,6 @@
-package com.github.adamovichas.project.dao.impl;
+package com.github.adamovichas.project.dao;
 
+import com.github.adamovichas.project.ISessionHibernate;
 import com.github.adamovichas.project.entity.BetEntity;
 import com.github.adamovichas.project.entity.FactorEntity;
 import com.github.adamovichas.project.entity.CashAccountEntity;
@@ -8,7 +9,6 @@ import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.IBetData;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
-import com.github.adamovichas.project.util.HibernateUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -24,25 +24,19 @@ import java.util.List;
 public class BetData implements IBetData {
 
     private static final Logger log = LoggerFactory.getLogger(BetData.class);
-    private static volatile IBetData instance;
+    private final ISessionHibernate factory;
 
-    public static IBetData getInstance() {
-        IBetData localInstance = instance;
-        if (localInstance == null) {
-            synchronized (IBetData.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new BetData();
-                }
-            }
-        }
-        return localInstance;
+    public BetData(ISessionHibernate emf) {
+        factory = emf;
+
     }
+
+
 
 
     @Override
     public Long addBet(BetDTO bet) {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         Long id = null;
         try {
             BetEntity betEntity = EntityDtoViewConverter.getEntity(bet);
@@ -69,7 +63,7 @@ public class BetData implements IBetData {
 
     @Override
     public BetView getViewById(Long idBet) {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         session.getTransaction().begin();
         BetEntity betEntity = session.get(BetEntity.class, idBet);
         Hibernate.initialize(betEntity.getFactor().getEvent());
@@ -81,7 +75,7 @@ public class BetData implements IBetData {
 
     @Override
     public List<BetView> getNotFinishedBetByLogin(String login) {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         List<BetView>views = new ArrayList<>();
         BetView betView;
         session.getTransaction().begin();
@@ -101,7 +95,7 @@ public class BetData implements IBetData {
 
     @Override
     public void CancelBetById(Long idBet) {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         try {
             session.getTransaction().begin();
             BetEntity betEntity = session.get(BetEntity.class, idBet);
@@ -120,7 +114,7 @@ public class BetData implements IBetData {
 
     @Override
     public Long getCountBetsByLogin(String login){
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         session.getTransaction().begin();
         final Long count = session.createQuery("SELECT count (*) FROM BetEntity b WHERE b.userLogin = :login", Long.class)
                 .setParameter("login", login)
@@ -133,7 +127,7 @@ public class BetData implements IBetData {
     @Override
     public List<BetView> getBetsOnPageByLogin(String login, int page, int pageSize){
         List<BetView>betViews = new ArrayList<>();
-        final Session session = HibernateUtil.getSession();
+        final Session session = factory.getSession();
         try {
             session.getTransaction().begin();
             final Query query = session.createQuery("FROM BetEntity b WHERE b.userLogin = :login ORDER BY b.id asc")

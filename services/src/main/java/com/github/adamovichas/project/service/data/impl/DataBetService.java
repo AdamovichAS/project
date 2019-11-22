@@ -4,7 +4,6 @@ import com.github.adamovichas.project.service.data.IDataBetService;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.IBetData;
-import com.github.adamovichas.project.dao.impl.BetData;
 
 import java.util.List;
 
@@ -12,26 +11,26 @@ public class DataBetService implements IDataBetService {
 
     private static final int PAGE_SIZE = 5;
 
-    private static volatile IDataBetService instance;
+//    private static volatile IDataBetService instance;
 
-    private IBetData data;
+    private final IBetData data;
 
-    private DataBetService() {
-        data = BetData.getInstance();
+    public DataBetService(IBetData betData) {
+        data = betData;
     }
-
-    public static IDataBetService getInstance() {
-        IDataBetService localInstance = instance;
-        if (localInstance == null) {
-            synchronized (IDataBetService.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new DataBetService();
-                }
-            }
-        }
-        return localInstance;
-    }
+//
+//    public static IDataBetService getInstance() {
+//        IDataBetService localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (IDataBetService.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    instance = localInstance = new DataBetService();
+//                }
+//            }
+//        }
+//        return localInstance;
+//    }
 
 
     @Override

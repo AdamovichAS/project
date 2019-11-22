@@ -25,6 +25,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
 
+        <spring-context.version>5.2.1.RELEASE</spring-context.version>
+        <spring-orm.version>5.2.1.RELEASE</spring-orm.version>
+        <spring-test.version>5.2.1.RELEASE</spring-test.version>
+
+        <HikariCP.version>3.4.1</HikariCP.version>
+
         <junit-jupiter-engine.version>5.5.2</junit-jupiter-engine.version>
         <mockito-core.version>3.1.0</mockito-core.version>
         <mockito-junit-jupiter.version>3.1.0</mockito-junit-jupiter.version>
@@ -44,6 +50,26 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring-context.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${spring-orm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring-test.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${HikariCP.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
@@ -133,16 +159,6 @@
                         <path>/project</path>
                     </configuration>
                 </plugin>
- <!--               <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <includes>
-                            <include>src/test/java/**/*Test.java</include>
-                        </includes>
-                    </configuration>
-                </plugin>-->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>cobertura-maven-plugin</artifactId>

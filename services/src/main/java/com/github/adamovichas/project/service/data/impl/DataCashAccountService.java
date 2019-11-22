@@ -1,32 +1,17 @@
 package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.ICashAccountData;
-import com.github.adamovichas.project.dao.impl.CashAccountData;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;
 
 public class DataCashAccountService implements IDataCashAccountService {
 
-    private static volatile IDataCashAccountService instance;
+    private final ICashAccountData data;
 
-    private ICashAccountData data;
-
-    private DataCashAccountService() {
-        data = CashAccountData.getInstance();
+    public DataCashAccountService(ICashAccountData cashAccountData) {
+        data = cashAccountData;
     }
 
-    public static IDataCashAccountService getInstance() {
-        IDataCashAccountService localInstance = instance;
-        if (localInstance == null) {
-            synchronized (IDataCashAccountService.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new DataCashAccountService();
-                }
-            }
-        }
-        return localInstance;
-    }
 
     @Override
     public boolean verification(String login) {

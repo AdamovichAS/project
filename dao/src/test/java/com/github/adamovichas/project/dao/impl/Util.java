@@ -1,5 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
+import com.github.adamovichas.project.ISessionHibernate;
+import com.github.adamovichas.project.dao.DataUser;
 import com.github.adamovichas.project.entity.EventEntity;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
@@ -9,22 +11,24 @@ import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Util {
-    UTIL_TEST;
+public class Util {
 
     private static final Logger log = LoggerFactory.getLogger(DataUser.class);
+
+    @Autowired
+    private ISessionHibernate factory;
+
 
     UserDTO createTestUser(){
         UserDTO user = new UserDTO();
@@ -41,15 +45,16 @@ public enum Util {
     }
 
     void deleteTestUser(UserEntity user){
-        EntityManager em = HibernateUtil.getEntityManager();
-        em.getTransaction().begin();
-        em.remove(em.contains(user) ? user : em.merge(user));
-        em.getTransaction().commit();
-        em.close();
+        Session session = factory.getSession();
+        session.getTransaction().begin();
+        UserEntity userEntity = session.find(UserEntity.class, user);
+        session.remove(userEntity);
+        session.getTransaction().commit();
+        session.close();
     }
 
     void deleteDeposit(String login){
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = factory.getSession();
         session.getTransaction().begin();
         CashAccountEntity cashAccountEntity = session.get(CashAccountEntity.class, login);
         session.delete(cashAccountEntity);
@@ -86,7 +91,7 @@ public enum Util {
     }
 
      void deleteEvent(Long id) {
-         Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+         Session session = factory.getSession();
          try{
              session.getTransaction().begin();
              EventEntity eventEntity = session.find(EventEntity.class, id);
@@ -101,7 +106,7 @@ public enum Util {
      }
 
     Long getCountAllNotFinishedEvents(){
-        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
+        Session session = factory.getSession();
         session.getTransaction().begin();
         Query query = session.createQuery("SELECT count(*) FROM EventEntity e WHERE e.resultFactorId = null");
         List list = query.list();

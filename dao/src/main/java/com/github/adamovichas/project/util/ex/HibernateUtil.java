@@ -1,4 +1,4 @@
-package com.github.adamovichas.project.util;
+package com.github.adamovichas.project.util.ex;
 
 import org.hibernate.Session;
 

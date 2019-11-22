@@ -1,5 +1,6 @@
-package com.github.adamovichas.project.dao.impl;
+package com.github.adamovichas.project.dao;
 
+import com.github.adamovichas.project.ISessionHibernate;
 import com.github.adamovichas.project.entity.EventEntity;
 import com.github.adamovichas.project.entity.FactorEntity;
 import com.github.adamovichas.project.entity.LeagueEntity;
@@ -9,14 +10,12 @@ import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.IDataEvent;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
-import com.github.adamovichas.project.util.HibernateUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.RollbackException;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -30,24 +29,16 @@ public class DataEvent implements IDataEvent {
 
 
     private static final Logger log = LoggerFactory.getLogger(DataEvent.class);
-    private static volatile IDataEvent instance;
+    private final ISessionHibernate factory;
 
-    public static IDataEvent getInstance() {
-        IDataEvent localInstance = instance;
-        if (localInstance == null) {
-            synchronized (IDataEvent.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new DataEvent();
-                }
-            }
-        }
-        return localInstance;
+    public DataEvent(ISessionHibernate emf) {
+        factory = emf;
     }
+
 
     @Override
     public Long addEvent(EventDTO event) {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         try {
             session.getTransaction().begin();
             EventEntity eventEntity = EntityDtoViewConverter.getEntity(event);
@@ -72,7 +63,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public boolean eventIsExist(EventDTO event) {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         boolean result = false;
         try {
             session.getTransaction().begin();
@@ -97,7 +88,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public List<EventDTO> getAllNotFinishedEvents() {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         session.getTransaction().begin();
         List<EventEntity> eventEntities = session.createQuery("FROM EventEntity e WHERE e.resultFactorId = null").list();
         List<EventDTO> views = new ArrayList<>();
@@ -110,8 +101,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public EventDTO getSavedEventById(Long id) {
-        EntityManager em = HibernateUtil.getEntityManager();
-        Session session = em.unwrap(Session.class);
+        Session session = factory.getSession();
         session.getTransaction().begin();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<EventEntity> criteria = criteriaBuilder.createQuery(EventEntity.class);
@@ -126,7 +116,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public Long getCountEvents() {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         session.getTransaction().begin();
         Long countEvents = session.createQuery("SELECT count (*) from EventEntity", Long.class).getSingleResult();
         session.getTransaction().commit();
@@ -137,7 +127,7 @@ public class DataEvent implements IDataEvent {
     @Override
     public List<EventDTO> getEventsOnPage(int page, int pageSize) {
         List<EventDTO>events = new ArrayList<>();
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         try {
             session.getTransaction().begin();
             final Query query = session.createQuery("FROM EventEntity e ORDER BY e.id asc")
@@ -162,7 +152,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public List<LeagueDTO> getAllLeagues() {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         session.beginTransaction();
         Query query = session.createQuery("FROM LeagueEntity");
         query.setCacheable(true);
@@ -178,7 +168,7 @@ public class DataEvent implements IDataEvent {
 
     @Override
     public List<TeamDTO> getAllTeamsByLeague(Long idLeague) {
-        Session session = HibernateUtil.getSession();
+        Session session = factory.getSession();
         session.getTransaction().begin();
         LeagueEntity leagueEntity = session.find(LeagueEntity.class, idLeague);
         Hibernate.initialize(leagueEntity.getTeams());

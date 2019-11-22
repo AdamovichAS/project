@@ -1,34 +1,28 @@
 package com.github.adamovichas.project.dao.impl;
 
 
+import com.github.adamovichas.project.IDataUser;
+import com.github.adamovichas.project.config.DaoConfig;
+import com.github.adamovichas.project.config.HibernateConfig;
+import com.github.adamovichas.project.config.SettingsConfig;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
-import com.github.adamovichas.project.util.HibernateUtil;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import javax.persistence.EntityManager;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class, SettingsConfig.class})
 public class DataUserTest {
 
-    private DataUser dataUser = (DataUser) DataUser.getInstance();
-    private Util util = Util.UTIL_TEST;
+    @Autowired
+    private IDataUser dataUser;
+    private Util util = new Util();
 
-    private static EntityManager entityManager;
-
-    @BeforeAll
-    static void init() {
-        entityManager = HibernateUtil.getEntityManager();
-    }
-
-    @AfterAll
-    public static void cleanUp() {
-        entityManager.close();
-    }
 
     @Test
     public void addUser() {
