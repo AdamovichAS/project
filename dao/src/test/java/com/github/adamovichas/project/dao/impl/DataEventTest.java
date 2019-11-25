@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.IDataEvent;
+import com.github.adamovichas.project.dao.IDataEvent;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.model.dto.EventDTO;
@@ -17,11 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class})
+@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class, Util.class})
 public class DataEventTest {
     @Autowired
     private IDataEvent dataEvent;
-    private Util util = new Util();
+    @Autowired
+    private IUtil util;
 
     @Test
     public void addEvent(){

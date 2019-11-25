@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.ICashAccountData;
+import com.github.adamovichas.project.dao.ICashAccountData;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;
 

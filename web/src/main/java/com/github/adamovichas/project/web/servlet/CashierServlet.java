@@ -5,6 +5,7 @@ import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;
 import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +16,8 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class CashierServlet extends HttpServlet {
-
-    private static final IDataCashAccountService moneyService = DataCashAccountService.getInstance();
+    @Autowired
+    private  IDataCashAccountService moneyService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

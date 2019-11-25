@@ -1,9 +1,9 @@
 package com.github.adamovichas.project.service.config;
 
-import com.github.adamovichas.project.IBetData;
-import com.github.adamovichas.project.ICashAccountData;
-import com.github.adamovichas.project.IDataEvent;
-import com.github.adamovichas.project.IDataUser;
+import com.github.adamovichas.project.dao.IBetData;
+import com.github.adamovichas.project.dao.ICashAccountData;
+import com.github.adamovichas.project.dao.IDataEvent;
+import com.github.adamovichas.project.dao.IDataUser;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.service.data.IDataBetService;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;

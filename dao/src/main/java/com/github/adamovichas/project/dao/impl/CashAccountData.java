@@ -1,7 +1,7 @@
-package com.github.adamovichas.project.dao;
+package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.ICashAccountData;
-import com.github.adamovichas.project.ISessionHibernate;
+import com.github.adamovichas.project.dao.ICashAccountData;
+import com.github.adamovichas.project.dao.ISessionHibernate;
 import com.github.adamovichas.project.entity.CashAccountEntity;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;

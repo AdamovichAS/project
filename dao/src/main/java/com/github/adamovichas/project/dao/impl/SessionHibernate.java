@@ -1,6 +1,6 @@
-package com.github.adamovichas.project.dao;
+package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.ISessionHibernate;
+import com.github.adamovichas.project.dao.ISessionHibernate;
 import org.hibernate.Session;
 
 import javax.persistence.EntityManagerFactory;

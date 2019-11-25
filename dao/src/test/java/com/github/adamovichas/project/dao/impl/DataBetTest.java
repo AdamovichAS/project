@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.IBetData;
-import com.github.adamovichas.project.ICashAccountData;
-import com.github.adamovichas.project.IDataUser;
+import com.github.adamovichas.project.dao.IBetData;
+import com.github.adamovichas.project.dao.ICashAccountData;
+import com.github.adamovichas.project.dao.IDataUser;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.entity.UserEntity;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class})
+@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class, Util.class})
 public class DataBetTest {
     @Autowired
     private IBetData betData;
@@ -30,7 +30,8 @@ public class DataBetTest {
     private IDataUser dataUser;
     @Autowired
     private ICashAccountData cashAccountData;
-    private Util util = new Util();
+    @Autowired
+    private IUtil util;
 
     @Test
     public void addBet(){

@@ -4,6 +4,7 @@ import com.github.adamovichas.project.service.data.impl.DataUserService;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.servlet.ServletException;
@@ -17,7 +18,8 @@ import java.util.Map;
 
 public class RegistrationServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
-    private final IdataUserService daoUser = DataUserService.getInstance();
+    @Autowired
+    private IdataUserService daoUser;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

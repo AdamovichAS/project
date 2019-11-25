@@ -7,6 +7,7 @@ import com.github.adamovichas.project.service.data.IDataBetService;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.web.service.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.servlet.ServletException;
@@ -17,15 +18,11 @@ import java.io.IOException;
 
 
 public class RoleRedirectServlet extends HttpServlet {
+    @Autowired
     private IdataUserService daoUser;
+    @Autowired
     private IDataBetService dataBet;
 
-
-    @Override
-    public void init() throws ServletException {
-        daoUser = DataUserService.getInstance();
-        dataBet = DataBetService.getInstance();
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

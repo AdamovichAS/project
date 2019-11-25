@@ -1,7 +1,6 @@
 package com.github.adamovichas.project.web.service;
 
 
-import com.github.adamovichas.project.ICashAccountData;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.service.data.IDataBetService;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;
@@ -9,7 +8,6 @@ import com.github.adamovichas.project.service.data.impl.DataBetService;
 import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
 import com.github.adamovichas.project.service.data.impl.DataUserService;
 import com.github.adamovichas.project.service.data.IdataUserService;
-import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.model.dto.AuthUser;
 
 import com.github.adamovichas.project.model.user.Role;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 public final class Util {
 

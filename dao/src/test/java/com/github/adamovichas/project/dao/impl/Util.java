@@ -1,7 +1,6 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.ISessionHibernate;
-import com.github.adamovichas.project.dao.DataUser;
+import com.github.adamovichas.project.dao.ISessionHibernate;
 import com.github.adamovichas.project.entity.EventEntity;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
@@ -16,21 +15,26 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.RollbackException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-public class Util {
+@Component
+public class Util implements IUtil{
 
     private static final Logger log = LoggerFactory.getLogger(DataUser.class);
 
     @Autowired
-    private ISessionHibernate factory;
+    private final ISessionHibernate factory;
+
+    public Util(ISessionHibernate session) {
+        factory = session;
+    }
 
 
-    UserDTO createTestUser(){
+    public UserDTO createTestUser(){
         UserDTO user = new UserDTO();
         user.setLogin("test");
         user.setPassword("123");
@@ -44,16 +48,16 @@ public class Util {
         return  user;
     }
 
-    void deleteTestUser(UserEntity user){
+    public void deleteTestUser(UserEntity user){
         Session session = factory.getSession();
         session.getTransaction().begin();
-        UserEntity userEntity = session.find(UserEntity.class, user);
+        UserEntity userEntity = session.find(UserEntity.class, user.getLogin());
         session.remove(userEntity);
         session.getTransaction().commit();
         session.close();
     }
 
-    void deleteDeposit(String login){
+    public void deleteDeposit(String login){
         Session session = factory.getSession();
         session.getTransaction().begin();
         CashAccountEntity cashAccountEntity = session.get(CashAccountEntity.class, login);
@@ -62,7 +66,7 @@ public class Util {
         session.close();
     }
 
-    BetDTO createFinishedBet(){
+    public BetDTO createFinishedBet(){
         final UserDTO testUser = createTestUser();
         BetDTO betDTO = new BetDTO();
         betDTO.setUserLogin(testUser.getLogin());
@@ -71,7 +75,7 @@ public class Util {
         return betDTO;
     }
 
-    BetDTO createNotFinishedBet(){
+    public BetDTO createNotFinishedBet(){
         final UserDTO testUser = createTestUser();
         BetDTO betDTO = new BetDTO();
         betDTO.setUserLogin(testUser.getLogin());
@@ -80,7 +84,7 @@ public class Util {
         return betDTO;
     }
 
-     EventDTO createEventTest(){
+     public EventDTO createEventTest(){
         EventDTO event = new EventDTO("Arsenal","Aston Vila", 1L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
         List<FactorDTO> factors= new ArrayList<>();
         factors.add(new FactorDTO(FactorName.win,2.5));
@@ -90,7 +94,7 @@ public class Util {
         return event;
     }
 
-     void deleteEvent(Long id) {
+     public void deleteEvent(Long id) {
          Session session = factory.getSession();
          try{
              session.getTransaction().begin();
@@ -105,7 +109,7 @@ public class Util {
          }
      }
 
-    Long getCountAllNotFinishedEvents(){
+    public Long getCountAllNotFinishedEvents(){
         Session session = factory.getSession();
         session.getTransaction().begin();
         Query query = session.createQuery("SELECT count(*) FROM EventEntity e WHERE e.resultFactorId = null");

@@ -1,6 +1,5 @@
 package com.github.adamovichas.project.config;
 
-import com.github.adamovichas.project.*;
 import com.github.adamovichas.project.dao.*;
 import com.github.adamovichas.project.dao.impl.*;
 import org.springframework.context.annotation.Bean;
@@ -34,4 +33,5 @@ public class DaoConfig {
     public IBetData betDao (ISessionHibernate session){
         return new BetData(session);
     }
+
 }

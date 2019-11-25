@@ -1,4 +1,4 @@
-package com.github.adamovichas.project;
+package com.github.adamovichas.project.dao;
 
 
 import com.github.adamovichas.project.model.dto.UserDTO;

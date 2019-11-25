@@ -1,7 +1,7 @@
-package com.github.adamovichas.project.dao;
+package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.IDataUser;
-import com.github.adamovichas.project.ISessionHibernate;
+import com.github.adamovichas.project.dao.IDataUser;
+import com.github.adamovichas.project.dao.ISessionHibernate;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;

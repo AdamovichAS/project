@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.dao.DataUser;
+import com.github.adamovichas.project.dao.impl.DataUser;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.service.user.UserCreater;

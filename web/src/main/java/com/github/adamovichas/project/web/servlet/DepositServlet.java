@@ -3,6 +3,7 @@ package com.github.adamovichas.project.web.servlet;
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;
 import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DepositServlet extends HttpServlet {
-
-    private IDataCashAccountService moneyService = DataCashAccountService.getInstance();
+    @Autowired
+    private IDataCashAccountService moneyService;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

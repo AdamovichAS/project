@@ -1,13 +1,13 @@
-package com.github.adamovichas.project.dao;
+package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.ISessionHibernate;
+import com.github.adamovichas.project.dao.IBetData;
+import com.github.adamovichas.project.dao.ISessionHibernate;
 import com.github.adamovichas.project.entity.BetEntity;
 import com.github.adamovichas.project.entity.FactorEntity;
 import com.github.adamovichas.project.entity.CashAccountEntity;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
-import com.github.adamovichas.project.IBetData;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;

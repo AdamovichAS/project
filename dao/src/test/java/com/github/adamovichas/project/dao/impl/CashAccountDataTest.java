@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.ICashAccountData;
-import com.github.adamovichas.project.IDataUser;
+import com.github.adamovichas.project.dao.ICashAccountData;
+import com.github.adamovichas.project.dao.IDataUser;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.entity.UserEntity;
@@ -17,14 +17,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class})
+@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class, Util.class})
 
 public class CashAccountDataTest {
     @Autowired
     private ICashAccountData cashAccountData;
     @Autowired
     private IDataUser dataUser;
-    private final Util util = new Util();
+    @Autowired
+    private IUtil util;
 
     @Test
     public void createDepositTrue(){

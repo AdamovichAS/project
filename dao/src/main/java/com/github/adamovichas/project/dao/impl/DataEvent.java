@@ -1,6 +1,7 @@
-package com.github.adamovichas.project.dao;
+package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.ISessionHibernate;
+import com.github.adamovichas.project.dao.IDataEvent;
+import com.github.adamovichas.project.dao.ISessionHibernate;
 import com.github.adamovichas.project.entity.EventEntity;
 import com.github.adamovichas.project.entity.FactorEntity;
 import com.github.adamovichas.project.entity.LeagueEntity;
@@ -8,7 +9,6 @@ import com.github.adamovichas.project.entity.TeamEntity;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
-import com.github.adamovichas.project.IDataEvent;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;

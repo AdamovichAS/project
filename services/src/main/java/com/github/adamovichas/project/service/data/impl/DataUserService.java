@@ -3,7 +3,7 @@ import com.github.adamovichas.project.service.user.UserCreater;
 import com.github.adamovichas.project.service.user.UserFieldsSetter;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import com.github.adamovichas.project.model.dto.UserDTO;
-import com.github.adamovichas.project.IDataUser;
+import com.github.adamovichas.project.dao.IDataUser;
 
 import java.util.Map;
 
