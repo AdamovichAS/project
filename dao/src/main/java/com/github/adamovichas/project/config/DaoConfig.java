@@ -2,36 +2,55 @@ package com.github.adamovichas.project.config;
 
 import com.github.adamovichas.project.dao.*;
 import com.github.adamovichas.project.dao.impl.*;
+import com.github.adamovichas.project.dao.repository.BetRepository;
+import com.github.adamovichas.project.dao.repository.CashAccountRepository;
+import com.github.adamovichas.project.dao.repository.EventRepository;
+import com.github.adamovichas.project.dao.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.persistence.EntityManagerFactory;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@Import(HibernateConfig.class)
+@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "com.github.adamovichas.project.dao.repository")
 public class DaoConfig {
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
+
+    @Autowired
+    private CashAccountRepository cashAccountRepository;
+
+    @Autowired
+    private BetRepository betRepository;
+
+
     @Bean
-    public ISessionHibernate session(EntityManagerFactory emf){
-        return new SessionHibernate(emf);
-    }
-    @Bean
-    public IDataUser userDao(ISessionHibernate session){
-        return new DataUser(session);
+    public IUserDao userDao(){
+        return new UserDao(userRepository);
     }
 
     @Bean
-    public ICashAccountData cashDao(ISessionHibernate session){
-        return new CashAccountData(session);
+    public ICashAccountDao cashDao(){
+        return new CashAccountDao(cashAccountRepository);
     }
 
     @Bean
-    public IDataEvent eventDao(ISessionHibernate session){
-        return new DataEvent(session);
+    public IEventDao eventDao(){
+        return new EventDao(eventRepository);
     }
 
     @Bean
-    public IBetData betDao (ISessionHibernate session){
-        return new BetData(session);
+    public IBetDao betDao (){
+        return new BetDao(betRepository);
     }
 
+    
 }

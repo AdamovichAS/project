@@ -3,7 +3,7 @@ package com.github.adamovichas.project.service.data.impl;
 import com.github.adamovichas.project.service.data.IDataBetService;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
-import com.github.adamovichas.project.dao.IBetData;
+import com.github.adamovichas.project.dao.IBetDao;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ public class DataBetService implements IDataBetService {
 
 //    private static volatile IDataBetService instance;
 
-    private final IBetData data;
+    private final IBetDao data;
 
-    public DataBetService(IBetData betData) {
+    public DataBetService(IBetDao betData) {
         data = betData;
     }
 //

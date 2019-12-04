@@ -3,7 +3,7 @@ import com.github.adamovichas.project.service.user.UserCreater;
 import com.github.adamovichas.project.service.user.UserFieldsSetter;
 import com.github.adamovichas.project.service.data.IdataUserService;
 import com.github.adamovichas.project.model.dto.UserDTO;
-import com.github.adamovichas.project.dao.IDataUser;
+import com.github.adamovichas.project.dao.IUserDao;
 
 import java.util.Map;
 
@@ -13,9 +13,9 @@ import static java.util.Objects.nonNull;
 public class DataUserService implements IdataUserService {
 
     private UserCreater userCreater = new UserCreater();
-    private final IDataUser data;
+    private final IUserDao data;
 
-    public DataUserService(IDataUser dataUser) {
+    public DataUserService(IUserDao dataUser) {
         this.data = dataUser;
     }
 
@@ -61,7 +61,7 @@ public class DataUserService implements IdataUserService {
             return false;
         }
         UserFieldsSetter.SETTER.SetFields(user,userFieldsForUpdate);
-        return data.updateUserInfo(user);
+        return data.updateUser(user);
     }
 
     @Override

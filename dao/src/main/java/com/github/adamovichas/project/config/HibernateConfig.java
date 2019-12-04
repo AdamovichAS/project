@@ -6,9 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
@@ -35,28 +40,21 @@ public class HibernateConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactoryBean() {
+    public LocalSessionFactoryBean entityManagerFactory() {
         final LocalSessionFactoryBean sf = new LocalSessionFactoryBean();
         sf.setDataSource(dataSource());
         sf.setPackagesToScan("com.github.adamovichas.project.entity");
         sf.setHibernateProperties(settingsConfig.hibernateProperties());
-
         return sf;
     }
 
     @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
+    public PlatformTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager
                 = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactoryBean().getObject());
+        transactionManager.setSessionFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
-
-    @Bean
-    public TransactionTemplate transactionTemplate(){
-        return new TransactionTemplate(hibernateTransactionManager());
-    }
-
 
 
 }

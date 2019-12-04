@@ -31,6 +31,9 @@
           <element id="archive" name="services-1.0-SNAPSHOT.jar">
             <element id="module-output" name="services" />
           </element>
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-jpa:2.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:2.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.9.4" />
           <element id="archive" name="dao-1.0-SNAPSHOT.jar">
             <element id="module-output" name="dao" />
           </element>

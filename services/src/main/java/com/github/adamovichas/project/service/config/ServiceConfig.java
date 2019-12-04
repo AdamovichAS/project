@@ -1,9 +1,9 @@
 package com.github.adamovichas.project.service.config;
 
-import com.github.adamovichas.project.dao.IBetData;
-import com.github.adamovichas.project.dao.ICashAccountData;
-import com.github.adamovichas.project.dao.IDataEvent;
-import com.github.adamovichas.project.dao.IDataUser;
+import com.github.adamovichas.project.dao.IBetDao;
+import com.github.adamovichas.project.dao.ICashAccountDao;
+import com.github.adamovichas.project.dao.IEventDao;
+import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.service.data.IDataBetService;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;
@@ -22,22 +22,22 @@ import org.springframework.context.annotation.Import;
 public class ServiceConfig {
 
     @Bean
-    public IDataBetService betService(IBetData betData){
+    public IDataBetService betService(IBetDao betData){
         return new DataBetService(betData);
     }
 
     @Bean
-    public IDataCashAccountService cashAccountService(ICashAccountData cashAccountData){
+    public IDataCashAccountService cashAccountService(ICashAccountDao cashAccountData){
         return new DataCashAccountService(cashAccountData);
     }
 
     @Bean
-    public IdataEventService eventService(IDataEvent dataEvent){
+    public IdataEventService eventService(IEventDao dataEvent){
         return new DataEventService(dataEvent);
     }
 
     @Bean
-    public IdataUserService userService(IDataUser dataUser){
+    public IdataUserService userService(IUserDao dataUser){
         return new DataUserService(dataUser);
     }
 }

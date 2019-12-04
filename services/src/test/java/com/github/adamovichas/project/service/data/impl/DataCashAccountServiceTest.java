@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.dao.impl.CashAccountData;
+import com.github.adamovichas.project.dao.impl.CashAccountDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 public class DataCashAccountServiceTest {
 
     @Mock
-    public CashAccountData dataMoney;
+    public CashAccountDao dataMoney;
 
     @InjectMocks
     public DataCashAccountService dataCashAccountService;
@@ -26,7 +26,7 @@ public class DataCashAccountServiceTest {
 
     @Test
     public void createMoney(){
-        when(dataMoney.verification("test")).thenReturn(true);
+        when(dataMoney.create("test")).thenReturn(true);
         final boolean test = dataCashAccountService.verification("test");
         assertTrue(test);
     }

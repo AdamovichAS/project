@@ -1,7 +1,8 @@
 package com.github.adamovichas.project.entity;
 
+import com.github.adamovichas.project.model.bet.Status;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "bet")
@@ -10,6 +11,7 @@ public class BetEntity {
     private String userLogin;
     private Long factorId;
     private double money;
+    private Status status;
     private FactorEntity factor;
     private UserEntity user;
 
@@ -28,7 +30,6 @@ public class BetEntity {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -37,7 +38,6 @@ public class BetEntity {
     public String getUserLogin() {
         return userLogin;
     }
-
     public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
     }
@@ -46,7 +46,6 @@ public class BetEntity {
     public Long getFactorId() {
         return factorId;
     }
-
     public void setFactorId(Long factorId) {
         this.factorId = factorId;
     }
@@ -55,9 +54,17 @@ public class BetEntity {
     public double getMoney() {
         return money;
     }
-
     public void setMoney(double money) {
         this.money = money;
+    }
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @ManyToOne
@@ -65,7 +72,6 @@ public class BetEntity {
     public FactorEntity getFactor() {
         return factor;
     }
-
     public void setFactor(FactorEntity factor) {
         this.factor = factor;
     }
@@ -75,7 +81,6 @@ public class BetEntity {
     public UserEntity getUser() {
         return user;
     }
-
     public void setUser(UserEntity user) {
         this.user = user;
     }

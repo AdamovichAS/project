@@ -1,21 +1,21 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.dao.ICashAccountData;
+import com.github.adamovichas.project.dao.ICashAccountDao;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;
 
 public class DataCashAccountService implements IDataCashAccountService {
 
-    private final ICashAccountData data;
+    private final ICashAccountDao data;
 
-    public DataCashAccountService(ICashAccountData cashAccountData) {
+    public DataCashAccountService(ICashAccountDao cashAccountData) {
         data = cashAccountData;
     }
 
 
     @Override
     public boolean verification(String login) {
-        return data.verification(login);
+        return data.create(login);
     }
 
     @Override

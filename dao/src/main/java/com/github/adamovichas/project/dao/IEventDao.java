@@ -7,7 +7,7 @@ import com.github.adamovichas.project.model.dto.TeamDTO;
 
 import java.util.List;
 
-public interface IDataEvent {
+public interface IEventDao {
     Long addEvent(com.github.adamovichas.project.model.dto.EventDTO eventDTO);
     List<LeagueDTO> getAllLeagues();
     List<TeamDTO> getAllTeamsByLeague(Long idLeague);

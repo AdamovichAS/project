@@ -18,10 +18,10 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/registration" method="POST">
-    <label><fmt:message key="index.login" bundle="${messages}"/></label>
-    <input type="text" required placeholder="login" name="login"><br>
+    <label><fmt:message key="index.userlogin" bundle="${messages}"/></label>
+    <input type="text" required placeholder="userlogin" name="userlogin"><br>
 
-    <label><fmt:message key="login.password" bundle="${messages}"/></label>
+    <label><fmt:message key="userlogin.password" bundle="${messages}"/></label>
     <input type="password" required placeholder="password" name="password"><br>
     <label><fmt:message key="registration.repeat_password" bundle="${messages}"/></label>
     <input type="password" required placeholder="repeat password" name="repeatedPassword"><br><br>

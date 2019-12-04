@@ -24,7 +24,7 @@
             <a href="${pageContext.request.contextPath}/cashier?action=deposit"><fmt:message key="deposit.button" bundle="${messages}"/></a>
             <a href="${pageContext.request.contextPath}/cashier?action=withdrawal"><fmt:message key="withdrawal.button" bundle="${messages}"/></a>
         </div>
-        <br>${account.login} <fmt:message key="my_page.balance" bundle="${messages}"/> ${account.value}<br>
+        <br>${account.userlogin} <fmt:message key="my_page.balance" bundle="${messages}"/> ${account.value}<br>
         <c:choose>
             <c:when test="${action eq 'deposit'}">
                 <jsp:include page="/deposit.jsp"/>

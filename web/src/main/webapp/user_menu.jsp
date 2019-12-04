@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<h4><fmt:message key="my_page.hello" bundle="${messages}"/> ${authUser.login} <fmt:message key="my_page.role" bundle="${messages}"/> ${authUser.role}, <fmt:message key="my_page.balance" bundle="${messages}"/> ${account}</h4>
+<h4><fmt:message key="my_page.hello" bundle="${messages}"/> ${authUser.userlogin} <fmt:message key="my_page.role" bundle="${messages}"/> ${authUser.role}, <fmt:message key="my_page.balance" bundle="${messages}"/> ${account}</h4>
 <br>
 <a href="${pageContext.request.contextPath}/logout"><fmt:message key="index.logout" bundle="${messages}"/></a>
 <br>

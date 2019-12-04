@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.dao.IBetData;
-import com.github.adamovichas.project.dao.ICashAccountData;
-import com.github.adamovichas.project.dao.IDataUser;
+import com.github.adamovichas.project.dao.IBetDao;
+import com.github.adamovichas.project.dao.ICashAccountDao;
+import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.entity.UserEntity;
@@ -25,11 +25,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class, Util.class})
 public class DataBetTest {
     @Autowired
-    private IBetData betData;
+    private IBetDao betData;
     @Autowired
-    private IDataUser dataUser;
+    private IUserDao dataUser;
     @Autowired
-    private ICashAccountData cashAccountData;
+    private ICashAccountDao cashAccountData;
     @Autowired
     private IUtil util;
 
@@ -38,12 +38,12 @@ public class DataBetTest {
         UserDTO userDTO = util.createTestUser();
         BetDTO betDTO = util.createFinishedBet();
         dataUser.addUser(userDTO);
-        cashAccountData.verification(userDTO.getLogin());
+        cashAccountData.create(userDTO.getLogin());
         Long idBet = betData.addBet(betDTO);
         betData.CancelBetById(idBet);
-        util.deleteDeposit(userDTO.getLogin());
+ //       util.deleteDeposit(userDTO.getUserlogin());
         UserEntity entity = EntityDtoViewConverter.getEntity(userDTO);
-        util.deleteTestUser(entity);
+ //       util.deleteTestUser(entity);
         assertNotNull(idBet);
     }
 
@@ -52,13 +52,13 @@ public class DataBetTest {
         UserDTO userDTO = util.createTestUser();
         BetDTO betDTO = util.createFinishedBet();
         dataUser.addUser(userDTO);
-        cashAccountData.verification(userDTO.getLogin());
+        cashAccountData.create(userDTO.getLogin());
         Long idBet = betData.addBet(betDTO);
         BetView viewById = betData.getViewById(idBet);
         betData.CancelBetById(idBet);
-        util.deleteDeposit(userDTO.getLogin());
+ //       util.deleteDeposit(userDTO.getUserlogin());
         UserEntity entity = EntityDtoViewConverter.getEntity(userDTO);
-        util.deleteTestUser(entity);
+ //       util.deleteTestUser(entity);
         assertEquals(viewById.getLogin(),betDTO.getUserLogin());
         assertEquals(viewById.getMoney(),betDTO.getMoney());
         assertEquals(viewById.getFactor().getId(),betDTO.getFactorId());
@@ -70,13 +70,13 @@ public class DataBetTest {
         UserDTO userDTO = util.createTestUser();
         BetDTO betDTO = util.createFinishedBet();
         dataUser.addUser(userDTO);
-        cashAccountData.verification(userDTO.getLogin());
+        cashAccountData.create(userDTO.getLogin());
         Long idBet = betData.addBet(betDTO);
         List<BetView> views = betData.getNotFinishedBetByLogin(userDTO.getLogin());
         betData.CancelBetById(idBet);
-        util.deleteDeposit(userDTO.getLogin());
+  //      util.deleteDeposit(userDTO.getUserlogin());
         UserEntity entity = EntityDtoViewConverter.getEntity(userDTO);
-        util.deleteTestUser(entity);
+  //      util.deleteTestUser(entity);
         assertEquals(views.size(),0);
     }
 
@@ -86,15 +86,15 @@ public class DataBetTest {
         BetDTO finishedBet = util.createFinishedBet();
         BetDTO notFinishedBet = util.createNotFinishedBet();
         dataUser.addUser(userDTO);
-        cashAccountData.verification(userDTO.getLogin());
+        cashAccountData.create(userDTO.getLogin());
         Long idBet1 = betData.addBet(finishedBet);
         Long idBet2 = betData.addBet(notFinishedBet);
         List<BetView> views = betData.getNotFinishedBetByLogin(userDTO.getLogin());
         betData.CancelBetById(idBet1);
         betData.CancelBetById(idBet2);
-        util.deleteDeposit(userDTO.getLogin());
+  //      util.deleteDeposit(userDTO.getUserlogin());
         UserEntity entity = EntityDtoViewConverter.getEntity(userDTO);
-        util.deleteTestUser(entity);
+  //      util.deleteTestUser(entity);
         assertEquals(views.size(),1);
         for (BetView view : views) {
             assertEquals(view.getLogin(),notFinishedBet.getUserLogin());

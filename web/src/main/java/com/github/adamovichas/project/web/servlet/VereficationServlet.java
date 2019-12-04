@@ -23,9 +23,9 @@ public class VereficationServlet extends HttpServlet {
         String message;
         if(isCreated){
             authUser.setRole(Role.USER_VER);
-            message = "verification.done";
+            message = "create.done";
         }else {
-            message = "verification.false";
+            message = "create.false";
         }
         req.setAttribute("message",message);
         req.getRequestDispatcher("/cashier.jsp").forward(req,resp);

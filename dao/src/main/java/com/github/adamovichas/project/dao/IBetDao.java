@@ -5,7 +5,7 @@ import com.github.adamovichas.project.model.view.BetView;
 
 import java.util.List;
 
-public interface IBetData {
+public interface IBetDao {
 
     Long addBet(BetDTO betDTO);
     BetView getViewById(Long idBet);

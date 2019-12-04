@@ -21,12 +21,6 @@ public class CashAccountEntity {
 
     @Id
     @Column(name = "user_login", nullable = false, updatable = false)
-    @GenericGenerator(
-            name = "gen",
-            strategy = "foreign",
-            parameters = @Parameter(name = "property", value = "userEntity")
-    )
-    @GeneratedValue(generator = "gen")
     public String getLogin() {
         return login;
     }
@@ -45,9 +39,8 @@ public class CashAccountEntity {
         this.value = value;
     }
 
-
     @OneToOne
-    @JoinColumn(name = "user_login", referencedColumnName = "login",foreignKey = @ForeignKey(ConstraintMode.PROVIDER_DEFAULT))
+    @JoinColumn(name = "user_login", referencedColumnName = "login")
     public UserEntity getUserEntity() {
         return userEntity;
     }

@@ -61,7 +61,7 @@ public class EventEntity {
         this.teamTwoId = teamTwoId;
     }
 
-    @Column(name = "league_id",nullable = false, updatable = false, insertable = false)
+    @Column(name = "league_id", nullable = false, updatable = false, insertable = false)
     public Long getLeagueId() {
         return leagueId;
     }

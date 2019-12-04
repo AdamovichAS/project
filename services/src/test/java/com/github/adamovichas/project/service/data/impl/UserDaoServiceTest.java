@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.dao.impl.DataUser;
+import com.github.adamovichas.project.dao.impl.UserDao;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.service.user.UserCreater;
@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class DataUserServiceTest {
+public class UserDaoServiceTest {
 
     @Mock
-    public DataUser dataUser;
+    public UserDao userDao;
 
     @Mock
     public UserCreater userCreater;
@@ -36,7 +36,7 @@ public class DataUserServiceTest {
     public void loginIsExist(){
         final UserDTO testUser = createTestUser();
         final String password = testUser.getPassword();
-        when(dataUser.getUserByLogin(testUser.getLogin())).thenReturn(testUser);
+        when(userDao.getUserByLogin(testUser.getLogin())).thenReturn(testUser);
         assertTrue(testUser !=null);
         assertEquals(password,testUser.getPassword());
         boolean isExist = dataUserService.loginIsExist(testUser.getLogin());
@@ -46,7 +46,7 @@ public class DataUserServiceTest {
     @Test
     public void userIsExist(){
         final UserDTO testUser = createTestUser();
-        when(dataUser.getUserByLogin(testUser.getLogin())).thenReturn(testUser);
+        when(userDao.getUserByLogin(testUser.getLogin())).thenReturn(testUser);
         boolean isExist = dataUserService.userIsExist(testUser.getLogin(),testUser.getPassword());
         assertTrue(isExist);
     }
@@ -60,7 +60,7 @@ public class DataUserServiceTest {
         user.setLogin("login");
         user.setPassword("password");
         when(userCreater.createUser(userFields)).thenReturn(user);
-        when(dataUser.addUser(user)).thenReturn(true);
+        when(userDao.addUser(user)).thenReturn(true);
         boolean addNewUser = dataUserService.addNewUser(userFields);
         assertTrue(addNewUser);
     }
@@ -70,9 +70,9 @@ public class DataUserServiceTest {
         String login = "login";
         UserDTO user = new UserDTO();
         user.setLogin(login);
-        when(dataUser.getUserByLogin(login)).thenReturn(user);
+        when(userDao.getUserByLogin(login)).thenReturn(user);
         dataUserService.getUserByLogin(login);
-        verify(dataUser,times(1)).getUserByLogin(login);
+        verify(userDao,times(1)).getUserByLogin(login);
 
     }
 

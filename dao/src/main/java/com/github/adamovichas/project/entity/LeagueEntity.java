@@ -12,7 +12,7 @@ public class LeagueEntity {
     private Long id;
     private String name;
     private List<TeamEntity>teams;
-    private List<EventEntity>events;
+//    private List<EventEntity>events;
 
     public LeagueEntity(Long id, String name) {
         this.id = id;
@@ -53,14 +53,14 @@ public class LeagueEntity {
         this.teams = teams;
     }
 
-    @OneToMany(mappedBy = "league")
-    public List<EventEntity> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<EventEntity> events) {
-        this.events = events;
-    }
+//    @OneToMany(mappedBy = "league")
+//    public List<EventEntity> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(List<EventEntity> events) {
+//        this.events = events;
+//    }
 
     @Override
     public String toString() {

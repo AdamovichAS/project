@@ -19,7 +19,7 @@
 <body>
 
     <form action="${pageContext.request.contextPath}/update" method="POST">
-        <label><fmt:message key="login.password" bundle="${messages}"/></label>
+        <label><fmt:message key="userlogin.password" bundle="${messages}"/></label>
         <input type="password" placeholder="new password" name="password"><br>
         <label><fmt:message key="registration.first_name" bundle="${messages}"/></label>
         <input type="text" placeholder="new first name" name="firstName"><br>
@@ -39,8 +39,8 @@
     <c:if test="${message ne null}">
         <c:out value="${message}"/>
     </c:if>
-    <c:if test="${user ne null}">
-        <c:out value="${user}"/>
+    <c:if test="${userEntity ne null}">
+        <c:out value="${userEntity}"/>
     </c:if>
 </body>
 </html>

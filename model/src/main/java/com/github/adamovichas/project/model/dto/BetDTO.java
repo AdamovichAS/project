@@ -1,11 +1,14 @@
 package com.github.adamovichas.project.model.dto;
 
+import com.github.adamovichas.project.model.bet.Status;
+
 public class BetDTO {
 
     private Long id;
     private String userLogin;
     private Long factorId;
     private double money;
+    private Status status;
 
     public BetDTO(String userLogin, Long factorId, double money) {
         this.userLogin = userLogin;
@@ -46,5 +49,13 @@ public class BetDTO {
 
     public void setMoney(double money) {
         this.money = money;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

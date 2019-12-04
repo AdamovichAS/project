@@ -2,7 +2,7 @@ package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
-import com.github.adamovichas.project.dao.impl.BetData;
+import com.github.adamovichas.project.dao.impl.BetDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class DataBetServiceTest {
 
     @Mock
-    public BetData dataBet;
+    public BetDao dataBet;
 
     @InjectMocks
     public DataBetService dataBetService;
