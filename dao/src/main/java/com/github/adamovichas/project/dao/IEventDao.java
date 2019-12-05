@@ -13,7 +13,7 @@ public interface IEventDao {
     List<TeamDTO> getAllTeamsByLeague(Long idLeague);
     boolean eventIsExist(com.github.adamovichas.project.model.dto.EventDTO eventDTO);
     List<EventDTO> getAllNotFinishedEvents();
-    EventDTO getSavedEventById(Long id);
+    EventDTO getEventById(Long id);
     Long getCountEvents();
     List<EventDTO>getEventsOnPage(int page, int pageSize);
 }

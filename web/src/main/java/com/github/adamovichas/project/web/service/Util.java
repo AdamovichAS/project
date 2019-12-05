@@ -54,7 +54,7 @@ public final class Util {
             CashAccountDTO accountByLogin = cashData.getAccountByLogin(login);
             req.setAttribute("account",accountByLogin);
 //            req.getRequestDispatcher("/bet_pagination").include(req,resp);
-//            List<BetView> betViews = betData.getNotFinishedBetByLogin(login);
+//            List<BetView> betViews = betData.getAllByUserAndStatus(login);
 //            if(!betViews.isEmpty()) {
 //                req.setAttribute("userBets", betViews);
 //            }

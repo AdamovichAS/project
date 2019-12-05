@@ -54,7 +54,7 @@ public class DataBetServiceTest {
     public void getNotFinishedBetByLogin(){
         String login = "Test";
         List<BetView>betViews = new ArrayList<>(Arrays.asList(new BetView(),new BetView(), new BetView()));
-        when(dataBet.getNotFinishedBetByLogin(login)).thenReturn(betViews);
+        when(dataBet.getAllByUserAndStatus(login)).thenReturn(betViews);
         List<BetView> notFinishedBetByLogin = dataBetService.getNotFinishedBetByLogin(login);
         assertEquals(notFinishedBetByLogin.size(),betViews.size());
     }

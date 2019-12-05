@@ -45,7 +45,7 @@ public class DataBetService implements IDataBetService {
 
     @Override
     public List<BetView> getNotFinishedBetByLogin(String login) {
-        return data.getNotFinishedBetByLogin(login);
+        return data.getAllByUserAndStatus(login);
     }
 
     @Override

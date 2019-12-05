@@ -7,5 +7,5 @@ public interface IUserDao {
     boolean updateUser(UserDTO user);
     void addUser(UserDTO user);
     UserDTO getUserByLogin(String login);
-    void deleteUser(String login);
+    void block(String login);
 }

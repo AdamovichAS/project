@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CashAccountEntity {
 
-    private String login;
+    private String userLogin;
     private double value;
     private UserEntity userEntity;
 
@@ -21,12 +21,18 @@ public class CashAccountEntity {
 
     @Id
     @Column(name = "user_login", nullable = false, updatable = false)
-    public String getLogin() {
-        return login;
+    @GenericGenerator(
+            name = "gen",
+            strategy = "foreign",
+            parameters = @Parameter(name = "property", value = "userEntity")
+    )
+    @GeneratedValue(generator = "gen")
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUserLogin(String login) {
+        this.userLogin = login;
     }
 
 

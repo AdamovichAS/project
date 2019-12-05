@@ -4,6 +4,7 @@ import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.dao.repository.UserRepository;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.UserDTO;
+import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,23 +34,19 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public void deleteUser(String login) {
+    public void block(String login) {
         final UserEntity userEntity = repository.findById(login).get();
-        userEntity.setIsDeleted(true);
+        userEntity.setRole(Role.BLOCKED);
     }
 
     @Override
     public boolean updateUser(UserDTO user) {
         boolean result = false;
         UserEntity userEntity = repository.findById(user.getLogin()).get();
-        setDTOfieldsToEntity(userEntity,user);
+        userEntity.setRole(user.getRole());
+        userEntity.setPassword(user.getPassword());
         result = true;
         return result;
     }
 
-    private void setDTOfieldsToEntity(UserEntity userEntity, UserDTO userDTO){
-        userEntity.setRole(userDTO.getRole());
-        userEntity.setPassword(userDTO.getPassword());
-        userEntity.setIsDeleted(userDTO.getIsDeleted());
-    }
 }

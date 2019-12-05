@@ -2,10 +2,7 @@ package com.github.adamovichas.project.config;
 
 import com.github.adamovichas.project.dao.*;
 import com.github.adamovichas.project.dao.impl.*;
-import com.github.adamovichas.project.dao.repository.BetRepository;
-import com.github.adamovichas.project.dao.repository.CashAccountRepository;
-import com.github.adamovichas.project.dao.repository.EventRepository;
-import com.github.adamovichas.project.dao.repository.UserRepository;
+import com.github.adamovichas.project.dao.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +28,14 @@ public class DaoConfig {
     @Autowired
     private BetRepository betRepository;
 
+    @Autowired
+    private LeagueRepository leagueRepository;
+
+    @Autowired
+    private AppCashAccountRepository appCashAccountRepository;
+
+    @Autowired
+    private UserPassportRepository userPassportRepository;
 
     @Bean
     public IUserDao userDao(){
@@ -52,5 +57,18 @@ public class DaoConfig {
         return new BetDao(betRepository);
     }
 
-    
+    @Bean
+    public ILeagueDao leagueDao(){
+        return new LeagueDao(leagueRepository);
+    }
+
+    @Bean
+    public IAppCashAccountDao appCashAccountDao(){
+        return new AppCashAccountDao(appCashAccountRepository);
+    }
+
+    @Bean
+    public IUserPassportDao userPassportDao(){
+        return new UserPassportDao(userPassportRepository);
+    }
 }

@@ -19,7 +19,6 @@ public abstract class EntityDtoViewConverter {
         userEntity.setLogin(userDTO.getLogin());
         userEntity.setPassword(userDTO.getPassword());
         userEntity.setRole(userDTO.getRole());
-        userEntity.setIsDeleted(userDTO.getIsDeleted());
         return userEntity;
     }
 
@@ -28,7 +27,6 @@ public abstract class EntityDtoViewConverter {
         userDTO.setLogin(userEntity.getLogin());
         userDTO.setPassword(userEntity.getPassword());
         userDTO.setRole(userEntity.getRole());
-        userDTO.setIsDeleted(userEntity.getIsDeleted());
         return userDTO;
     }
 
@@ -79,7 +77,9 @@ public abstract class EntityDtoViewConverter {
         if (nonNull(eventDTO.getFactors())) {
             List<FactorEntity> factorEntities = new ArrayList<>();
             for (FactorDTO dtoFactor : eventDTO.getFactors()) {
-                factorEntities.add(getEntity(dtoFactor));
+                FactorEntity entity = getEntity(dtoFactor);
+                factorEntities.add(entity);
+                entity.setEvent(eventEntity);
             }
             eventEntity.setFactors(factorEntities);
         }
@@ -143,6 +143,7 @@ public abstract class EntityDtoViewConverter {
         betEntity.setFactorId(betDTO.getFactorId());
         betEntity.setMoney(betDTO.getMoney());
         betEntity.setUserLogin(betDTO.getUserLogin());
+        betEntity.setStatus(betDTO.getStatus());
         return betEntity;
     }
 
@@ -152,19 +153,20 @@ public abstract class EntityDtoViewConverter {
         betDTO.setUserLogin(betEntity.getUserLogin());
         betDTO.setFactorId(betEntity.getFactorId());
         betDTO.setMoney(betEntity.getMoney());
+        betDTO.setStatus(betEntity.getStatus());
         return betDTO;
     }
 
     public static CashAccountDTO getDTO(CashAccountEntity cashAccountEntity) {
         CashAccountDTO cashAccountDTO = new CashAccountDTO();
-        cashAccountDTO.setLogin(cashAccountEntity.getLogin());
+        cashAccountDTO.setLogin(cashAccountEntity.getUserLogin());
         cashAccountDTO.setValue(cashAccountEntity.getValue());
         return cashAccountDTO;
     }
 
     public static CashAccountEntity getEntity(CashAccountDTO cashAccountDTO) {
         CashAccountEntity cashAccountEntity = new CashAccountEntity();
-        cashAccountEntity.setLogin(cashAccountDTO.getLogin());
+        cashAccountEntity.setUserLogin(cashAccountDTO.getLogin());
         cashAccountEntity.setValue(cashAccountDTO.getValue());
         return cashAccountEntity;
     }
@@ -177,6 +179,51 @@ public abstract class EntityDtoViewConverter {
         betView.setFactor(factorDTO);
         betView.setLogin(betEntity.getUserLogin());
         betView.setMoney(betEntity.getMoney());
+        betView.setStatus(betEntity.getStatus());
         return betView;
+    }
+
+    public static AppCashAccountEntity getEntity(AppCashAccountDTO dto){
+        AppCashAccountEntity entity = new AppCashAccountEntity();
+        entity.setId(dto.getId());
+        entity.setBalance(dto.getBalance());
+        return entity;
+    }
+
+    public static AppCashAccountDTO getDTO(AppCashAccountEntity entity){
+        AppCashAccountDTO dto = new AppCashAccountDTO();
+        dto.setId(entity.getId());
+        dto.setBalance(entity.getBalance());
+        return dto;
+    }
+
+    public static UserPassportDTO getDTO(UserPassportEntity entity){
+        UserPassportDTO dto = new UserPassportDTO();
+        dto.setAddress(entity.getAddress());
+        dto.setBirthDay(entity.getBirthDay());
+        dto.setCountry(entity.getCountry());
+        dto.setFirstName(entity.getFirstName());
+        dto.setLastName(entity.getLastName());
+        dto.setPassEndDate(entity.getPassEndDate());
+        dto.setPassIssueDate(entity.getPassIssueDate());
+        dto.setPassNumber(entity.getPassNumber());
+        dto.setPassSeries(entity.getPassSeries());
+        dto.setUserLogin(entity.getUserLogin());
+        return dto;
+    }
+
+    public static UserPassportEntity getEntity(UserPassportDTO dto){
+        UserPassportEntity entity = new UserPassportEntity();
+        entity.setAddress(dto.getAddress());
+        entity.setBirthDay(dto.getBirthDay());
+        entity.setCountry(dto.getCountry());
+        entity.setFirstName(dto.getFirstName());
+        entity.setPassEndDate(dto.getPassEndDate());
+        entity.setLastName(dto.getLastName());
+        entity.setPassIssueDate(dto.getPassIssueDate());
+        entity.setPassNumber(dto.getPassNumber());
+        entity.setUserLogin(dto.getUserLogin());
+        entity.setPassSeries(dto.getPassSeries());
+        return entity;
     }
 }

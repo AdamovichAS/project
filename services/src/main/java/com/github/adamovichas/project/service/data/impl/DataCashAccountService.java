@@ -20,20 +20,20 @@ public class DataCashAccountService implements IDataCashAccountService {
 
     @Override
     public CashAccountDTO getAccountByLogin(String login) {
-        return data.getMoneyByLogin(login);
+        return data.getCashAccountByLogin(login);
     }
 
     @Override
     public boolean makeDeposit(String login, double depositValue) {
-        CashAccountDTO cashAccountDTO = data.getMoneyByLogin(login);
+        CashAccountDTO cashAccountDTO = data.getCashAccountByLogin(login);
         cashAccountDTO.setValue(cashAccountDTO.getValue() + depositValue);
-        return data.updateMoneyValue(cashAccountDTO);
+        return data.updateCashAccountValue(cashAccountDTO);
     }
 
     @Override
     public boolean withdrawal(String login, double withdrawalValue) {
-        CashAccountDTO cashAccountDTO = data.getMoneyByLogin(login);
+        CashAccountDTO cashAccountDTO = data.getCashAccountByLogin(login);
         cashAccountDTO.setValue(cashAccountDTO.getValue() - withdrawalValue);
-        return data.updateMoneyValue(cashAccountDTO);
+        return data.updateCashAccountValue(cashAccountDTO);
     }
 }

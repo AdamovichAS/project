@@ -21,7 +21,7 @@ import java.util.List;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class, Util.class})
 @Transactional
-@Rollback(value = false)
+//@Rollback(value = false)
 public class EventDaoTest {
     @Autowired
     private IEventDao dataEvent;
@@ -33,11 +33,10 @@ public class EventDaoTest {
         EventDTO eventTest = util.createEventTest();
         Long id = dataEvent.addEvent(eventTest);
         assertNotNull(id);
-  //      util.deleteEvent(id);
     }
 
     @Test
-    public void eventIsExistNull(){
+    public void eventIsExistFalse(){
         EventDTO eventTest = util.createEventTest();
         boolean result = dataEvent.eventIsExist(eventTest);
         assertFalse(result);
@@ -45,53 +44,34 @@ public class EventDaoTest {
     }
 
     @Test
-    public void eventIsExist(){
+    public void eventIsExistTrue(){
         EventDTO eventTest = util.createEventTest();
-        Long id = dataEvent.addEvent(eventTest);
+        dataEvent.addEvent(eventTest);
         boolean result = dataEvent.eventIsExist(eventTest);
         assertTrue(result);
- //       util.deleteEvent(id);
     }
 
     @Test
-    public void getSavedEventById(){
+    public void getEventById(){
         EventDTO eventTest = util.createEventTest();
         Long id = dataEvent.addEvent(eventTest);
-        EventDTO savedEventById = dataEvent.getSavedEventById(id);
-  //      util.deleteEvent(id);
+        EventDTO savedEventById = dataEvent.getEventById(id);
         assertNotNull(savedEventById);
         assertEquals(savedEventById.getName(),"Arsenal - Aston Vila");
     }
 
-    @Test
-    void getAllNotFinishedEvents(){
-   //     Long countAllNotFinishedEvents = util.getCountAllNotFinishedEvents();
-        final List<EventDTO> events = dataEvent.getAllNotFinishedEvents();
-  //      assertEquals(events.size(),countAllNotFinishedEvents);
-    }
+//    @Test
+//    void getAllNotFinishedEvents(){
+//   //     Long countAllNotFinishedEvents = util.getCountAllNotFinishedEvents();
+//        final List<EventDTO> events = dataEvent.getAllNotFinishedEvents();
+//  //      assertEquals(events.size(),countAllNotFinishedEvents);
+//    }
 
-    @Test
-    void getAllLeagues(){
-        int countLeagues = 2;
-        List<LeagueDTO> allLeagues = dataEvent.getAllLeagues();
-        assertEquals(countLeagues,allLeagues.size());
-    }
 
-    @Test
-    void cacheTest(){
-        dataEvent.getAllLeagues();
-        dataEvent.getAllLeagues();
-        dataEvent.getAllLeagues();
 
-    }
 
-    @Test
-    void getAllTeamsByLeague(){
-        Long idLeague = 1L;
-        int countTeamsInLeague = 20;
-        List<TeamDTO> allTeamsByLeague = dataEvent.getAllTeamsByLeague(idLeague);
-        assertEquals(countTeamsInLeague,allTeamsByLeague.size());
-    }
+
+
 
 
 }

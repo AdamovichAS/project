@@ -1,5 +1,6 @@
 package com.github.adamovichas.project.model.view;
 
+import com.github.adamovichas.project.model.bet.Status;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 
@@ -7,6 +8,7 @@ public class BetView {
     private Long id;
     private String login;
     private String event;
+    private Status status;
 //    private FactorName factorName;
 //    private double factorValue;
     private FactorDTO factor;
@@ -39,7 +41,15 @@ public class BetView {
         this.event = event;
     }
 
-//    public FactorName getFactorName() {
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    //    public FactorName getFactorName() {
 //        return factorName;
 //    }
 //

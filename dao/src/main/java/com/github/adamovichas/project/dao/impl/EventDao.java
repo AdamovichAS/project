@@ -3,12 +3,16 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.dao.IEventDao;
 import com.github.adamovichas.project.dao.repository.EventRepository;
 import com.github.adamovichas.project.entity.EventEntity;
+import com.github.adamovichas.project.entity.LeagueEntity;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 
 import java.util.ArrayList;
@@ -29,32 +33,11 @@ public class EventDao implements IEventDao {
 
 
     @Override
- //   @Modifying(flushAutomatically = true)
     public Long addEvent(EventDTO event) {
-//        Session session = repository.getSession();
-//        try {
-//            session.getTransaction().begin();
-//            EventEntity eventEntity = EntityDtoViewConverter.getEntity(event);
-//            LeagueEntity leagueEntity = session.find(LeagueEntity.class, event.getLeagueId());
-//            leagueEntity.getEvents().add(eventEntity);
-//            eventEntity.setLeague(leagueEntity);
-//            Long id = (Long) session.save(eventEntity);
-//            for (FactorEntity factor : eventEntity.getFactors()) {
-//                factor.setEvent(eventEntity);
-//                session.save(factor);
-//            }
-//            session.getTransaction().commit();
-//            return id;
-//        } catch (RollbackException e) {
-//            log.error("AddEvent exception, EventDTO {}", event);
-//            session.getTransaction().rollback();
-//        } finally {
-//            session.close();
-//        }
         EventEntity eventEntity = EntityDtoViewConverter.getEntity(event);
-        if(nonNull(eventEntity.getLeagueId())){
-            eventEntity.setLeagueId(1L);
-        }
+        LeagueEntity league = repository.getLeague(event.getLeagueId());
+        eventEntity.setLeague(league);
+        league.getEvents().add(eventEntity);
         repository.save(eventEntity);
         return eventEntity.getId();
     }
@@ -81,7 +64,8 @@ public class EventDao implements IEventDao {
 //        } finally {
 //            session.close();
 //        }
-        throw new RuntimeException();
+
+        return repository.existsByTeamOneIdAndTeamTwoIdAndStartTime(event.getTeamOne(),event.getTeamTwo(),event.getStartTime());
     }
 
     @Override
@@ -95,11 +79,12 @@ public class EventDao implements IEventDao {
 //        }
 //        session.getTransaction().commit();
 //        return views;
-        throw new RuntimeException();
+        List<EventEntity> eventEntities = repository.getAllByResultFactorIdIsNull();
+        return getDTOs(eventEntities);
     }
 
     @Override
-    public EventDTO getSavedEventById(Long id) {
+    public EventDTO getEventById(Long id) {
 //        Session session = repository.getSession();
 //        session.getTransaction().begin();
 //        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -111,7 +96,8 @@ public class EventDao implements IEventDao {
 //        session.getTransaction().commit();
 //        session.close();
 //        return EntityDtoViewConverter.getDTO(eventEntity);
-        throw new RuntimeException();
+         EventEntity eventEntity = repository.findById(id).get();
+         return EntityDtoViewConverter.getDTO(eventEntity);
     }
 
     @Override
@@ -122,7 +108,7 @@ public class EventDao implements IEventDao {
 //        session.getTransaction().commit();
 //        session.close();
 //        return countEvents;
-        throw new RuntimeException();
+        return repository.count();
     }
 
     @Override
@@ -147,10 +133,18 @@ public class EventDao implements IEventDao {
 //        }finally {
 //            session.close();
 //        }
-        return events;
+        List<EventEntity> eventEntities = repository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
+        return getDTOs(eventEntities);
     }
 
 
+    private List<EventDTO> getDTOs(List<EventEntity> entities){
+        List<EventDTO>dtos = new ArrayList<>();
+        for (EventEntity entity : entities) {
+            dtos.add(EntityDtoViewConverter.getDTO(entity));
+        }
+        return dtos;
+    }
     @Override
     public List<LeagueDTO> getAllLeagues() {
 //        Session session = repository.getSession();

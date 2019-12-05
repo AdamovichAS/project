@@ -1,6 +1,8 @@
 package com.github.adamovichas.project.dao.impl;
 
 
+import com.github.adamovichas.project.model.bet.Status;
+import com.github.adamovichas.project.model.dto.AppCashAccountDTO;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
@@ -32,7 +34,6 @@ public class Util implements IUtil{
         user.setLogin("test");
         user.setPassword("123");
         user.setRole(Role.USER_VER);
-        user.setIsDeleted(false);
         return  user;
     }
 
@@ -60,6 +61,7 @@ public class Util implements IUtil{
         betDTO.setUserLogin(testUser.getLogin());
         betDTO.setMoney(100);
         betDTO.setFactorId(1L);
+        betDTO.setStatus(Status.FINISH);
         return betDTO;
     }
 
@@ -68,18 +70,37 @@ public class Util implements IUtil{
         BetDTO betDTO = new BetDTO();
         betDTO.setUserLogin(testUser.getLogin());
         betDTO.setMoney(100);
-        betDTO.setFactorId(5L);
+        betDTO.setFactorId(1L);
+        betDTO.setStatus(Status.RUN_TIME);
+        return betDTO;
+    }
+
+    public BetDTO createCanselBet(){
+        final UserDTO testUser = createTestUser();
+        BetDTO betDTO = new BetDTO();
+        betDTO.setUserLogin(testUser.getLogin());
+        betDTO.setMoney(100);
+        betDTO.setFactorId(1L);
+        betDTO.setStatus(Status.CANCELD);
         return betDTO;
     }
 
      public EventDTO createEventTest(){
         EventDTO event = new EventDTO("Arsenal","Aston Vila", 1L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
-//        List<FactorDTO> factors= new ArrayList<>();
-//        factors.add(new FactorDTO(FactorName.win,2.5));
-//        factors.add(new FactorDTO(FactorName.draw,3));
-//        factors.add(new FactorDTO(FactorName.lose,2.1));
-//        event.setFactors(factors);
+        List<FactorDTO> factors= new ArrayList<>();
+        factors.add(new FactorDTO(FactorName.win,2.5));
+        factors.add(new FactorDTO(FactorName.draw,3));
+        factors.add(new FactorDTO(FactorName.lose,2.1));
+        event.setFactors(factors);
         return event;
+    }
+
+    @Override
+    public AppCashAccountDTO createAppCashAccount() {
+        AppCashAccountDTO appCashAccountDTO = new AppCashAccountDTO();
+        appCashAccountDTO.setId(2L);
+        appCashAccountDTO.setBalance(100);
+        return appCashAccountDTO;
     }
 
 //     public void deleteEvent(Long id) {

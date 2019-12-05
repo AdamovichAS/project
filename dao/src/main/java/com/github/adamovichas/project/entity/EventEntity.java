@@ -61,7 +61,7 @@ public class EventEntity {
         this.teamTwoId = teamTwoId;
     }
 
-    @Column(name = "league_id", nullable = false, updatable = false, insertable = false)
+    @Column(name = "league_id", nullable = false, insertable = false, updatable = false)
     public Long getLeagueId() {
         return leagueId;
     }
@@ -109,7 +109,7 @@ public class EventEntity {
         this.resultFactorId = resultFactorId;
     }
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     public List<FactorEntity> getFactors() {
         return factors;
     }

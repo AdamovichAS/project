@@ -89,7 +89,7 @@ public class EventDaoServiceTest {
     public void getEventById(){
         EventDTO eventTest = new EventDTO();
         eventTest.setId(10L);
-        when(eventDao.getSavedEventById(eventTest.getId())).thenReturn(eventTest);
+        when(eventDao.getEventById(eventTest.getId())).thenReturn(eventTest);
         EventDTO eventById = dataEventService.getEventById(10L);
         assertEquals(eventById.getId(),eventTest.getId());
     }

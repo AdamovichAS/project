@@ -8,7 +8,6 @@ public class UserDTO {
     private String login;
     private String password;
     private Role role;
-    private boolean isDeleted;
 
     public UserDTO() {
     }
@@ -37,13 +36,6 @@ public class UserDTO {
         this.role = role;
     }
 
-    public boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
 
     //    @Override
 //    public String toString() {

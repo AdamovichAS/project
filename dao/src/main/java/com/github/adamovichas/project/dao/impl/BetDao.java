@@ -2,11 +2,21 @@ package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.dao.IBetDao;
 import com.github.adamovichas.project.dao.repository.BetRepository;
+import com.github.adamovichas.project.entity.BetEntity;
+import com.github.adamovichas.project.entity.CashAccountEntity;
+import com.github.adamovichas.project.entity.FactorEntity;
+import com.github.adamovichas.project.entity.UserEntity;
+import com.github.adamovichas.project.model.bet.Status;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
+import com.github.adamovichas.project.util.EntityDtoViewConverter;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +25,13 @@ public class BetDao implements IBetDao {
     private static final Logger log = LoggerFactory.getLogger(BetDao.class);
     private final BetRepository repository;
 
+    @PersistenceContext
+    private Session session;
+
     public BetDao(BetRepository repository) {
         this.repository = repository;
 
     }
-
-
 
 
     @Override
@@ -48,7 +59,22 @@ public class BetDao implements IBetDao {
 //            session.close();
 //        }
 //        return id;
-        throw new RuntimeException();
+        Long id = null;
+        BetEntity betEntity = EntityDtoViewConverter.getEntity(bet);
+        UserEntity userEntity = session.find(UserEntity.class, betEntity.getUserLogin());
+        FactorEntity factorEntity = session.find(FactorEntity.class, betEntity.getFactorId());
+        CashAccountEntity cashAccountEntity = session.find(CashAccountEntity.class, bet.getUserLogin());
+        cashAccountEntity.setValue(cashAccountEntity.getValue() - bet.getMoney());
+        session.saveOrUpdate(cashAccountEntity);
+        betEntity.setFactor(factorEntity);
+        betEntity.setUser(userEntity);
+        if(userEntity.getBets() == null){
+            userEntity.setBets(new ArrayList<>());
+        }
+        userEntity.getBets().add(betEntity);
+        factorEntity.getBets().add(betEntity);
+        id = (Long) session.save(betEntity);
+        return id;
     }
 
     @Override
@@ -61,28 +87,18 @@ public class BetDao implements IBetDao {
 //        session.close();
 //        BetView view = EntityDtoViewConverter.getView(betEntity);
 //        return view;
-        throw new RuntimeException();
+        BetEntity betEntity = repository.findById(idBet).get();
+        return EntityDtoViewConverter.getView(betEntity);
     }
 
     @Override
-    public List<BetView> getNotFinishedBetByLogin(String login) {
-//        Session session = repository.getSession();
-//        List<BetView>views = new ArrayList<>();
-//        BetView betView;
-//        session.getTransaction().begin();
-//        UserEntity userEntity = session.find(UserEntity.class, login);
-//        List<BetEntity> betsEntity = userEntity.getBets();
-//        for (BetEntity entity : betsEntity) {
-//            Long resultFactorId = entity.getFactor().getEvent().getResultFactorId();
-//            if(resultFactorId == null){
-//               betView = EntityDtoViewConverter.getView(entity);
-//               views.add(betView);
-//            }
-//        }
-//        session.getTransaction().commit();
-//        session.close();
-//        return views;
-        throw new RuntimeException();
+    public List<BetView> getAllByUserAndStatus(String login, Status status) {
+        List<BetView> views = new ArrayList<>();
+        List<BetEntity> betEntities = repository.getAllByUserLoginAndStatus(login,status);
+        if(!betEntities.isEmpty()) {
+            views = getViews(betEntities);
+        }
+        return views;
     }
 
     @Override
@@ -101,11 +117,12 @@ public class BetDao implements IBetDao {
 //        }finally {
 //            session.close();
 //        }
-
+        BetEntity betEntity = repository.findById(idBet).get();
+        betEntity.setStatus(Status.CANCELD);
     }
 
-    @Override
-    public Long getCountBetsByLogin(String login){
+//    @Override
+//    public Long getCountBetsByLogin(String login) {
 //        Session session = repository.getSession();
 //        session.getTransaction().begin();
 //        final Long count = session.createQuery("SELECT count (*) FROM BetEntity b WHERE b.userLogin = :login", Long.class)
@@ -114,12 +131,12 @@ public class BetDao implements IBetDao {
 //        session.getTransaction().commit();
 //        session.close();
 //        return count;
-        throw new RuntimeException();
-    }
+//        throw new RuntimeException();
+//    }
 
     @Override
-    public List<BetView> getBetsOnPageByLogin(String login, int page, int pageSize){
-        List<BetView>betViews = new ArrayList<>();
+    public List<BetView> getBetsOnPageByLogin(String login, int page, int pageSize) {
+        List<BetView> betViews = new ArrayList<>();
 //        final Session session = repository.getSession();
 //        try {
 //            session.getTransaction().begin();
@@ -140,7 +157,21 @@ public class BetDao implements IBetDao {
 //        }finally {
 //            session.close();
 //        }
+        List<BetEntity> betEntities = repository.getAllByUserLoginAndStatus(login, Status.RUN_TIME, PageRequest.of(page, pageSize, Sort.by("id")));
+        if(!betEntities.isEmpty()){
+            betViews = getViews(betEntities);
+        }
         return betViews;
+
+
+    }
+
+    private List<BetView> getViews(List<BetEntity> entities){
+        List<BetView>views = new ArrayList<>();
+        for (BetEntity entity : entities) {
+            views.add(EntityDtoViewConverter.getView(entity));
+        }
+        return views;
     }
 
 

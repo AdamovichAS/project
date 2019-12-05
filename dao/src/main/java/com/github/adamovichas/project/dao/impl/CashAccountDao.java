@@ -3,6 +3,7 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.dao.ICashAccountDao;
 import com.github.adamovichas.project.dao.repository.CashAccountRepository;
 import com.github.adamovichas.project.entity.CashAccountEntity;
+import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.slf4j.Logger;
@@ -23,7 +24,9 @@ public class CashAccountDao implements ICashAccountDao {
         boolean result = false;
         CashAccountEntity cashAccountEntity = new CashAccountEntity();
         cashAccountEntity.setValue(0);
-        cashAccountEntity.setLogin(login);
+        UserEntity userEntity = repository.getUserByLogin(login);
+        userEntity.setCashAccount(cashAccountEntity);
+        cashAccountEntity.setUserEntity(userEntity);
         repository.save(cashAccountEntity);
         result =true;
 //        try {
@@ -46,13 +49,13 @@ public class CashAccountDao implements ICashAccountDao {
     }
 
     @Override
-    public CashAccountDTO getMoneyByLogin(String login) {
+    public CashAccountDTO getCashAccountByLogin(String login) {
         final CashAccountEntity one = repository.getOne(login);
         return  EntityDtoViewConverter.getDTO(one);
     }
 
     @Override
-    public boolean updateMoneyValue(CashAccountDTO cashAccountDTO) {
+    public boolean updateCashAccountValue(CashAccountDTO cashAccountDTO) {
 //        Session session = repository.getSession();
 //        try {
 //            session.getTransaction().begin();

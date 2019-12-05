@@ -47,7 +47,7 @@ public class DataEventService implements IdataEventService {
 
     @Override
     public EventDTO getEventById(Long id) {
-        return dataEvent.getSavedEventById(id);
+        return dataEvent.getEventById(id);
     }
 
     @Override

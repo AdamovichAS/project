@@ -16,10 +16,9 @@ public class UserEntity {
     private String login;
     private String password;
     private Role role;
-    private boolean isDeleted;
     private UserInfoEntity userInfoEntity;
-    private UserPasspotInfo userPasspotInfo;
-    private CashAccountEntity money;
+    private UserPassportEntity userPassportEntity;
+    private CashAccountEntity cashAccount;
     private List<BetEntity>bets;
 
     public UserEntity() {
@@ -34,11 +33,11 @@ public class UserEntity {
     }
 
     @OneToOne(mappedBy = "userEntity",fetch = FetchType.EAGER)
-    public CashAccountEntity getMoney() {
-        return money;
+    public CashAccountEntity getCashAccount() {
+        return cashAccount;
     }
-    public void setMoney(CashAccountEntity money) {
-        this.money = money;
+    public void setCashAccount(CashAccountEntity money) {
+        this.cashAccount = money;
     }
 
     @Column(name = "role", columnDefinition = "USER_VER")
@@ -59,13 +58,6 @@ public class UserEntity {
     }
 
     @Column(name = "is_deleted", nullable = false)
-    public boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
 
     @OneToMany(mappedBy = "user")
     public List<BetEntity> getBets() {
@@ -75,7 +67,7 @@ public class UserEntity {
         this.bets = bets;
     }
 
-    @OneToOne(mappedBy = "userEntity", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "userEntity",fetch = FetchType.EAGER)
     public UserInfoEntity getUserInfoEntity() {
         return userInfoEntity;
     }
@@ -84,11 +76,11 @@ public class UserEntity {
     }
 
     @OneToOne(mappedBy = "userEntity", fetch = FetchType.EAGER)
-    public UserPasspotInfo getUserPasspotInfo() {
-        return userPasspotInfo;
+    public UserPassportEntity getUserPassportEntity() {
+        return userPassportEntity;
     }
 
-    public void setUserPasspotInfo(UserPasspotInfo userPasspotInfo) {
-        this.userPasspotInfo = userPasspotInfo;
+    public void setUserPassportEntity(UserPassportEntity userPassportEntity) {
+        this.userPassportEntity = userPassportEntity;
     }
 }

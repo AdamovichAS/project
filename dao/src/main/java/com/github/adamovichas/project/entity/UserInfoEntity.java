@@ -9,7 +9,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "user_info")
 public class UserInfoEntity {
 
-    private String UserLogin;
+    private String userLogin;
     private String phone;
     private String email;
     private UserEntity userEntity;
@@ -25,11 +25,11 @@ public class UserInfoEntity {
     )
     @GeneratedValue(generator = "gen")
     public String getUserLogin() {
-        return UserLogin;
+        return userLogin;
     }
 
     public void setUserLogin(String userlogin) {
-        this.UserLogin = userlogin;
+        this.userLogin = userlogin;
     }
 
     @Column(name = "phone", nullable = false)
