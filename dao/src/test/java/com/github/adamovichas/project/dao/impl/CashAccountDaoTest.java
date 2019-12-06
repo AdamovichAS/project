@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.dao.ICashAccountDao;
+import com.github.adamovichas.project.dao.IUserCashAccountDao;
 import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //@Rollback(value = false)
 public class CashAccountDaoTest {
     @Autowired
-    private ICashAccountDao cashAccountData;
+    private IUserCashAccountDao cashAccountData;
     @Autowired
     private IUserDao dataUser;
     @Autowired

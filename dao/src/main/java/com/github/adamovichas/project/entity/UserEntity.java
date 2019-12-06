@@ -64,8 +64,8 @@ public class UserEntity {
         this.bets = bets;
     }
 
-    @OneToOne(mappedBy = "userEntity")
-//    @PrimaryKeyJoinColumn
+    @OneToOne
+    @PrimaryKeyJoinColumn
     public UserPassportEntity getUserPassportEntity() {
         return userPassportEntity;
     }

@@ -3,8 +3,10 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.dao.IEventDao;
 import com.github.adamovichas.project.dao.repository.EventRepository;
 import com.github.adamovichas.project.entity.EventEntity;
+import com.github.adamovichas.project.entity.EventStatisticEntity;
 import com.github.adamovichas.project.entity.LeagueEntity;
 import com.github.adamovichas.project.model.dto.EventDTO;
+import com.github.adamovichas.project.model.dto.EventStatisticDto;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
@@ -135,6 +137,15 @@ public class EventDao implements IEventDao {
 //        }
         List<EventEntity> eventEntities = repository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
         return getDTOs(eventEntities);
+    }
+
+    @Override
+    public boolean addStatistics(EventStatisticDto statisticDto, Long eventId) {
+        EventStatisticEntity statisticEntity = EntityDtoViewConverter.getEntity(statisticDto);
+        EventEntity eventEntity = repository.getOne(eventId);
+        eventEntity.setStatistic(statisticEntity);
+        statisticEntity.setEvent(eventEntity);
+        return true;
     }
 
 

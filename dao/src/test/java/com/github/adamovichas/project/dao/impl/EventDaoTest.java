@@ -4,6 +4,7 @@ import com.github.adamovichas.project.dao.IEventDao;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.model.dto.EventDTO;
+import com.github.adamovichas.project.model.dto.EventStatisticDto;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,15 @@ public class EventDaoTest {
         EventDTO savedEventById = dataEvent.getEventById(id);
         assertNotNull(savedEventById);
         assertEquals(savedEventById.getName(),"Arsenal - Aston Vila");
+    }
+
+    @Test
+    public void addStatistic(){
+        EventDTO eventTest = util.createEventTest();
+        EventStatisticDto testStatistic = util.createTestStatistic();
+        Long id = dataEvent.addEvent(eventTest);
+        final boolean b = dataEvent.addStatistics(testStatistic, id);
+        assertTrue(b);
     }
 
 //    @Test

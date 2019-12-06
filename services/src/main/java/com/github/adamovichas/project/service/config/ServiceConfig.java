@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.service.config;
 
 import com.github.adamovichas.project.dao.IBetDao;
-import com.github.adamovichas.project.dao.ICashAccountDao;
+import com.github.adamovichas.project.dao.IUserCashAccountDao;
 import com.github.adamovichas.project.dao.IEventDao;
 import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.config.DaoConfig;
@@ -27,7 +27,7 @@ public class ServiceConfig {
     }
 
     @Bean
-    public IDataCashAccountService cashAccountService(ICashAccountDao cashAccountData){
+    public IDataCashAccountService cashAccountService(IUserCashAccountDao cashAccountData){
         return new DataCashAccountService(cashAccountData);
     }
 

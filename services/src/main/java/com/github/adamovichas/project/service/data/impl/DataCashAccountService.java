@@ -1,14 +1,14 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.dao.ICashAccountDao;
+import com.github.adamovichas.project.dao.IUserCashAccountDao;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.service.data.IDataCashAccountService;
 
 public class DataCashAccountService implements IDataCashAccountService {
 
-    private final ICashAccountDao data;
+    private final IUserCashAccountDao data;
 
-    public DataCashAccountService(ICashAccountDao cashAccountData) {
+    public DataCashAccountService(IUserCashAccountDao cashAccountData) {
         data = cashAccountData;
     }
 

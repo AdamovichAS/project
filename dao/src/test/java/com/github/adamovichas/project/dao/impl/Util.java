@@ -98,15 +98,17 @@ public class Util implements IUtil{
         UserPassportDTO passportDTO = new UserPassportDTO();
         passportDTO.setUserLogin(testUser.getLogin());
         passportDTO.setPassSeries("MP");
-        passportDTO.setPassNumber(123);
-        passportDTO.setPassIssueDate(Date.valueOf("2010-10-10"));
-        passportDTO.setPassEndDate(Date.valueOf("2020-10-10"));
         passportDTO.setLastName("Test");
         passportDTO.setFirstName("Test");
-        passportDTO.setCountry("Bel");
-        passportDTO.setBirthDay(Date.valueOf("2000-01-01"));
-        passportDTO.setAddress("Test");
         return passportDTO;
+    }
+
+    @Override
+    public EventStatisticDto createTestStatistic() {
+        EventStatisticDto statisticDto = new EventStatisticDto();
+        statisticDto.setTeamTwoGoals(2);
+        statisticDto.setTeamOneGoals(2);
+        return statisticDto;
     }
 
 //    @Override

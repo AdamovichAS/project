@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
-import com.github.adamovichas.project.dao.ICashAccountDao;
-import com.github.adamovichas.project.dao.repository.CashAccountRepository;
+import com.github.adamovichas.project.dao.IUserCashAccountDao;
+import com.github.adamovichas.project.dao.repository.UserCashAccountRepository;
 import com.github.adamovichas.project.entity.CashAccountEntity;
 import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
@@ -9,12 +9,12 @@ import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CashAccountDao implements ICashAccountDao {
+public class UserCashAccountDao implements IUserCashAccountDao {
 
     private static final Logger log = LoggerFactory.getLogger(UserDao.class);
-    private final CashAccountRepository repository;
+    private final UserCashAccountRepository repository;
 
-    public CashAccountDao(CashAccountRepository repository) {
+    public UserCashAccountDao(UserCashAccountRepository repository) {
         this.repository = repository;
     }
 

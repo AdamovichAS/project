@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.service.data.impl;
 
-import com.github.adamovichas.project.dao.impl.CashAccountDao;
+import com.github.adamovichas.project.dao.impl.UserCashAccountDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 public class DataCashAccountServiceTest {
 
     @Mock
-    public CashAccountDao dataMoney;
+    public UserCashAccountDao dataMoney;
 
     @InjectMocks
     public DataCashAccountService dataCashAccountService;

@@ -2,6 +2,7 @@ package com.github.adamovichas.project.dao;
 
 
 import com.github.adamovichas.project.model.dto.EventDTO;
+import com.github.adamovichas.project.model.dto.EventStatisticDto;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 
@@ -16,4 +17,5 @@ public interface IEventDao {
     EventDTO getEventById(Long id);
     Long getCountEvents();
     List<EventDTO>getEventsOnPage(int page, int pageSize);
+    boolean addStatistics(EventStatisticDto statisticDto, Long eventId);
 }

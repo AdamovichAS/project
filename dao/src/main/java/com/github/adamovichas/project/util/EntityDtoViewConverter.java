@@ -199,14 +199,8 @@ public abstract class EntityDtoViewConverter {
 
     public static UserPassportDTO getDTO(UserPassportEntity entity){
         UserPassportDTO dto = new UserPassportDTO();
-        dto.setAddress(entity.getAddress());
-        dto.setBirthDay(entity.getBirthDay());
-        dto.setCountry(entity.getCountry());
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
-        dto.setPassEndDate(entity.getPassEndDate());
-        dto.setPassIssueDate(entity.getPassIssueDate());
-        dto.setPassNumber(entity.getPassNumber());
         dto.setPassSeries(entity.getPassSeries());
         dto.setUserLogin(entity.getUserLogin());
         return dto;
@@ -214,16 +208,28 @@ public abstract class EntityDtoViewConverter {
 
     public static UserPassportEntity getEntity(UserPassportDTO dto){
         UserPassportEntity entity = new UserPassportEntity();
-        entity.setAddress(dto.getAddress());
-        entity.setBirthDay(dto.getBirthDay());
-        entity.setCountry(dto.getCountry());
         entity.setFirstName(dto.getFirstName());
-        entity.setPassEndDate(dto.getPassEndDate());
         entity.setLastName(dto.getLastName());
-        entity.setPassIssueDate(dto.getPassIssueDate());
-        entity.setPassNumber(dto.getPassNumber());
         entity.setUserLogin(dto.getUserLogin());
         entity.setPassSeries(dto.getPassSeries());
+        return entity;
+    }
+
+    public static EventStatisticDto getDTO(EventStatisticEntity entity){
+        EventStatisticDto dto = new EventStatisticDto();
+ //       dto.setId(entity.getId());
+        dto.setEventId(entity.getEventId());
+        dto.setTeamOneGoals(entity.getTeamOneGoals());
+        dto.setTeamTwoGoals(entity.getTeamTwoGoals());
+        return dto;
+    }
+
+    public static EventStatisticEntity getEntity(EventStatisticDto dto){
+        EventStatisticEntity entity = new EventStatisticEntity();
+ //       entity.setId(dto.getId());
+        entity.setEventId(dto.getEventId());
+        entity.setTeamOneGoals(dto.getTeamOneGoals());
+        entity.setTeamTwoGoals(dto.getTeamTwoGoals());
         return entity;
     }
 }

@@ -32,9 +32,11 @@ public class UserPassportDao implements IUserPassportDao {
     }
 
     @Override
-    public UserPassportDTO update(UserPassportDTO userPassport) {
-        UserPassportEntity passportEntity = repository.getOne(userPassport.getUserLogin());
-        setDtoFieldsToEntity(userPassport,passportEntity);
+    public UserPassportDTO update(UserPassportDTO dto) {
+        UserPassportEntity passportEntity = repository.getOne(dto.getUserLogin());
+        passportEntity.setFirstName(dto.getFirstName());
+        passportEntity.setLastName(dto.getLastName());
+        passportEntity.setPassSeries(dto.getPassSeries());
         return EntityDtoViewConverter.getDTO(passportEntity);
     }
 
@@ -49,16 +51,5 @@ public class UserPassportDao implements IUserPassportDao {
         return repository.existsById(login);
     }
 
-    private void setDtoFieldsToEntity(UserPassportDTO dto, UserPassportEntity entity){
-        entity.setAddress(dto.getAddress());
-        entity.setBirthDay(dto.getBirthDay());
-        entity.setFirstName(dto.getFirstName());
-        entity.setCountry(dto.getCountry());
-        entity.setPassEndDate(dto.getPassEndDate());
-        entity.setLastName(dto.getLastName());
-        entity.setPassIssueDate(dto.getPassIssueDate());
-        entity.setPassNumber(dto.getPassNumber());
-        entity.setUserLogin(dto.getUserLogin());
-        entity.setPassSeries(dto.getPassSeries());
-    }
+
 }

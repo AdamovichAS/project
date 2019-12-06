@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.dao.IBetDao;
-import com.github.adamovichas.project.dao.ICashAccountDao;
+import com.github.adamovichas.project.dao.IUserCashAccountDao;
 import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
@@ -32,7 +32,7 @@ public class DataBetTest {
     @Autowired
     private IUserDao dataUser;
     @Autowired
-    private ICashAccountDao cashAccountData;
+    private IUserCashAccountDao cashAccountData;
     @Autowired
     private IUtil util;
 

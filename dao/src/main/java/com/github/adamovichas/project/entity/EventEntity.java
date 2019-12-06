@@ -16,9 +16,10 @@ public class EventEntity {
     private Long leagueId;
     private Timestamp startTime;
     private Timestamp endTime;
-    private List<FactorEntity> factors;
     private Long resultFactorId;
+    private List<FactorEntity> factors;
     private LeagueEntity league;
+    private EventStatisticEntity statistic;
 //    private List<TeamEntity> teams;
 
 //    public EventEntity(Long teamOneId, Long teamTwoId, Timestamp startTime, Timestamp endTime) {
@@ -116,6 +117,15 @@ public class EventEntity {
 
     public void setFactors(List<FactorEntity> factors) {
         this.factors = factors;
+    }
+
+    @OneToOne(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public EventStatisticEntity getStatistic() {
+        return statistic;
+    }
+
+    public void setStatistic(EventStatisticEntity statistic) {
+        this.statistic = statistic;
     }
 
     @Transient

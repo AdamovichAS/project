@@ -11,6 +11,7 @@ public interface IUtil {
     BetDTO createCanselBet();
     EventDTO createEventTest();
     UserPassportDTO createTestPassport();
+    EventStatisticDto createTestStatistic();
 //    AppCashAccountDTO createAppCashAccount();
 //    void deleteEvent(Long id);
 //    Long getCountAllNotFinishedEvents();

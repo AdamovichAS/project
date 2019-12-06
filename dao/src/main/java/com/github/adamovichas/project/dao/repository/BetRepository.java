@@ -15,7 +15,7 @@ public interface BetRepository extends JpaRepository<BetEntity,Long> {
     List<BetEntity>getAllByUserLoginAndStatus(@Param("userLogin")String userLogin,
                                               @Param("status") Status status);
 
-    List<BetEntity>getAllByUserLoginAndStatus(@Param("login")String userLogin,
+    List<BetEntity>getAllByUserLoginAndStatus(@Param("userLogin")String userLogin,
                                          @Param("status") Status status,
                                          Pageable page);
 }
