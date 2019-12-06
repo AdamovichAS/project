@@ -22,12 +22,12 @@ public class UserPassportDao implements IUserPassportDao {
     }
 
     @Override
-    public boolean save(UserPassportDTO userPassport) {
+    public boolean addPassport(UserPassportDTO userPassport) {
         UserPassportEntity passportEntity = EntityDtoViewConverter.getEntity(userPassport);
         UserEntity userEntity = session.find(UserEntity.class, userPassport.getUserLogin());
-        userEntity.setUserPassportEntity(passportEntity);
         passportEntity.setUserEntity(userEntity);
-        repository.save(passportEntity);
+        userEntity.setUserPassportEntity(passportEntity);
+        repository.saveAndFlush(passportEntity);
         return true;
     }
 

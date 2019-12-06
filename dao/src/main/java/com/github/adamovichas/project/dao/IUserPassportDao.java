@@ -5,7 +5,7 @@ import com.github.adamovichas.project.model.dto.UserPassportDTO;
 
 public interface IUserPassportDao {
 
-    boolean save(UserPassportDTO userPassport);
+    boolean addPassport(UserPassportDTO userPassport);
     UserPassportDTO update(UserPassportDTO userPassport);
     UserPassportDTO getPassport(String login);
     boolean isExist(String login);

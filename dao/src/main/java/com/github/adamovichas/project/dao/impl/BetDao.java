@@ -50,7 +50,7 @@ public class BetDao implements IBetDao {
 //            betEntity.setUserEntity(userEntity);
 //            userEntity.getBets().add(betEntity);
 //            factorEntity.getBets().add(betEntity);
-//            id = (Long) session.save(betEntity);
+//            id = (Long) session.addPassport(betEntity);
 //            session.getTransaction().commit();
 //        }catch (RollbackException e){
 //            log.error("AddBet exception, BetDTO {}",bet);

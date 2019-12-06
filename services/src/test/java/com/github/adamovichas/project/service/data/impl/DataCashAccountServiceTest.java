@@ -26,7 +26,7 @@ public class DataCashAccountServiceTest {
 
     @Test
     public void createMoney(){
-        when(dataMoney.create("test")).thenReturn(true);
+        when(dataMoney.addUserCashAccount("test")).thenReturn(true);
         final boolean test = dataCashAccountService.verification("test");
         assertTrue(test);
     }

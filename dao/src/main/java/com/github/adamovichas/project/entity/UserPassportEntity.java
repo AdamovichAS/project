@@ -27,6 +27,12 @@ public class UserPassportEntity {
 
     @Id
     @Column(name = "user_login", nullable = false, updatable = false)
+    @GenericGenerator(
+            name = "gen",
+            strategy = "foreign",
+            parameters = @Parameter(name = "property", value = "userEntity")
+    )
+    @GeneratedValue(generator = "gen")
     public String getUserLogin() {
         return UserLogin;
     }
@@ -106,7 +112,7 @@ public class UserPassportEntity {
     public void setAddress(String address) {
         this.address = address;
     }
-    @OneToOne
+    @OneToOne//(mappedBy = "userPassportEntity")
     @JoinColumn(name = "user_login", referencedColumnName = "login")
     public UserEntity getUserEntity() {
         return userEntity;

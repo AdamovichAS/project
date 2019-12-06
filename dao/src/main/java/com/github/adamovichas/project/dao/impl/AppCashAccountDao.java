@@ -15,9 +15,15 @@ public class AppCashAccountDao implements IAppCashAccountDao {
     }
 
     @Override
-    public AppCashAccountDTO updateBalance(AppCashAccountDTO appCashAccountDTO) {
-         AppCashAccountEntity accountEntity = repository.findById(appCashAccountDTO.getId()).get();
-         accountEntity.setBalance(appCashAccountDTO.getBalance());
+    public AppCashAccountDTO getAppCashAccount() {
+        AppCashAccountEntity cashAccountEntity = repository.getOne(1L);
+        return EntityDtoViewConverter.getDTO(cashAccountEntity);
+    }
+
+    @Override
+    public AppCashAccountDTO updateBalance(double change) {
+         AppCashAccountEntity accountEntity = repository.getOne(1L);
+         accountEntity.setBalance(accountEntity.getBalance() + change);
         return EntityDtoViewConverter.getDTO(accountEntity);
     }
 }

@@ -16,7 +16,6 @@ public class UserEntity {
     private String login;
     private String password;
     private Role role;
-    private UserInfoEntity userInfoEntity;
     private UserPassportEntity userPassportEntity;
     private CashAccountEntity cashAccount;
     private List<BetEntity>bets;
@@ -57,8 +56,6 @@ public class UserEntity {
         this.password = password;
     }
 
-    @Column(name = "is_deleted", nullable = false)
-
     @OneToMany(mappedBy = "user")
     public List<BetEntity> getBets() {
         return bets;
@@ -67,15 +64,8 @@ public class UserEntity {
         this.bets = bets;
     }
 
-    @OneToOne(mappedBy = "userEntity",fetch = FetchType.EAGER)
-    public UserInfoEntity getUserInfoEntity() {
-        return userInfoEntity;
-    }
-    public void setUserInfoEntity(UserInfoEntity userInfoEntity) {
-        this.userInfoEntity = userInfoEntity;
-    }
-
-    @OneToOne(mappedBy = "userEntity", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "userEntity")
+//    @PrimaryKeyJoinColumn
     public UserPassportEntity getUserPassportEntity() {
         return userPassportEntity;
     }

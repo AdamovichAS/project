@@ -15,7 +15,7 @@ public class DataCashAccountService implements IDataCashAccountService {
 
     @Override
     public boolean verification(String login) {
-        return data.create(login);
+        return data.addUserCashAccount(login);
     }
 
     @Override

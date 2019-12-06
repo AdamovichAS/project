@@ -9,7 +9,6 @@ import com.github.adamovichas.project.model.dto.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,14 +31,14 @@ public class CashAccountDaoTest {
     public void createAccountTrue(){
         UserDTO userDTO = util.createTestUser();
         dataUser.addUser(userDTO);
-        boolean deposit = cashAccountData.create(userDTO.getLogin());
+        boolean deposit = cashAccountData.addUserCashAccount(userDTO.getLogin());
         assertTrue(deposit);
     }
 
 //    @Test
 //    public void createAccountFalse(){
 //        UserDTO userDTO = util.createTestUser();
-//        boolean deposit = cashAccountData.create(userDTO.getLogin());
+//        boolean deposit = cashAccountData.addUserCashAccount(userDTO.getLogin());
 //        assertFalse(deposit);
 //    }
 
@@ -47,7 +46,7 @@ public class CashAccountDaoTest {
     public void getAccountByLogin(){
         UserDTO userDTO = util.createTestUser();
         dataUser.addUser(userDTO);
-        cashAccountData.create(userDTO.getLogin());
+        cashAccountData.addUserCashAccount(userDTO.getLogin());
         CashAccountDTO moneyByLogin = cashAccountData.getCashAccountByLogin(userDTO.getLogin());
         assertEquals(userDTO.getLogin(),moneyByLogin.getLogin());
         assertEquals(0,moneyByLogin.getValue());
@@ -58,7 +57,7 @@ public class CashAccountDaoTest {
         double newCashAccountValue = 100;
         UserDTO testUser = util.createTestUser();
         dataUser.addUser(testUser);
-        cashAccountData.create(testUser.getLogin());
+        cashAccountData.addUserCashAccount(testUser.getLogin());
         CashAccountDTO account = cashAccountData.getCashAccountByLogin(testUser.getLogin());
         assertEquals(account.getValue(),0);
         account.setValue(newCashAccountValue);

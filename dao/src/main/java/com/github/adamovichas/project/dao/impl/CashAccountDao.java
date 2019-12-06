@@ -20,7 +20,7 @@ public class CashAccountDao implements ICashAccountDao {
 
 
     @Override
-    public boolean create(String login) {
+    public boolean addUserCashAccount(String login) {
         boolean result = false;
         CashAccountEntity cashAccountEntity = new CashAccountEntity();
         cashAccountEntity.setValue(0);
@@ -36,11 +36,11 @@ public class CashAccountDao implements ICashAccountDao {
 //                cashAccountEntity.setUserEntity(userEntity);
 //                userEntity.setMoney(cashAccountEntity);
 //
-//            session.save(cashAccountEntity);
+//            session.addPassport(cashAccountEntity);
 //            session.getTransaction().commit();
 //            result = true;
 //        }catch (RollbackException | NullPointerException | IdentifierGenerationException e){
-//            log.error("create exception Login - {}", login);
+//            log.error("addUserCashAccount exception Login - {}", login);
 //            session.getTransaction().rollback();
 //        }finally {
 //            session.close();

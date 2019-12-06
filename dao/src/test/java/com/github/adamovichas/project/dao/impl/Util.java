@@ -2,12 +2,9 @@ package com.github.adamovichas.project.dao.impl;
 
 
 import com.github.adamovichas.project.model.bet.Status;
-import com.github.adamovichas.project.model.dto.AppCashAccountDTO;
-import com.github.adamovichas.project.model.dto.BetDTO;
-import com.github.adamovichas.project.model.dto.EventDTO;
+import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
-import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,12 +93,29 @@ public class Util implements IUtil{
     }
 
     @Override
-    public AppCashAccountDTO createAppCashAccount() {
-        AppCashAccountDTO appCashAccountDTO = new AppCashAccountDTO();
-        appCashAccountDTO.setId(2L);
-        appCashAccountDTO.setBalance(100);
-        return appCashAccountDTO;
+    public UserPassportDTO createTestPassport() {
+        UserDTO testUser = createTestUser();
+        UserPassportDTO passportDTO = new UserPassportDTO();
+        passportDTO.setUserLogin(testUser.getLogin());
+        passportDTO.setPassSeries("MP");
+        passportDTO.setPassNumber(123);
+        passportDTO.setPassIssueDate(Date.valueOf("2010-10-10"));
+        passportDTO.setPassEndDate(Date.valueOf("2020-10-10"));
+        passportDTO.setLastName("Test");
+        passportDTO.setFirstName("Test");
+        passportDTO.setCountry("Bel");
+        passportDTO.setBirthDay(Date.valueOf("2000-01-01"));
+        passportDTO.setAddress("Test");
+        return passportDTO;
     }
+
+//    @Override
+//    public AppCashAccountDTO createAppCashAccount() {
+//        AppCashAccountDTO appCashAccountDTO = new AppCashAccountDTO();
+//        appCashAccountDTO.setId(2L);
+//        appCashAccountDTO.setBalance(100);
+//        return appCashAccountDTO;
+//    }
 
 //     public void deleteEvent(Long id) {
 //         Session session = factory.getSession();

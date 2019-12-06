@@ -22,13 +22,13 @@ public class AppCashAccountDaoTest {
     @Autowired
     private IAppCashAccountDao appCashAccountDao;
 
-    @Autowired
-    private IUtil util;
 
     @Test
     public void updateBalanceTest(){
-        AppCashAccountDTO appCashAccount = util.createAppCashAccount();
-        AppCashAccountDTO accountAfterUpdate = appCashAccountDao.updateBalance(appCashAccount);
-        assertEquals(accountAfterUpdate.getBalance(),appCashAccount.getBalance());
+        double change = 100;
+        AppCashAccountDTO appCashAccount = appCashAccountDao.getAppCashAccount();
+        double afterUpdate = appCashAccount.getBalance() + change;
+        AppCashAccountDTO accountAfterUpdate = appCashAccountDao.updateBalance(change);
+        assertEquals(accountAfterUpdate.getBalance(),afterUpdate);
     }
 }
