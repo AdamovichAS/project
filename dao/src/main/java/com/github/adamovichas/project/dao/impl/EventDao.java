@@ -2,51 +2,56 @@ package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.dao.IEventDao;
 import com.github.adamovichas.project.dao.repository.EventRepository;
+import com.github.adamovichas.project.dao.repository.EventStatisticRepository;
+import com.github.adamovichas.project.dao.repository.FactorRepository;
+import com.github.adamovichas.project.dao.repository.LeagueRepository;
 import com.github.adamovichas.project.entity.EventEntity;
 import com.github.adamovichas.project.entity.EventStatisticEntity;
+import com.github.adamovichas.project.entity.FactorEntity;
 import com.github.adamovichas.project.entity.LeagueEntity;
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.model.dto.EventStatisticDto;
-import com.github.adamovichas.project.model.dto.LeagueDTO;
-import com.github.adamovichas.project.model.dto.TeamDTO;
+import com.github.adamovichas.project.model.dto.EventStatisticDTO;
+import com.github.adamovichas.project.model.factor.FactorDTO;
+import com.github.adamovichas.project.model.view.EventView;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Modifying;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Objects.nonNull;
 
 public class EventDao implements IEventDao {
 
 
     private static final Logger log = LoggerFactory.getLogger(EventDao.class);
 
-    private final EventRepository repository;
+    private final EventRepository eventRepository;
+    private final EventStatisticRepository statisticRepository;
+    private final LeagueRepository leagueRepository;
+    private final FactorRepository factorRepository;
 
-    public EventDao(EventRepository repository) {
-        this.repository = repository;
+    public EventDao(EventRepository eventRepository, FactorRepository factorRepository, EventStatisticRepository statisticRepository, LeagueRepository leagueRepository) {
+        this.eventRepository = eventRepository;
+        this.factorRepository = factorRepository;
+        this.statisticRepository = statisticRepository;
+        this.leagueRepository = leagueRepository;
     }
-
 
     @Override
     public Long addEvent(EventDTO event) {
         EventEntity eventEntity = EntityDtoViewConverter.getEntity(event);
-        LeagueEntity league = repository.getLeague(event.getLeagueId());
+        LeagueEntity league = leagueRepository.getOne(event.getLeagueId());
         eventEntity.setLeague(league);
         league.getEvents().add(eventEntity);
-        repository.save(eventEntity);
+        eventRepository.save(eventEntity);
         return eventEntity.getId();
     }
 
     @Override
     public boolean eventIsExist(EventDTO event) {
-//        Session session = repository.getSession();
+//        Session session = eventRepository.getSession();
 //        boolean result = false;
 //        try {
 //            session.getTransaction().begin();
@@ -67,12 +72,12 @@ public class EventDao implements IEventDao {
 //            session.close();
 //        }
 
-        return repository.existsByTeamOneIdAndTeamTwoIdAndStartTime(event.getTeamOne(),event.getTeamTwo(),event.getStartTime());
+        return eventRepository.existsByTeamOneIdAndTeamTwoIdAndStartTime(event.getTeamOne(),event.getTeamTwo(),event.getStartTime());
     }
 
     @Override
     public List<EventDTO> getAllNotFinishedEvents() {
-//        Session session = repository.getSession();
+//        Session session = eventRepository.getSession();
 //        session.getTransaction().begin();
 //        List<EventEntity> eventEntities = session.createQuery("FROM EventEntity e WHERE e.resultFactorId = null").list();
 //        List<EventDTO> views = new ArrayList<>();
@@ -81,13 +86,13 @@ public class EventDao implements IEventDao {
 //        }
 //        session.getTransaction().commit();
 //        return views;
-        List<EventEntity> eventEntities = repository.getAllByResultFactorIdIsNull();
+        List<EventEntity> eventEntities = eventRepository.getAllByResultFactorIdIsNull();
         return getDTOs(eventEntities);
     }
 
     @Override
     public EventDTO getEventById(Long id) {
-//        Session session = repository.getSession();
+//        Session session = eventRepository.getSession();
 //        session.getTransaction().begin();
 //        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 //        CriteriaQuery<EventEntity> criteria = criteriaBuilder.createQuery(EventEntity.class);
@@ -98,25 +103,25 @@ public class EventDao implements IEventDao {
 //        session.getTransaction().commit();
 //        session.close();
 //        return EntityDtoViewConverter.getDTO(eventEntity);
-         EventEntity eventEntity = repository.findById(id).get();
+         EventEntity eventEntity = eventRepository.findById(id).get();
          return EntityDtoViewConverter.getDTO(eventEntity);
     }
 
     @Override
     public Long getCountEvents() {
-//        Session session = repository.getSession();
+//        Session session = eventRepository.getSession();
 //        session.getTransaction().begin();
 //        Long countEvents = session.createQuery("SELECT count (*) from EventEntity", Long.class).getSingleResult();
 //        session.getTransaction().commit();
 //        session.close();
 //        return countEvents;
-        return repository.count();
+        return eventRepository.count();
     }
 
     @Override
     public List<EventDTO> getEventsOnPage(int page, int pageSize) {
         List<EventDTO>events = new ArrayList<>();
-//        Session session = repository.getSession();
+//        Session session = eventRepository.getSession();
 //        try {
 //            session.getTransaction().begin();
 //            final Query query = session.createQuery("FROM EventEntity e ORDER BY e.id asc")
@@ -135,19 +140,9 @@ public class EventDao implements IEventDao {
 //        }finally {
 //            session.close();
 //        }
-        List<EventEntity> eventEntities = repository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
+        List<EventEntity> eventEntities = eventRepository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
         return getDTOs(eventEntities);
     }
-
-    @Override
-    public boolean addStatistics(EventStatisticDto statisticDto, Long eventId) {
-        EventStatisticEntity statisticEntity = EntityDtoViewConverter.getEntity(statisticDto);
-        EventEntity eventEntity = repository.getOne(eventId);
-        eventEntity.setStatistic(statisticEntity);
-        statisticEntity.setEvent(eventEntity);
-        return true;
-    }
-
 
     private List<EventDTO> getDTOs(List<EventEntity> entities){
         List<EventDTO>dtos = new ArrayList<>();
@@ -156,65 +151,57 @@ public class EventDao implements IEventDao {
         }
         return dtos;
     }
+
     @Override
-    public List<LeagueDTO> getAllLeagues() {
-//        Session session = repository.getSession();
-//        session.beginTransaction();
-//        Query query = session.createQuery("FROM LeagueEntity");
-//        query.setCacheable(true);
-//        List<LeagueEntity> leagueEn = (List<LeagueEntity>) query.list();
-//        session.getTransaction().commit();
-//        session.close();
-//        List<LeagueDTO> leaguesDTO = new ArrayList<>();
-//        for (LeagueEntity entity : leagueEn) {
-//            leaguesDTO.add(EntityDtoViewConverter.getDTO(entity));
-//        }
-//        return leaguesDTO;
-        throw new RuntimeException();
+    public EventView getEventViewById(Long id) {
+        EventEntity eventEntity = eventRepository.getOne(id);
+        return EntityDtoViewConverter.getView(eventEntity);
+    }
+
+    /**
+     *Factors
+     */
+
+    @Override
+    public void addFactors(List<FactorDTO> factorDTOS) {
+        EventEntity eventEntity = eventRepository.getOne(factorDTOS.get(0).getEventId());
+        List<FactorEntity>factorEntities = new ArrayList<>();
+        for (FactorDTO dto : factorDTOS) {
+            FactorEntity factorEntity = EntityDtoViewConverter.getEntity(dto);
+            factorEntity.setEvent(eventEntity);
+            factorEntities.add(factorEntity);
+        }
+        eventEntity.setFactors(factorEntities);
+        factorRepository.saveAll(factorEntities);
     }
 
     @Override
-    public List<TeamDTO> getAllTeamsByLeague(Long idLeague) {
-//        Session session = repository.getSession();
-//        session.getTransaction().begin();
-//        LeagueEntity leagueEntity = session.find(LeagueEntity.class, idLeague);
-//        Hibernate.initialize(leagueEntity.getTeams());
-//        List<TeamEntity> teams = leagueEntity.getTeams();
-//        session.getTransaction().commit();
-//        session.close();
-//        List<TeamDTO> teamDTOS = new ArrayList<>();
-//        for (TeamEntity team : teams) {
-//            teamDTOS.add(EntityDtoViewConverter.getDTO(team));
-//        }
-//        return teamDTOS;
-        throw new RuntimeException();
+    public List<FactorDTO> getEventFactors(Long eventId) {
+        List<FactorDTO>factorDTOS = new ArrayList<>();
+        List<FactorEntity> factorEntities = factorRepository.getAllByEventId(eventId);
+        for (FactorEntity entity : factorEntities) {
+            factorDTOS.add(EntityDtoViewConverter.getDTO(entity));
+        }
+        return factorDTOS;
     }
 
-//    public boolean saveLeagueTeam(){
-//        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
-//        LeagueEntity leagueEntity = new LeagueEntity();
-//        leagueEntity.setEvents(new ArrayList<>());
-//        leagueEntity.setTeams(new ArrayList<>());
-//        leagueEntity.setName("UFC");
-//        session.getTransaction().begin();
-//        TeamEntity teamEntity = session.find(TeamEntity.class, "Arsenal");
-//        leagueEntity.getTeams().add(teamEntity);
-//        teamEntity.getLeagues().add(leagueEntity);
-//        session.saveOrUpdate(leagueEntity);
-//        session.getTransaction().commit();
-//        session.close();
-//        return true;
-//    }
-//
-//    public boolean deleteLeague(){
-//        Session session = HibernateUtil.getEntityManager().unwrap(Session.class);
-//        session.getTransaction().begin();
-//        LeagueEntity leagueEntity = session.find(LeagueEntity.class, 3L);
-//        Hibernate.initialize(leagueEntity.getTeams());
-//        Hibernate.initialize(leagueEntity.getEvents());
-//        session.delete(leagueEntity);
-//        session.getTransaction().commit();
-//        session.close();
-//        return true;
-//    }
+    /**
+     * EventStatistic
+     */
+
+    @Override
+    public boolean addStatistics(EventStatisticDTO statisticDto, Long eventId) {
+        EventStatisticEntity statisticEntity = EntityDtoViewConverter.getEntity(statisticDto);
+        EventEntity eventEntity = eventRepository.getOne(eventId);
+        eventEntity.setStatistic(statisticEntity);
+        statisticEntity.setEvent(eventEntity);
+        statisticRepository.save(statisticEntity);
+        return true;
+    }
+
+    @Override
+    public EventStatisticDTO getEventStatistic(Long eventId) {
+        EventStatisticEntity statisticEntity = statisticRepository.getOne(eventId);
+        return EntityDtoViewConverter.getDTO(statisticEntity);
+    }
 }

@@ -6,9 +6,11 @@ import java.util.List;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import static java.util.Objects.nonNull;
+
 @Entity
 @Table(name = "event")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class EventEntity {
     private Long id;
     private String teamOneId;
@@ -110,7 +112,10 @@ public class EventEntity {
         this.resultFactorId = resultFactorId;
     }
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = com.github.adamovichas.project.entity.FactorEntity.class,
+            mappedBy = "event",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     public List<FactorEntity> getFactors() {
         return factors;
     }

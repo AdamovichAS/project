@@ -1,6 +1,7 @@
-package com.github.adamovichas.project.dao.impl;
+package com.github.adamovichas.project.dao.impl.util;
 
 
+import com.github.adamovichas.project.dao.impl.UserDao;
 import com.github.adamovichas.project.model.bet.Status;
 import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
@@ -72,7 +73,7 @@ public class Util implements IUtil{
         return betDTO;
     }
 
-    public BetDTO createCanselBet(){
+    public BetDTO createCancelBet(){
         final UserDTO testUser = createTestUser();
         BetDTO betDTO = new BetDTO();
         betDTO.setUserLogin(testUser.getLogin());
@@ -84,14 +85,16 @@ public class Util implements IUtil{
 
      public EventDTO createEventTest(){
         EventDTO event = new EventDTO("Arsenal","Aston Vila", 1L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
+        return event;
+    }
+
+    public List<FactorDTO> createFactors(){
         List<FactorDTO> factors= new ArrayList<>();
         factors.add(new FactorDTO(FactorName.win,2.5));
         factors.add(new FactorDTO(FactorName.draw,3));
         factors.add(new FactorDTO(FactorName.lose,2.1));
-        event.setFactors(factors);
-        return event;
+        return factors;
     }
-
     @Override
     public UserPassportDTO createTestPassport() {
         UserDTO testUser = createTestUser();
@@ -104,8 +107,8 @@ public class Util implements IUtil{
     }
 
     @Override
-    public EventStatisticDto createTestStatistic() {
-        EventStatisticDto statisticDto = new EventStatisticDto();
+    public EventStatisticDTO createTestStatistic() {
+        EventStatisticDTO statisticDto = new EventStatisticDTO();
         statisticDto.setTeamTwoGoals(2);
         statisticDto.setTeamOneGoals(2);
         return statisticDto;

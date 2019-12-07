@@ -46,7 +46,7 @@ public class CashAccountEntity {
     }
 
     @OneToOne
-    @JoinColumn(name = "user_login", referencedColumnName = "login")
+    @PrimaryKeyJoinColumn(name = "user_login", referencedColumnName = "login")
     public UserEntity getUserEntity() {
         return userEntity;
     }

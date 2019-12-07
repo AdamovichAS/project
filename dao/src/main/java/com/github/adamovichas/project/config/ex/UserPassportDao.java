@@ -27,7 +27,7 @@ public class UserPassportDao implements IUserPassportDao {
         UserEntity userEntity = session.find(UserEntity.class, userPassport.getUserLogin());
         passportEntity.setUserEntity(userEntity);
         userEntity.setUserPassportEntity(passportEntity);
-        repository.saveAndFlush(passportEntity);
+        repository.save(passportEntity);
         return true;
     }
 

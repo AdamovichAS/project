@@ -15,8 +15,8 @@ import java.util.List;
 
 public interface EventRepository extends JpaRepository<EventEntity, Long> {
 
-    @Query("FROM LeagueEntity l where l.id= :leagueId")
-    LeagueEntity getLeague(@Param("leagueId") Long leagueId);
+//    @Query("FROM LeagueEntity l where l.id= :leagueId")
+//    LeagueEntity getLeague(@Param("leagueId") Long leagueId);
 
     //    @Query("FROM EventEntity e WHERE e.teamOneId= :teamOne AND e.teamTwoId= :teamTwo and e.startTime= :startTime")
     boolean existsByTeamOneIdAndTeamTwoIdAndStartTime(@Param("teamOneId") String teamOneId,

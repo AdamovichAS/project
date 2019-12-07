@@ -4,7 +4,7 @@ public class FactorDTO {
     private Long id;
     private FactorName name;
     private double value;
-    private Long eventID;
+    private Long eventId;
 
     public FactorDTO(FactorName name, double value) {
         this.name = name;
@@ -44,12 +44,12 @@ public class FactorDTO {
         this.value = value;
     }
 
-    public Long getEventID() {
-        return eventID;
+    public Long getEventId() {
+        return eventId;
     }
 
-    public void setEventID(Long eventID) {
-        this.eventID = eventID;
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     @Override

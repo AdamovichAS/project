@@ -3,6 +3,7 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.dao.IAppCashAccountDao;
+import com.github.adamovichas.project.dao.impl.util.Util;
 import com.github.adamovichas.project.model.dto.AppCashAccountDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

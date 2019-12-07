@@ -14,7 +14,7 @@ public class FactorEntity {
     private Long id;
     private FactorName name;
     private double value;
-    private Long eventID;
+//    private Long eventId;
     private EventEntity event;
     private List<BetEntity>bets;
 
@@ -62,14 +62,14 @@ public class FactorEntity {
         this.value = value;
     }
 
-    @Column(name = "event_id",nullable = false, updatable = false, insertable = false)
-    public Long getEventID() {
-        return eventID;
-    }
-
-    public void setEventID(Long eventID) {
-        this.eventID = eventID;
-    }
+//    @Column(name = "event_id", updatable = false, insertable = false)
+//    public Long getEventId() {
+//        return eventId;
+//    }
+//
+//    public void setEventId(Long eventId) {
+//        this.eventId = eventId;
+//    }
 
     @ManyToOne
     @JoinColumn(name = "event_id",referencedColumnName = "id")

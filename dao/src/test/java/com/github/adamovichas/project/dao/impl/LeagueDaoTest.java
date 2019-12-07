@@ -3,6 +3,7 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.dao.ILeagueDao;
+import com.github.adamovichas.project.dao.impl.util.Util;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class,Util.class})
+@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class, Util.class})
 @Transactional()
 //@Rollback(value = false)
 public class LeagueDaoTest {

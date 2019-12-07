@@ -3,7 +3,6 @@ package com.github.adamovichas.project.dao.impl;
 import com.github.adamovichas.project.dao.IUserCashAccountDao;
 import com.github.adamovichas.project.dao.repository.UserCashAccountRepository;
 import com.github.adamovichas.project.entity.CashAccountEntity;
-import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.slf4j.Logger;
@@ -22,12 +21,13 @@ public class UserCashAccountDao implements IUserCashAccountDao {
     @Override
     public boolean addUserCashAccount(String login) {
         boolean result = false;
-        CashAccountEntity cashAccountEntity = new CashAccountEntity();
-        cashAccountEntity.setValue(0);
-        UserEntity userEntity = repository.getUserByLogin(login);
-        userEntity.setCashAccount(cashAccountEntity);
-        cashAccountEntity.setUserEntity(userEntity);
-        repository.save(cashAccountEntity);
+//        CashAccountEntity cashAccountEntity = new CashAccountEntity();
+//        cashAccountEntity.setValue(0);
+//        cashAccountEntity.setUserLogin(login);
+//        UserEntity userEntity = repository.getUserByLogin(login);
+//        cashAccountEntity.setUserEntity(userEntity);
+//        userEntity.setCashAccount(cashAccountEntity);
+//        repository.save(cashAccountEntity);
         result =true;
 //        try {
 //            session.getTransaction().begin();

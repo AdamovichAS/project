@@ -1,6 +1,6 @@
 package com.github.adamovichas.project.model.dto;
 
-public class EventStatisticDto {
+public class EventStatisticDTO {
 
 
     private Long eventId;

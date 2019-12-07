@@ -5,6 +5,7 @@ import com.github.adamovichas.project.entity.UserEntity;
 import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.view.BetView;
+import com.github.adamovichas.project.model.view.EventView;
 
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public abstract class EntityDtoViewConverter {
         FactorEntity factorEntity = new FactorEntity();
         factorEntity.setName(factorDTO.getName());
         factorEntity.setValue(factorDTO.getValue());
-        factorEntity.setEventID(factorDTO.getEventID());
+//        factorEntity.setEventId(factorDTO.getEventId());
         factorEntity.setId(factorDTO.getId());
         return factorEntity;
 
@@ -45,7 +46,7 @@ public abstract class EntityDtoViewConverter {
         factorDTO.setId(factorEntity.getId());
         factorDTO.setName(factorEntity.getName());
         factorDTO.setValue(factorEntity.getValue());
-        factorDTO.setEventID(factorEntity.getEventID());
+        factorDTO.setEventId(factorEntity.getEvent().getId());
         return factorDTO;
     }
 
@@ -74,15 +75,15 @@ public abstract class EntityDtoViewConverter {
         eventEntity.setStartTime(eventDTO.getStartTime());
         eventEntity.setEndTime(eventDTO.getEndTime());
         eventEntity.setResultFactorId(eventDTO.getResultFactorId());
-        if (nonNull(eventDTO.getFactors())) {
-            List<FactorEntity> factorEntities = new ArrayList<>();
-            for (FactorDTO dtoFactor : eventDTO.getFactors()) {
-                FactorEntity entity = getEntity(dtoFactor);
-                factorEntities.add(entity);
-                entity.setEvent(eventEntity);
-            }
-            eventEntity.setFactors(factorEntities);
-        }
+//        if (nonNull(eventDTO.getFactors())) {
+//            List<FactorEntity> factorEntities = new ArrayList<>();
+//            for (FactorDTO dtoFactor : eventDTO.getFactors()) {
+//                FactorEntity entity = getEntity(dtoFactor);
+//                factorEntities.add(entity);
+//                entity.setEvent(eventEntity);
+//            }
+//            eventEntity.setFactors(factorEntities);
+//        }
         return eventEntity;
     }
 
@@ -95,20 +96,42 @@ public abstract class EntityDtoViewConverter {
         eventDTO.setStartTime(eventEntity.getStartTime());
         eventDTO.setEndTime(eventEntity.getEndTime());
         eventDTO.setResultFactorId(eventEntity.getResultFactorId());
-        if (nonNull(eventEntity.getFactors())) {
-            List<FactorDTO> factorsDTO = getFactorsDTO(eventEntity);
-            eventDTO.setFactors(factorsDTO);
-        }
+//        if (nonNull(eventEntity.getFactors())) {
+//            List<FactorDTO> factorsDTO = getFactorsDTO(eventEntity);
+//            eventDTO.setFactors(factorsDTO);
+//        }
         return eventDTO;
     }
 
-    private static List<FactorDTO> getFactorsDTO(EventEntity eventEntity) {
-        List<FactorDTO> factorsDTO = new ArrayList<>();
-        for (FactorEntity entityFactor : eventEntity.getFactors()) {
-            factorsDTO.add(getDTO(entityFactor));
+    public static EventView getView(EventEntity eventEntity){
+        EventView eventView = new EventView();
+        eventView.setId(eventEntity.getId());
+        eventView.setTeamTwo(eventEntity.getTeamTwoId());
+        eventView.setTeamOne(eventEntity.getTeamOneId());
+        eventView.setLeagueId(eventEntity.getLeagueId());
+        eventView.setStartTime(eventEntity.getStartTime());
+        eventView.setEndTime(eventEntity.getEndTime());
+        eventView.setResultFactorId(eventEntity.getResultFactorId());
+        if(nonNull(eventEntity.getStatistic())) {
+            eventView.setStatistic(getDTO(eventEntity.getStatistic()));
         }
-        return factorsDTO;
+        if (nonNull(eventEntity.getFactors())) {
+            List<FactorDTO> factorsDTO = new ArrayList<>();
+            for (FactorEntity entityFactor : eventEntity.getFactors()) {
+                factorsDTO.add(getDTO(entityFactor));
+            }
+            eventView.setFactors(factorsDTO);
+        }
+        return eventView;
     }
+
+//    private static List<FactorDTO> getFactorsDTO(EventEntity eventEntity) {
+//        List<FactorDTO> factorsDTO = new ArrayList<>();
+//        for (FactorEntity entityFactor : eventEntity.getFactors()) {
+//            factorsDTO.add(getDTO(entityFactor));
+//        }
+//        return factorsDTO;
+//    }
 
 //    public static EventDTO getView(EventEntity entity, String teamOneName, String teamTwoName){
 //        EventDTO eventDTO = new EventDTO();
@@ -215,8 +238,8 @@ public abstract class EntityDtoViewConverter {
         return entity;
     }
 
-    public static EventStatisticDto getDTO(EventStatisticEntity entity){
-        EventStatisticDto dto = new EventStatisticDto();
+    public static EventStatisticDTO getDTO(EventStatisticEntity entity){
+        EventStatisticDTO dto = new EventStatisticDTO();
  //       dto.setId(entity.getId());
         dto.setEventId(entity.getEventId());
         dto.setTeamOneGoals(entity.getTeamOneGoals());
@@ -224,7 +247,7 @@ public abstract class EntityDtoViewConverter {
         return dto;
     }
 
-    public static EventStatisticEntity getEntity(EventStatisticDto dto){
+    public static EventStatisticEntity getEntity(EventStatisticDTO dto){
         EventStatisticEntity entity = new EventStatisticEntity();
  //       entity.setId(dto.getId());
         entity.setEventId(dto.getEventId());

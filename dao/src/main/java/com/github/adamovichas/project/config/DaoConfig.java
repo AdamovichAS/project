@@ -37,28 +37,27 @@ public class DaoConfig {
     @Autowired
     private UserPassportRepository userPassportRepository;
 
-//    @Autowired
-//    private EventStatisticRepository eventStatisticRepository;
+    @Autowired
+    private EventStatisticRepository eventStatisticRepository;
 
+    @Autowired
+    private FactorRepository factorRepository;
 
-    @Bean
-    public IUserDao userDao(){
-        return new UserDao(userRepository);
-    }
-
-    @Bean
-    public IUserCashAccountDao cashDao(){
-        return new UserCashAccountDao(userCashAccountRepository);
-    }
 
     @Bean
     public IEventDao eventDao(){
-        return new EventDao(eventRepository);
+        return new EventDao(eventRepository,factorRepository,eventStatisticRepository,leagueRepository);
     }
 
     @Bean
+    public IUserDao userDao(){
+        return new UserDao(userRepository,userPassportRepository,userCashAccountRepository);
+    }
+
+
+    @Bean
     public IBetDao betDao (){
-        return new BetDao(betRepository);
+        return new BetDao(betRepository,userRepository,factorRepository);
     }
 
     @Bean
@@ -71,11 +70,4 @@ public class DaoConfig {
         return new AppCashAccountDao(appCashAccountRepository);
     }
 
-    @Bean
-    public IUserPassportDao userPassportDao(){
-        return new UserPassportDao(userPassportRepository);
-    }
-
-//    @Bean
-//    public IEventStatisticDao eventStatisticDao(){return new EventStatisticDao(eventStatisticRepository);}
 }

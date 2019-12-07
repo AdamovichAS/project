@@ -1,10 +1,11 @@
 package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.dao.IBetDao;
-import com.github.adamovichas.project.dao.IUserCashAccountDao;
 import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.config.HibernateConfig;
+import com.github.adamovichas.project.dao.impl.util.IUtil;
+import com.github.adamovichas.project.dao.impl.util.Util;
 import com.github.adamovichas.project.model.bet.Status;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.UserDTO;
@@ -23,16 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class,Util.class})
+@ContextConfiguration(classes = {HibernateConfig.class, DaoConfig.class, Util.class})
 @Transactional()
 //@Rollback(value = false)
-public class DataBetTest {
+public class BetDaoTest {
     @Autowired
-    private IBetDao betData;
+    private IBetDao betDao;
     @Autowired
-    private IUserDao dataUser;
-    @Autowired
-    private IUserCashAccountDao cashAccountData;
+    private IUserDao userDao;
+
     @Autowired
     private IUtil util;
 
@@ -40,9 +40,9 @@ public class DataBetTest {
     public void addBet(){
         UserDTO userDTO = util.createTestUser();
         BetDTO betDTO = util.createFinishedBet();
-        dataUser.addUser(userDTO);
-        cashAccountData.addUserCashAccount(userDTO.getLogin());
-        Long idBet = betData.addBet(betDTO);
+        userDao.addUser(userDTO);
+//        userDao.addUserCashAccount(userDTO.getLogin());
+        Long idBet = betDao.addBet(betDTO);
         assertNotNull(idBet);
     }
 
@@ -50,11 +50,11 @@ public class DataBetTest {
     public void getViewById(){
         UserDTO userDTO = util.createTestUser();
         BetDTO betDTO = util.createFinishedBet();
-        dataUser.addUser(userDTO);
-        cashAccountData.addUserCashAccount(userDTO.getLogin());
-        Long idBet = betData.addBet(betDTO);
-        BetView viewById = betData.getViewById(idBet);
-        betData.CancelBetById(idBet);
+        userDao.addUser(userDTO);
+//        cashAccountData.addUserCashAccount(userDTO.getLogin());
+        Long idBet = betDao.addBet(betDTO);
+        BetView viewById = betDao.getViewById(idBet);
+        betDao.CancelBetById(idBet);
         assertEquals(viewById.getLogin(),betDTO.getUserLogin());
         assertEquals(viewById.getMoney(),betDTO.getMoney());
         assertEquals(viewById.getFactor().getId(),betDTO.getFactorId());
@@ -64,13 +64,13 @@ public class DataBetTest {
     @Test
     public void getAllByUserLoginAndStatusEmpty(){
         UserDTO userDTO = util.createTestUser();
-        dataUser.addUser(userDTO);
-        cashAccountData.addUserCashAccount(userDTO.getLogin());
-        List<BetView> views = betData.getAllByUserAndStatus(userDTO.getLogin(),Status.FINISH);
+        userDao.addUser(userDTO);
+//        cashAccountData.addUserCashAccount(userDTO.getLogin());
+        List<BetView> views = betDao.getAllByUserAndStatus(userDTO.getLogin(), Status.FINISH);
         assertEquals(views.size(),0);
-        views = betData.getAllByUserAndStatus(userDTO.getLogin(),Status.CANCELD);
+        views = betDao.getAllByUserAndStatus(userDTO.getLogin(),Status.CANCELD);
         assertEquals(views.size(),0);
-        views = betData.getAllByUserAndStatus(userDTO.getLogin(),Status.RUN_TIME);
+        views = betDao.getAllByUserAndStatus(userDTO.getLogin(),Status.RUN_TIME);
         assertEquals(views.size(),0);
     }
 
@@ -79,15 +79,15 @@ public class DataBetTest {
         UserDTO userDTO = util.createTestUser();
         BetDTO finishedBet = util.createFinishedBet();
         BetDTO notFinishedBet = util.createNotFinishedBet();
-        BetDTO canselBet = util.createCanselBet();
-        dataUser.addUser(userDTO);
-        cashAccountData.addUserCashAccount(userDTO.getLogin());
-        betData.addBet(finishedBet);
-        betData.addBet(notFinishedBet);
-        betData.addBet(canselBet);
+        BetDTO canselBet = util.createCancelBet();
+        userDao.addUser(userDTO);
+//        cashAccountData.addUserCashAccount(userDTO.getLogin());
+        betDao.addBet(finishedBet);
+        betDao.addBet(notFinishedBet);
+        betDao.addBet(canselBet);
         List<Status>statuses = Arrays.asList(Status.CANCELD,Status.FINISH,Status.RUN_TIME);
         for (Status status : statuses) {
-            List<BetView> views = betData.getAllByUserAndStatus(userDTO.getLogin(),status);
+            List<BetView> views = betDao.getAllByUserAndStatus(userDTO.getLogin(),status);
             assertEquals(views.size(),1);
             for (BetView view : views) {
                 assertEquals(view.getLogin(),notFinishedBet.getUserLogin());
@@ -103,11 +103,11 @@ public class DataBetTest {
     public void CancelBetById(){
         UserDTO userDTO = util.createTestUser();
         BetDTO notFinishedBet = util.createNotFinishedBet();
-        dataUser.addUser(userDTO);
-        cashAccountData.addUserCashAccount(userDTO.getLogin());
-        Long idBet = betData.addBet(notFinishedBet);
-        betData.CancelBetById(idBet);
-        BetView view = betData.getViewById(idBet);
+        userDao.addUser(userDTO);
+//        cashAccountData.addUserCashAccount(userDTO.getLogin());
+        Long idBet = betDao.addBet(notFinishedBet);
+        betDao.CancelBetById(idBet);
+        BetView view = betDao.getViewById(idBet);
         assertEquals(view.getStatus(), Status.CANCELD);
     }
 }

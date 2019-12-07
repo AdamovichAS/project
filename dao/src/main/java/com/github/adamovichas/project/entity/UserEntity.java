@@ -23,7 +23,7 @@ public class UserEntity {
     public UserEntity() {
     }
     @Id
-    @Column(name = "login", nullable = false, updatable = false)
+    @Column(name = "login", nullable = false, updatable = false, insertable = false)
     public String getLogin() {
         return login;
     }
@@ -31,7 +31,7 @@ public class UserEntity {
         this.login = login;
     }
 
-    @OneToOne(mappedBy = "userEntity",fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "userEntity",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public CashAccountEntity getCashAccount() {
         return cashAccount;
     }
