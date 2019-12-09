@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.web.servlet.event;
 
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.service.data.IdataEventService;
-import com.github.adamovichas.project.service.data.impl.DataEventService;
+import com.github.adamovichas.project.service.data.IEventService;
+import com.github.adamovichas.project.service.data.impl.EventService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EventPaginationServlet extends HttpServlet {
 
-    private IdataEventService eventService = DataEventService.getInstance();
+    private IEventService eventService = EventService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -25,7 +25,7 @@ public class UserDaoServiceTest {
     public UserCreater userCreater;
 
     @InjectMocks
-    public DataUserService dataUserService;
+    public UserService dataUserService;
 
     @BeforeEach
     public void initMock(){

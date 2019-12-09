@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 
-public class DataCashAccountServiceTest {
+public class CashAccountServiceTest {
 
     @Mock
     public UserCashAccountDao dataMoney;
 
     @InjectMocks
-    public DataCashAccountService dataCashAccountService;
+    public CashAccountService cashAccountService;
 
     @BeforeEach
     public void initMock(){
@@ -27,7 +27,7 @@ public class DataCashAccountServiceTest {
     @Test
     public void createMoney(){
         when(dataMoney.addUserCashAccount("test")).thenReturn(true);
-        final boolean test = dataCashAccountService.verification("test");
+        final boolean test = cashAccountService.verification("test");
         assertTrue(test);
     }
 }

@@ -2,12 +2,12 @@ package com.github.adamovichas.project.web.service;
 
 
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
-import com.github.adamovichas.project.service.data.IDataBetService;
-import com.github.adamovichas.project.service.data.IDataCashAccountService;
-import com.github.adamovichas.project.service.data.impl.DataBetService;
-import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
-import com.github.adamovichas.project.service.data.impl.DataUserService;
-import com.github.adamovichas.project.service.data.IdataUserService;
+import com.github.adamovichas.project.service.data.IBetService;
+import com.github.adamovichas.project.service.data.ICashAccountService;
+import com.github.adamovichas.project.service.data.impl.BetService;
+import com.github.adamovichas.project.service.data.impl.CashAccountService;
+import com.github.adamovichas.project.service.data.impl.UserService;
+import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
 
 import com.github.adamovichas.project.model.user.Role;
@@ -21,9 +21,9 @@ import java.io.IOException;
 
 public final class Util {
 
-    private static final IdataUserService serviceDAO = DataUserService.getInstance();
-    private static final IDataBetService betData = DataBetService.getInstance();
-    private static final IDataCashAccountService cashData = DataCashAccountService.getInstance();
+    private static final IUserService serviceDAO = UserService.getInstance();
+    private static final IBetService betData = BetService.getInstance();
+    private static final ICashAccountService cashData = CashAccountService.getInstance();
 
 
     private Util() {

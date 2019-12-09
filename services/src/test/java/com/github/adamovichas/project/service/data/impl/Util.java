@@ -1,26 +1,18 @@
-package com.github.adamovichas.project.dao.impl.util;
+package com.github.adamovichas.project.service.data.impl;
 
-
-import com.github.adamovichas.project.dao.impl.UserDao;
 import com.github.adamovichas.project.model.bet.Status;
 import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.model.user.Role;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.sql.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
-public class Util implements IUtil{
-
-    private static final Logger log = LoggerFactory.getLogger(UserDao.class);
-
-
-
+public class Util {
     public UserDTO createTestUser(){
         UserDTO user = new UserDTO();
         user.setLogin("test");
@@ -60,7 +52,7 @@ public class Util implements IUtil{
         return betDTO;
     }
 
-     public EventDTO createEventTest(){
+    public EventDTO createEventTest(){
         EventDTO event = new EventDTO("Arsenal","Aston Vila", 1L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
         return event;
     }
@@ -72,7 +64,7 @@ public class Util implements IUtil{
         factors.add(new FactorDTO(FactorName.lose,2.1));
         return factors;
     }
-    @Override
+
     public UserPassportDTO createTestPassport() {
         UserDTO testUser = createTestUser();
         UserPassportDTO passportDTO = new UserPassportDTO();
@@ -83,12 +75,11 @@ public class Util implements IUtil{
         return passportDTO;
     }
 
-    @Override
+
     public EventStatisticDTO createTestStatistic() {
         EventStatisticDTO statisticDto = new EventStatisticDTO();
         statisticDto.setTeamTwoGoals(2);
         statisticDto.setTeamOneGoals(2);
         return statisticDto;
     }
-
 }

@@ -38,36 +38,9 @@ public class BetDao implements IBetDao {
 
     @Override
     public Long addBet(BetDTO bet) {
-//        Session session = betRepository.getSession();
-//        Long id = null;
-//        try {
-//            BetEntity betEntity = EntityDtoViewConverter.getEntity(bet);
-//            session.getTransaction().begin();
-//            UserEntity userEntity = session.find(UserEntity.class, betEntity.getUserLogin());
-//            FactorEntity factorEntity = session.find(FactorEntity.class, betEntity.getFactorId());
-//            CashAccountEntity cashAccountEntity = session.find(CashAccountEntity.class, bet.getUserLogin());
-//            cashAccountEntity.setValue(cashAccountEntity.getValue()- bet.getMoney());
-//            session.saveOrUpdate(cashAccountEntity);
-//            betEntity.setFactor(factorEntity);
-//            betEntity.setUserEntity(userEntity);
-//            userEntity.getBets().add(betEntity);
-//            factorEntity.getBets().add(betEntity);
-//            id = (Long) session.addPassport(betEntity);
-//            session.getTransaction().commit();
-//        }catch (RollbackException e){
-//            log.error("AddBet exception, BetDTO {}",bet);
-//            session.getTransaction().rollback();
-//        }finally {
-//            session.close();
-//        }
-//        return id;
-
         BetEntity betEntity = EntityDtoViewConverter.getEntity(bet);
         UserEntity userEntity = userRepository.getOne(bet.getUserLogin());
         FactorEntity factorEntity = factorRepository.getOne(bet.getFactorId());
-//        CashAccountEntity cashAccountEntity = session.find(CashAccountEntity.class, bet.getUserLogin());
-//        cashAccountEntity.setValue(cashAccountEntity.getValue() - bet.getMoney());
-//        session.saveOrUpdate(cashAccountEntity);
         betEntity.setFactor(factorEntity);
         betEntity.setUser(userEntity);
         if(userEntity.getBets() == null){
@@ -81,14 +54,6 @@ public class BetDao implements IBetDao {
 
     @Override
     public BetView getViewById(Long idBet) {
-//        Session session = betRepository.getSession();
-//        session.getTransaction().begin();
-//        BetEntity betEntity = session.get(BetEntity.class, idBet);
-//        Hibernate.initialize(betEntity.getFactor().getEvent());
-//        session.getTransaction().commit();
-//        session.close();
-//        BetView view = EntityDtoViewConverter.getView(betEntity);
-//        return view;
         BetEntity betEntity = betRepository.findById(idBet).get();
         return EntityDtoViewConverter.getView(betEntity);
     }
@@ -104,27 +69,26 @@ public class BetDao implements IBetDao {
     }
 
     @Override
-    public void CancelBetById(Long idBet) {
-//        Session session = betRepository.getSession();
-//        try {
-//            session.getTransaction().begin();
-//            BetEntity betEntity = session.get(BetEntity.class, idBet);
-//            session.delete(betEntity);
-//            CashAccountEntity cashAccountEntity = session.find(CashAccountEntity.class, betEntity.getUserLogin());
-//            cashAccountEntity.setValue(cashAccountEntity.getValue() + betEntity.getMoney());
-//            session.getTransaction().commit();
-//        }catch (RollbackException e){
-//            log.error("CancelBetById exception, idBet {}",idBet);
-//            session.getTransaction().rollback();
-//        }finally {
-//            session.close();
-//        }
-        BetEntity betEntity = betRepository.findById(idBet).get();
-        betEntity.setStatus(Status.CANCELD);
+    public List<BetDTO>getAllNotFinishedBetsByFactorId(Long factorId) {
+        List<BetDTO>dtos = new ArrayList<>();
+        List<BetEntity> betEntities = betRepository.getAllNotFinishedBetsByFactorId(factorId);
+        if(!betEntities.isEmpty()){
+            for (BetEntity entity : betEntities) {
+                dtos.add(EntityDtoViewConverter.getDTO(entity));
+            }
+        }
+        return dtos;
     }
 
-//    @Override
-//    public Long getCountBetsByLogin(String login) {
+    @Override
+    public void updateBetStatus(Long idBet, Status status) {
+        BetEntity betEntity = betRepository.getOne(idBet);
+        betEntity.setStatus(status);
+        betRepository.flush();
+    }
+
+    @Override
+    public Long getCountBetsByLoginAbdStatus(String login, Status status) {
 //        Session session = betRepository.getSession();
 //        session.getTransaction().begin();
 //        final Long count = session.createQuery("SELECT count (*) FROM BetEntity b WHERE b.userLogin = :login", Long.class)
@@ -134,10 +98,11 @@ public class BetDao implements IBetDao {
 //        session.close();
 //        return count;
 //        throw new RuntimeException();
-//    }
+        return betRepository.countByUserLoginAndStatus(login,status);
+    }
 
     @Override
-    public List<BetView> getBetsOnPageByLogin(String login, int page, int pageSize) {
+    public List<BetView> getBetsOnPageByLoginAndStatus(String login, Status status, int page, int pageSize) {
         List<BetView> betViews = new ArrayList<>();
 //        final Session session = betRepository.getSession();
 //        try {
@@ -159,7 +124,7 @@ public class BetDao implements IBetDao {
 //        }finally {
 //            session.close();
 //        }
-        List<BetEntity> betEntities = betRepository.getAllByUserLoginAndStatus(login, Status.RUN_TIME, PageRequest.of(page, pageSize, Sort.by("id")));
+        List<BetEntity> betEntities = betRepository.getAllByUserLoginAndStatus(login, status, PageRequest.of(page, pageSize, Sort.by("id")));
         if(!betEntities.isEmpty()){
             betViews = getViews(betEntities);
         }

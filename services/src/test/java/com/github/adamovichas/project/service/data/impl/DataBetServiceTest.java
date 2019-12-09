@@ -22,7 +22,7 @@ public class DataBetServiceTest {
     public BetDao dataBet;
 
     @InjectMocks
-    public DataBetService dataBetService;
+    public BetService dataBetService;
 
     @BeforeEach
     public void initMock(){
@@ -62,6 +62,6 @@ public class DataBetServiceTest {
 //    @Test
 //    public void cancelBetById(){
 //        dataBetService.cancelBetById(1L);
-//        Mockito.verify(dataBet,times(1)).CancelBetById(1L);
+//        Mockito.verify(dataBet,times(1)).updateBetStatus(1L);
 //    }
 }

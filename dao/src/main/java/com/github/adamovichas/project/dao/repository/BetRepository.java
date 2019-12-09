@@ -18,4 +18,10 @@ public interface BetRepository extends JpaRepository<BetEntity,Long> {
     List<BetEntity>getAllByUserLoginAndStatus(@Param("userLogin")String userLogin,
                                          @Param("status") Status status,
                                          Pageable page);
+
+    Long countByUserLoginAndStatus(@Param("userLogin")String userLogin,
+                                    @Param("status")Status status);
+
+    @Query("FROM BetEntity b WHERE b.factorId= :factorId AND b.status= 'RUN_TIME'")
+    List<BetEntity>getAllNotFinishedBetsByFactorId(@Param("factorId")Long factorId);
 }

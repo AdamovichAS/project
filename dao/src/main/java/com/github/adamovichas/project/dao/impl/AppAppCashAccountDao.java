@@ -6,11 +6,11 @@ import com.github.adamovichas.project.entity.AppCashAccountEntity;
 import com.github.adamovichas.project.model.dto.AppCashAccountDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 
-public class AppCashAccountDao implements IAppCashAccountDao {
+public class AppAppCashAccountDao implements IAppCashAccountDao {
 
     private final AppCashAccountRepository repository;
 
-    public AppCashAccountDao(AppCashAccountRepository repository) {
+    public AppAppCashAccountDao(AppCashAccountRepository repository) {
         this.repository = repository;
     }
 
@@ -24,6 +24,7 @@ public class AppCashAccountDao implements IAppCashAccountDao {
     public AppCashAccountDTO updateBalance(double change) {
          AppCashAccountEntity accountEntity = repository.getOne(1L);
          accountEntity.setBalance(accountEntity.getBalance() + change);
+         repository.flush();
         return EntityDtoViewConverter.getDTO(accountEntity);
     }
 }

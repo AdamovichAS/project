@@ -54,7 +54,7 @@ public class BetDaoTest {
 //        cashAccountData.addUserCashAccount(userDTO.getLogin());
         Long idBet = betDao.addBet(betDTO);
         BetView viewById = betDao.getViewById(idBet);
-        betDao.CancelBetById(idBet);
+//        betDao.updateBetStatus(idBet);
         assertEquals(viewById.getLogin(),betDTO.getUserLogin());
         assertEquals(viewById.getMoney(),betDTO.getMoney());
         assertEquals(viewById.getFactor().getId(),betDTO.getFactorId());
@@ -106,7 +106,7 @@ public class BetDaoTest {
         userDao.addUser(userDTO);
 //        cashAccountData.addUserCashAccount(userDTO.getLogin());
         Long idBet = betDao.addBet(notFinishedBet);
-        betDao.CancelBetById(idBet);
+        betDao.updateBetStatus(idBet,Status.CANCELD);
         BetView view = betDao.getViewById(idBet);
         assertEquals(view.getStatus(), Status.CANCELD);
     }

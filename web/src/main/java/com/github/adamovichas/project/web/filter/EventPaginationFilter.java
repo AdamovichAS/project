@@ -1,8 +1,7 @@
 package com.github.adamovichas.project.web.filter;
 
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.service.data.IdataEventService;
-import com.github.adamovichas.project.service.data.impl.DataEventService;
+import com.github.adamovichas.project.service.data.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class EventPaginationFilter implements Filter {
     @Autowired
-    private IdataEventService eventService;
+    private IEventService eventService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

@@ -16,7 +16,7 @@
         <a href="${pageContext.request.contextPath}/logout"><fmt:message key="index.logout" bundle="${messages}"/></a><br>
     </c:when>
     <c:otherwise>
-        <a href="${pageContext.request.contextPath}/userlogin.jsp"><fmt:message key="index.userlogin" bundle="${messages}"/></a><br>
+        <a href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="index.userlogin" bundle="${messages}"/></a><br>
         <a href="${pageContext.request.contextPath}/registration.jsp"><fmt:message key="index.registration" bundle="${messages}"/></a><br>
     </c:otherwise>
 </c:choose>

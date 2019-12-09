@@ -118,8 +118,8 @@ public class EventDaoTest {
         EventStatisticDTO testStatistic = util.createTestStatistic();
         Long id = eventDao.addEvent(eventTest);
 //        testStatistic.setEventId(id);
-        final boolean b = eventDao.addStatistics(testStatistic,id);
-        assertTrue(b);
+        EventStatisticDTO statisticAdded= eventDao.addStatistics(testStatistic,id);
+        assertNotNull(statisticAdded.getEventId());
     }
 
     @Test

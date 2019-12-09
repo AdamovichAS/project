@@ -51,76 +51,44 @@ public class EventDao implements IEventDao {
 
     @Override
     public boolean eventIsExist(EventDTO event) {
-//        Session session = eventRepository.getSession();
-//        boolean result = false;
-//        try {
-//            session.getTransaction().begin();
-//            final Query query = session.createQuery("FROM EventEntity e where e.teamOneId = :teamOneId AND e.teamTwoId = :teamTwoId AND e.startTime = :startTime")
-//                    .setParameter("teamOneId", event.getTeamOne())
-//                    .setParameter("teamTwoId", event.getTeamTwo())
-//                    .setParameter("startTime", event.getStartTime());
-//            List<EventEntity> entity = query.list();
-//            session.getTransaction().commit();
-//            if (!entity.isEmpty()) {
-//                result = true;
-//            }
-//            return result;
-//        } catch (RollbackException e) {
-//            log.error("eventIsExist exception, EventDTO {}", event);
-//            session.getTransaction().rollback();
-//        } finally {
-//            session.close();
-//        }
-
         return eventRepository.existsByTeamOneIdAndTeamTwoIdAndStartTime(event.getTeamOne(),event.getTeamTwo(),event.getStartTime());
     }
 
     @Override
-    public List<EventDTO> getAllNotFinishedEvents() {
-//        Session session = eventRepository.getSession();
-//        session.getTransaction().begin();
-//        List<EventEntity> eventEntities = session.createQuery("FROM EventEntity e WHERE e.resultFactorId = null").list();
-//        List<EventDTO> views = new ArrayList<>();
-//        for (EventEntity entity : eventEntities) {
-//            views.add(EntityDtoViewConverter.getDTO(entity));
-//        }
-//        session.getTransaction().commit();
-//        return views;
+    public List<EventView> getAllNotFinishedEvents() {
         List<EventEntity> eventEntities = eventRepository.getAllByResultFactorIdIsNull();
-        return getDTOs(eventEntities);
+        return getViews(eventEntities);
+    }
+
+    @Override
+    public void addResultFactorId(EventDTO eventDTO) {
+        EventEntity eventEntity = eventRepository.getOne(eventDTO.getId());
+        eventEntity.setResultFactorId(eventDTO.getResultFactorId());
+        eventRepository.flush();
+    }
+
+    private List<EventView> getViews(List<EventEntity> entities){
+        List<EventView>views = new ArrayList<>();
+        for (EventEntity entity : entities) {
+            views.add(EntityDtoViewConverter.getView(entity));
+        }
+        return views;
     }
 
     @Override
     public EventDTO getEventById(Long id) {
-//        Session session = eventRepository.getSession();
-//        session.getTransaction().begin();
-//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-//        CriteriaQuery<EventEntity> criteria = criteriaBuilder.createQuery(EventEntity.class);
-//        Root<EventEntity> event = criteria.from(EventEntity.class);
-//        criteria.select(event)
-//                .where(criteriaBuilder.equal(event.get("id"),id));
-//        EventEntity eventEntity = session.createQuery(criteria).getSingleResult();
-//        session.getTransaction().commit();
-//        session.close();
-//        return EntityDtoViewConverter.getDTO(eventEntity);
-         EventEntity eventEntity = eventRepository.findById(id).get();
+         EventEntity eventEntity = eventRepository.getOne(id);
          return EntityDtoViewConverter.getDTO(eventEntity);
     }
 
     @Override
     public Long getCountEvents() {
-//        Session session = eventRepository.getSession();
-//        session.getTransaction().begin();
-//        Long countEvents = session.createQuery("SELECT count (*) from EventEntity", Long.class).getSingleResult();
-//        session.getTransaction().commit();
-//        session.close();
-//        return countEvents;
         return eventRepository.count();
     }
 
     @Override
-    public List<EventDTO> getEventsOnPage(int page, int pageSize) {
-        List<EventDTO>events = new ArrayList<>();
+    public List<EventView> getEventsOnPage(int page, int pageSize) {
+//        List<EventDTO>events = new ArrayList<>();
 //        Session session = eventRepository.getSession();
 //        try {
 //            session.getTransaction().begin();
@@ -141,16 +109,18 @@ public class EventDao implements IEventDao {
 //            session.close();
 //        }
         List<EventEntity> eventEntities = eventRepository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
-        return getDTOs(eventEntities);
+        return getViews(eventEntities);
     }
 
-    private List<EventDTO> getDTOs(List<EventEntity> entities){
-        List<EventDTO>dtos = new ArrayList<>();
-        for (EventEntity entity : entities) {
-            dtos.add(EntityDtoViewConverter.getDTO(entity));
-        }
-        return dtos;
-    }
+//    private List<EventDTO> getDTOs(List<EventEntity> entities){
+//        List<EventDTO>dtos = new ArrayList<>();
+//        for (EventEntity entity : entities) {
+//            dtos.add(EntityDtoViewConverter.getDTO(entity));
+//        }
+//        return dtos;
+//    }
+
+
 
     @Override
     public EventView getEventViewById(Long id) {
@@ -187,16 +157,17 @@ public class EventDao implements IEventDao {
 
     /**
      * EventStatistic
+     * @return
      */
 
     @Override
-    public boolean addStatistics(EventStatisticDTO statisticDto, Long eventId) {
+    public EventStatisticDTO addStatistics(EventStatisticDTO statisticDto, Long eventId) {
         EventStatisticEntity statisticEntity = EntityDtoViewConverter.getEntity(statisticDto);
         EventEntity eventEntity = eventRepository.getOne(eventId);
         eventEntity.setStatistic(statisticEntity);
         statisticEntity.setEvent(eventEntity);
         statisticRepository.save(statisticEntity);
-        return true;
+        return EntityDtoViewConverter.getDTO(statisticEntity);
     }
 
     @Override

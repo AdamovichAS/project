@@ -21,6 +21,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/by/itacademy/jd2/admin_service" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/java/com/github/adamovichas/project/service/ex" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

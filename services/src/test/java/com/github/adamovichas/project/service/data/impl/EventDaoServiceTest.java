@@ -28,7 +28,7 @@ public class EventDaoServiceTest {
     public EventDao eventDao;
 
     @InjectMocks
-    public DataEventService dataEventService;
+    public EventService eventService;
 
     @BeforeEach
     public void initMock(){
@@ -50,14 +50,14 @@ public class EventDaoServiceTest {
     @Test
     public void eventIsExist(){
         EventDTO eventDTOTest = createEventTest();
-        dataEventService.eventIsExist(eventDTOTest);
+        eventService.eventIsExist(eventDTOTest);
         Mockito.verify(eventDao,times(1)).eventIsExist(eventDTOTest);
     }
 
     @Test
     public void addEvent(){
         EventDTO eventDTOTest = createEventTest();
-        dataEventService.addEvent(eventDTOTest);
+        eventService.addEvent(eventDTOTest);
         Mockito.verify(eventDao,times(1)).addEvent(eventDTOTest);
     }
 
@@ -65,7 +65,7 @@ public class EventDaoServiceTest {
     public void getAllNotFinishedEvents(){
         List<EventDTO> eventDTOS = new ArrayList<>(Arrays.asList(new EventDTO(),new EventDTO(),new EventDTO()));
         when(eventDao.getAllNotFinishedEvents()).thenReturn(eventDTOS);
-        List<EventDTO> allNotFinishedEvents = dataEventService.getAllNotFinishedEvents();
+        List<EventDTO> allNotFinishedEvents = eventService.getAllNotFinishedEvents();
         assertEquals(allNotFinishedEvents.size(), eventDTOS.size());
     }
 
@@ -73,7 +73,7 @@ public class EventDaoServiceTest {
     public void getAllLeagues(){
         List<LeagueDTO> leagueDTOS = new ArrayList<>(Arrays.asList(new LeagueDTO(),new LeagueDTO(),new LeagueDTO()));
         when(eventDao.getAllLeagues()).thenReturn(leagueDTOS);
-        List<LeagueDTO> allLeagueDTOS = dataEventService.getAllLeagues();
+        List<LeagueDTO> allLeagueDTOS = eventService.getAllLeagues();
         assertEquals(allLeagueDTOS.size(), leagueDTOS.size());
     }
 
@@ -81,7 +81,7 @@ public class EventDaoServiceTest {
     public void getAllTeamsByLeague(){
         List<TeamDTO> teamDTOS = new ArrayList<>(Arrays.asList(new TeamDTO("Liverpool"),new TeamDTO("Arsenal")));
         when(eventDao.getAllTeamsByLeague(Mockito.any())).thenReturn(teamDTOS);
-        List<TeamDTO> allTeamsByLeague = dataEventService.getAllTeamsByLeague(10L);
+        List<TeamDTO> allTeamsByLeague = eventService.getAllTeamsByLeague(10L);
         assertEquals(allTeamsByLeague.size(), teamDTOS.size());
     }
 
@@ -90,14 +90,14 @@ public class EventDaoServiceTest {
         EventDTO eventTest = new EventDTO();
         eventTest.setId(10L);
         when(eventDao.getEventById(eventTest.getId())).thenReturn(eventTest);
-        EventDTO eventById = dataEventService.getEventById(10L);
+        EventDTO eventById = eventService.getEventById(10L);
         assertEquals(eventById.getId(),eventTest.getId());
     }
 
     @Test
     public void getEventMaxPages(){
         when(eventDao.getCountEvents()).thenReturn(10L);
-        Long pages = dataEventService.getEventMaxPages();
+        Long pages = eventService.getEventMaxPages();
         assertEquals(pages,2L);
     }
 }

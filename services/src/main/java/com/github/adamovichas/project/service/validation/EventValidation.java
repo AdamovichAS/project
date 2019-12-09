@@ -8,10 +8,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public enum EventValidation implements IEventValidation {
-    EVENT_VALIDATION;
+public class EventValidation implements IEventValidation {
 
-    public boolean isStartTimeEarlierEndTime(Timestamp start, Timestamp end) {
+    private boolean isStartTimeEarlierEndTime(Timestamp start, Timestamp end) {
         if(start.compareTo(end) >= 0){
             return false;
         }
@@ -19,11 +18,8 @@ public enum EventValidation implements IEventValidation {
     }
 
 
-    public boolean isEqualsTeamOneAndTwo(String oneId, String twoId) {
-        if(oneId.equals(twoId)) {
-            return true;
-        }
-        return false;
+    private boolean isEqualsTeamOneAndTwo(String oneId, String twoId) {
+        return oneId.equals(twoId);
     }
 
     @Override

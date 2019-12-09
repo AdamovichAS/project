@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.web.servlet;
 
-import com.github.adamovichas.project.service.data.impl.DataUserService;
-import com.github.adamovichas.project.service.data.IdataUserService;
+import com.github.adamovichas.project.service.data.impl.UserService;
+import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.web.service.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 public class LoginServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
-    private final IdataUserService daoUser = DataUserService.getInstance();
+    private final IUserService daoUser = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

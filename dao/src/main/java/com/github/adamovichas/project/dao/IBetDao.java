@@ -14,9 +14,11 @@ public interface IBetDao {
 
     List<BetView> getAllByUserAndStatus(String login, Status status);
 
-    void CancelBetById(Long idBet);
+    List<BetDTO>getAllNotFinishedBetsByFactorId(Long factorId);
 
-//    Long getCountBetsByLogin(String login);
+    void updateBetStatus(Long idBet, Status status);
 
-    List<BetView> getBetsOnPageByLogin(String login, int page, int pageSize);
+    Long getCountBetsByLoginAbdStatus(String login, Status status);
+
+    List<BetView> getBetsOnPageByLoginAndStatus(String login, Status status, int page, int pageSize);
 }

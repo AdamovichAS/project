@@ -1,10 +1,8 @@
 package com.github.adamovichas.project.web.servlet;
 
 
-import com.github.adamovichas.project.service.data.impl.DataBetService;
-import com.github.adamovichas.project.service.data.impl.DataUserService;
-import com.github.adamovichas.project.service.data.IDataBetService;
-import com.github.adamovichas.project.service.data.IdataUserService;
+import com.github.adamovichas.project.service.data.IBetService;
+import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.web.service.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +17,9 @@ import java.io.IOException;
 
 public class RoleRedirectServlet extends HttpServlet {
     @Autowired
-    private IdataUserService daoUser;
+    private IUserService daoUser;
     @Autowired
-    private IDataBetService dataBet;
+    private IBetService dataBet;
 
 
     @Override

@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.web.servlet;
 
-import com.github.adamovichas.project.service.data.impl.DataBetService;
-import com.github.adamovichas.project.service.data.IDataBetService;
+import com.github.adamovichas.project.service.data.IBetService;
+import com.github.adamovichas.project.service.data.impl.BetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,11 +18,11 @@ import static java.util.Objects.nonNull;
 public class CancelBetServlet extends HttpServlet{
 
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
-    private IDataBetService betData;
+    private IBetService betData;
 
     @Override
     public void init() throws ServletException {
-        betData = DataBetService.getInstance();
+        betData = BetService.getInstance();
     }
 
 

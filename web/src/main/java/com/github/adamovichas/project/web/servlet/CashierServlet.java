@@ -3,8 +3,7 @@ package com.github.adamovichas.project.web.servlet;
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.service.data.IDataCashAccountService;
-import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
+import com.github.adamovichas.project.service.data.ICashAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
@@ -17,7 +16,7 @@ import static java.util.Objects.nonNull;
 
 public class CashierServlet extends HttpServlet {
     @Autowired
-    private  IDataCashAccountService moneyService;
+    private ICashAccountService moneyService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

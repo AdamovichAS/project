@@ -1,9 +1,17 @@
 package com.github.adamovichas.project.service.util;
 
+import com.github.adamovichas.project.config.DaoConfig;
+import com.github.adamovichas.project.config.HibernateConfig;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
+import com.github.adamovichas.project.service.data.impl.Util;
+import com.github.adamovichas.project.service.util.event.IEventUtil;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EventUtilTest {
 
-    private EventUtil util = EventUtil.EVENT_UTIL;
+    private IEventUtil util;
 
     @Test
     public void createFactors(){

@@ -9,8 +9,6 @@ public class BetView {
     private String login;
     private String event;
     private Status status;
-//    private FactorName factorName;
-//    private double factorValue;
     private FactorDTO factor;
     private double money;
 
@@ -48,23 +46,6 @@ public class BetView {
     public void setStatus(Status status) {
         this.status = status;
     }
-
-    //    public FactorName getFactorName() {
-//        return factorName;
-//    }
-//
-//    public void setFactorName(FactorName factorName) {
-//        this.factorName = factorName;
-//    }
-//
-//    public double getFactorValue() {
-//        return factorValue;
-//    }
-//
-//    public void setFactorValue(double factorValue) {
-//        this.factorValue = factorValue;
-//    }
-
 
     public FactorDTO getFactor() {
         return factor;

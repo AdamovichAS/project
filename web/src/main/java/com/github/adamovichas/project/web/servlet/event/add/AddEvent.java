@@ -1,8 +1,8 @@
 package com.github.adamovichas.project.web.servlet.event.add;
 
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.service.data.impl.DataEventService;
-import com.github.adamovichas.project.service.data.IdataEventService;
+import com.github.adamovichas.project.service.data.impl.EventService;
+import com.github.adamovichas.project.service.data.IEventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +15,11 @@ import java.io.IOException;
 public class AddEvent extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(AddEvent.class);
 
-    private IdataEventService data;
+    private IEventService data;
 
     @Override
     public void init() throws ServletException {
-        data = DataEventService.getInstance();
+        data = EventService.getInstance();
     }
 
 

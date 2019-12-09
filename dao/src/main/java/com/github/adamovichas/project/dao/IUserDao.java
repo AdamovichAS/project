@@ -9,19 +9,21 @@ public interface IUserDao {
     boolean updateUser(UserDTO user);
     void addUser(UserDTO user);
     UserDTO getUserByLogin(String login);
-    void block(String login);
+    void blockUser(String login);
 
     /**
      *CashAccount
+     * @return
      */
-    void addUserCashAccount(String login);
+    CashAccountDTO addUserCashAccount(String login);
     CashAccountDTO getCashAccountByLogin(String login);
     CashAccountDTO updateCashAccountValue(CashAccountDTO cashAccountDTO);
 
     /**
      * UserPassport
+     * @return
      */
-    void addPassport(UserPassportDTO userPassport);
+    UserPassportDTO addPassport(UserPassportDTO userPassport);
     UserPassportDTO updatePassport(UserPassportDTO userPassport);
     UserPassportDTO getPassport(String login);
 }

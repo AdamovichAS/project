@@ -72,7 +72,7 @@ public class UserDaoTest {
     public void deleteUser(){
         UserDTO testUser = util.createTestUser();
         userDao.addUser(testUser);
-        userDao.block(testUser.getLogin());
+        userDao.blockUser(testUser.getLogin());
         final UserDTO userByLogin = userDao.getUserByLogin(testUser.getLogin());
         assertEquals(userByLogin.getRole(),Role.BLOCKED);
     }

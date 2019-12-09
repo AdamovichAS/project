@@ -2,18 +2,18 @@ package com.github.adamovichas.project.web.servlet;
 
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.service.data.IDataCashAccountService;
-import com.github.adamovichas.project.service.data.impl.DataBetService;
-import com.github.adamovichas.project.service.data.impl.DataEventService;
-import com.github.adamovichas.project.service.data.IDataBetService;
-import com.github.adamovichas.project.service.data.IdataEventService;
+import com.github.adamovichas.project.service.data.ICashAccountService;
+import com.github.adamovichas.project.service.data.impl.BetService;
+import com.github.adamovichas.project.service.data.impl.EventService;
+import com.github.adamovichas.project.service.data.IBetService;
+import com.github.adamovichas.project.service.data.IEventService;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.service.data.impl.DataCashAccountService;
-import com.github.adamovichas.project.service.util.EventUtil;
-import com.github.adamovichas.project.service.util.IEventUtil;
+import com.github.adamovichas.project.service.data.impl.CashAccountService;
+import com.github.adamovichas.project.service.util.event.EventUtil;
+import com.github.adamovichas.project.service.util.event.IEventUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,19 +26,19 @@ import java.util.List;
 
 public class BetServlet extends HttpServlet {
 
-    private IdataEventService dataEvent;
+    private IEventService dataEvent;
     private IEventUtil util;
-    private IDataBetService dataBet;
-    private IDataCashAccountService dataMoney;
+    private IBetService dataBet;
+    private ICashAccountService dataMoney;
 
     private static final Logger log = LoggerFactory.getLogger(BetServlet.class);
 
     @Override
     public void init() throws ServletException {
-        dataEvent = DataEventService.getInstance();
+        dataEvent = EventService.getInstance();
         util = EventUtil.EVENT_UTIL;
-        dataBet = DataBetService.getInstance();
-        dataMoney = DataCashAccountService.getInstance();
+        dataBet = BetService.getInstance();
+        dataMoney = CashAccountService.getInstance();
     }
 
     @Override

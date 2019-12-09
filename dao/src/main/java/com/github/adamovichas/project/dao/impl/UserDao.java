@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Modifying;
 
+import java.util.Optional;
+
 public class UserDao implements IUserDao {
 
     private static final Logger log = LoggerFactory.getLogger(UserDao.class);
@@ -39,38 +41,46 @@ public class UserDao implements IUserDao {
 
     @Override
     public UserDTO getUserByLogin(String login) {
-        UserEntity userEntity = userRepository.findById(login).get();
+        Optional<UserEntity> entityOptional = userRepository.findById(login);
+        if(!entityOptional.isPresent()){
+            return null;
+        }
+        UserEntity userEntity = entityOptional.get();
         return EntityDtoViewConverter.getDTO(userEntity);
     }
 
     @Override
-    public void block(String login) {
-        final UserEntity userEntity = userRepository.findById(login).get();
+    public void blockUser(String login) {
+        UserEntity userEntity = userRepository.getOne(login);
         userEntity.setRole(Role.BLOCKED);
     }
 
     @Override
     public boolean updateUser(UserDTO user) {
-        boolean result = false;
-        UserEntity userEntity = userRepository.findById(user.getLogin()).get();
+        Optional<UserEntity> optional = userRepository.findById(user.getLogin());
+        if(!optional.isPresent()){
+            return false;
+        }
+        final UserEntity userEntity = optional.get();
         userEntity.setRole(user.getRole());
         userEntity.setPassword(user.getPassword());
-        result = true;
-        return result;
+        return true;
     }
 
     /**
      *CashAccount
+     * @return
      */
 
     @Override
-    public void addUserCashAccount(String login) {
+    public CashAccountDTO addUserCashAccount(String login) {
         CashAccountEntity cashAccountEntity = new CashAccountEntity();
         cashAccountEntity.setValue(0);
         UserEntity userEntity = userRepository.getOne(login);
         cashAccountEntity.setUserEntity(userEntity);
         userEntity.setCashAccount(cashAccountEntity);
         cashAccountRepository.save(cashAccountEntity);
+        return EntityDtoViewConverter.getDTO(cashAccountEntity);
     }
 
     @Override
@@ -89,15 +99,17 @@ public class UserDao implements IUserDao {
 
     /**
      * UserPassport
+     * @return
      */
 
     @Override
-    public void addPassport(UserPassportDTO userPassport) {
+    public UserPassportDTO addPassport(UserPassportDTO userPassport) {
         UserPassportEntity passportEntity = EntityDtoViewConverter.getEntity(userPassport);
         UserEntity userEntity = userRepository.getOne(userPassport.getUserLogin());
         passportEntity.setUserEntity(userEntity);
         userEntity.setUserPassportEntity(passportEntity);
         passportRepository.save(passportEntity);
+        return EntityDtoViewConverter.getDTO(passportEntity);
     }
 
     @Override
@@ -111,7 +123,11 @@ public class UserDao implements IUserDao {
 
     @Override
     public UserPassportDTO getPassport(String login) {
-        UserPassportEntity passportEntity = passportRepository.getOne(login);
+        Optional<UserPassportEntity> optional = passportRepository.findById(login);
+        if(!optional.isPresent()){
+            return null;
+        }
+        UserPassportEntity passportEntity = optional.get();
         return EntityDtoViewConverter.getDTO(passportEntity);
     }
 

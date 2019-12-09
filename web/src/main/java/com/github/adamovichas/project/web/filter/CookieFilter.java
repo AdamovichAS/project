@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.web.filter;
 
-import com.github.adamovichas.project.service.data.impl.DataUserService;
-import com.github.adamovichas.project.service.data.IdataUserService;
+import com.github.adamovichas.project.service.data.impl.UserService;
+import com.github.adamovichas.project.service.data.IUserService;
 
 import com.github.adamovichas.project.web.service.Util;
 
@@ -15,11 +15,11 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class CookieFilter implements Filter {
-    private IdataUserService serviceDAO;
+    private IUserService serviceDAO;
 
     @Override
     public void init(FilterConfig filterConfig) {
-        serviceDAO = DataUserService.getInstance();
+        serviceDAO = UserService.getInstance();
     }
 
     @Override

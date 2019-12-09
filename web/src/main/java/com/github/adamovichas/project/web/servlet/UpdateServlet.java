@@ -3,8 +3,8 @@ package com.github.adamovichas.project.web.servlet;
 
 
 import com.github.adamovichas.project.model.dto.UserDTO;
-import com.github.adamovichas.project.service.data.impl.DataUserService;
-import com.github.adamovichas.project.service.data.IdataUserService;
+import com.github.adamovichas.project.service.data.impl.UserService;
+import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
 
 import com.github.adamovichas.project.service.util.Util;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class UpdateServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(UpdateServlet.class);
-    private final IdataUserService daoUser = DataUserService.getInstance();
+    private final IUserService daoUser = UserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class UpdateServlet extends HttpServlet {
         userFieldsForUpdate.put("country",req.getParameter("country"));
         Util.UTILS.removeEmptyValue(userFieldsForUpdate);
         if(!userFieldsForUpdate.isEmpty()){
-            daoUser.updateUserInfo(authUser.getLogin(),userFieldsForUpdate);
+            daoUser.updateUser(authUser.getLogin(),userFieldsForUpdate);
             if(password !=null) {
                 resp.addCookie(new Cookie("login", authUser.getLogin() + "/" + password));
             }

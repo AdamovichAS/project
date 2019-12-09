@@ -1,12 +1,12 @@
 package com.github.adamovichas.project.web.servlet.event.add;
 
 import com.github.adamovichas.project.model.factor.FactorDTO;
-import com.github.adamovichas.project.service.data.impl.DataEventService;
-import com.github.adamovichas.project.service.data.IdataEventService;
+import com.github.adamovichas.project.service.data.impl.EventService;
+import com.github.adamovichas.project.service.data.IEventService;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.service.util.EventUtil;
-import com.github.adamovichas.project.service.util.IEventUtil;
+import com.github.adamovichas.project.service.util.event.EventUtil;
+import com.github.adamovichas.project.service.util.event.IEventUtil;
 import com.github.adamovichas.project.service.validation.EventValidation;
 import com.github.adamovichas.project.service.validation.IEventValidation;
 
@@ -22,13 +22,13 @@ import static java.util.Objects.nonNull;
 
 public class ChoseEventInfo extends HttpServlet {
 
-    private IdataEventService dataEvent;
+    private IEventService dataEvent;
     private IEventValidation eventVal;
     private IEventUtil eventUtil;
 
     @Override
     public void init() throws ServletException {
-        dataEvent = DataEventService.getInstance();
+        dataEvent = EventService.getInstance();
         eventVal = EventValidation.EVENT_VALIDATION;
         eventUtil = EventUtil.EVENT_UTIL;
     }
