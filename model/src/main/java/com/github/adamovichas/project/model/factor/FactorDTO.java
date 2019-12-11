@@ -17,6 +17,12 @@ public class FactorDTO {
         this.value = value;
     }
 
+    public FactorDTO(FactorName name, double value, Long eventId) {
+        this.name = name;
+        this.value = value;
+        this.eventId = eventId;
+    }
+
     public FactorDTO() {
     }
 

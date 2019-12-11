@@ -1,11 +1,13 @@
 package com.github.adamovichas.project.service.data.impl;
 
+import com.github.adamovichas.project.dao.impl.LeagueDao;
 import com.github.adamovichas.project.model.dto.EventDTO;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.dao.impl.EventDao;
+import com.github.adamovichas.project.model.view.EventView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,6 +29,9 @@ public class EventDaoServiceTest {
 
     @Mock
     public EventDao eventDao;
+
+    @Mock
+    public LeagueDao leagueDao;
 
     @InjectMocks
     public EventService eventService;
@@ -38,13 +44,29 @@ public class EventDaoServiceTest {
 
     EventDTO createEventTest(){
         EventDTO eventDTO = new EventDTO("Arsenal","Liverpool",1L, Timestamp.valueOf("2019-12-05 17:00:00"),Timestamp.valueOf("2019-12-05 18:00:00"));
-        List<FactorDTO> factorDTOS = new ArrayList<>();
         eventDTO.setId(50L);
-        factorDTOS.add(new FactorDTO(FactorName.win,2.5));
-        factorDTOS.add(new FactorDTO(FactorName.draw,3));
-        factorDTOS.add(new FactorDTO(FactorName.lose,2.1));
-        eventDTO.setFactors(factorDTOS);
         return eventDTO;
+    }
+
+    EventView createeventView(){
+        EventView view = new EventView();
+        view.setId(50L);
+        view.setTeamOne("Arsenal");
+        view.setTeamTwo("Liverpool");
+        view.setLeagueId(1L);
+        view.setStartTime( Timestamp.valueOf("2019-12-05 17:00:00"));
+        view.setEndTime(Timestamp.valueOf("2019-12-05 18:00:00"));
+        List<FactorDTO> factorsTest = createFactorsTest();
+        view.setFactors(factorsTest);
+        return view;
+    }
+
+    List<FactorDTO> createFactorsTest(){
+        List<FactorDTO> factorDTOS = new ArrayList<>();
+        factorDTOS.add(new FactorDTO(FactorName.win,2.5,50L));
+        factorDTOS.add(new FactorDTO(FactorName.draw,3,50L));
+        factorDTOS.add(new FactorDTO(FactorName.lose,2.1,50L));
+        return factorDTOS;
     }
 
     @Test
@@ -63,16 +85,16 @@ public class EventDaoServiceTest {
 
     @Test
     public void getAllNotFinishedEvents(){
-        List<EventDTO> eventDTOS = new ArrayList<>(Arrays.asList(new EventDTO(),new EventDTO(),new EventDTO()));
-        when(eventDao.getAllNotFinishedEvents()).thenReturn(eventDTOS);
-        List<EventDTO> allNotFinishedEvents = eventService.getAllNotFinishedEvents();
-        assertEquals(allNotFinishedEvents.size(), eventDTOS.size());
+        List<EventView> views = new ArrayList<>(Collections.singletonList(createeventView()));
+        when(eventDao.getAllNotFinishedEvents()).thenReturn(views);
+        List<EventView> allNotFinishedEvents = eventService.getAllNotFinishedEvents();
+        assertEquals(allNotFinishedEvents.size(), views.size());
     }
 
     @Test
     public void getAllLeagues(){
         List<LeagueDTO> leagueDTOS = new ArrayList<>(Arrays.asList(new LeagueDTO(),new LeagueDTO(),new LeagueDTO()));
-        when(eventDao.getAllLeagues()).thenReturn(leagueDTOS);
+        when(leagueDao.getAllLeagues()).thenReturn(leagueDTOS);
         List<LeagueDTO> allLeagueDTOS = eventService.getAllLeagues();
         assertEquals(allLeagueDTOS.size(), leagueDTOS.size());
     }
@@ -80,7 +102,7 @@ public class EventDaoServiceTest {
     @Test
     public void getAllTeamsByLeague(){
         List<TeamDTO> teamDTOS = new ArrayList<>(Arrays.asList(new TeamDTO("Liverpool"),new TeamDTO("Arsenal")));
-        when(eventDao.getAllTeamsByLeague(Mockito.any())).thenReturn(teamDTOS);
+        when(leagueDao.getAllTeamsByLeague(Mockito.any())).thenReturn(teamDTOS);
         List<TeamDTO> allTeamsByLeague = eventService.getAllTeamsByLeague(10L);
         assertEquals(allTeamsByLeague.size(), teamDTOS.size());
     }
