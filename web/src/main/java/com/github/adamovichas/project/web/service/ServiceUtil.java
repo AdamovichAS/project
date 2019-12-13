@@ -2,34 +2,30 @@ package com.github.adamovichas.project.web.service;
 
 
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
-import com.github.adamovichas.project.service.data.IBetService;
-import com.github.adamovichas.project.service.data.ICashAccountService;
-import com.github.adamovichas.project.service.data.impl.BetService;
-import com.github.adamovichas.project.service.data.impl.CashAccountService;
-import com.github.adamovichas.project.service.data.impl.UserService;
 import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
 
 import com.github.adamovichas.project.model.user.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
-public final class Util {
+public class ServiceUtil implements IServiceUtil{
 
-    private static final IUserService serviceDAO = UserService.getInstance();
-    private static final IBetService betData = BetService.getInstance();
-    private static final ICashAccountService cashData = CashAccountService.getInstance();
+    @Autowired
+    private final IUserService userService;
 
 
-    private Util() {
+    public ServiceUtil(IUserService userService) {
+        this.userService = userService;
+
     }
 
-    public static Cookie getCookie(String cookieName, Cookie[] cookies){
+    @Override
+    public Cookie getCookie(String cookieName, Cookie[] cookies){
         Cookie resultCookie = null;
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) {
@@ -40,21 +36,24 @@ public final class Util {
         return resultCookie;
     }
 
-    public static void setAuthUserInSession(HttpSession session, String login){
-        Role role = serviceDAO.getUserByLogin(login).getRole();
+    @Override
+    public AuthUser setAuthUserInSession(HttpServletRequest request, String login){
+        HttpSession session = request.getSession();
+        Role role = userService.getUserByLogin(login).getRole();
         AuthUser authUser = new AuthUser(login,role);
         session.setAttribute("authUser", authUser);
-
+        return authUser;
     }
 
-    public static void setUserBetsInReq(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override
+    public void setUserBetsInReq(HttpServletRequest req, HttpServletResponse resp) {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         String login = authUser.getLogin();
         if(authUser.getRole().equals(Role.USER_VER)) {
-            CashAccountDTO accountByLogin = cashData.getAccountByLogin(login);
+            CashAccountDTO accountByLogin = userService.getCashAccountByLogin(login);
             req.setAttribute("account",accountByLogin);
 //            req.getRequestDispatcher("/bet_pagination").include(req,resp);
-//            List<BetView> betViews = betData.getAllByUserAndStatus(login);
+//            List<BetView> betViews = betService.getAllByUserAndStatus(login);
 //            if(!betViews.isEmpty()) {
 //                req.setAttribute("userBets", betViews);
 //            }

@@ -34,7 +34,7 @@
 
         <input type="submit" name="submit" value="<fmt:message key="update.button" bundle="${messages}"/>"/><br>
     </form>
-    <a href="${pageContext.request.contextPath}/user_menu.jsp" ><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
+    <a href="${pageContext.request.contextPath}/user_menu.jsp/user_menu.jsp" ><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
 
     <c:if test="${message ne null}">
         <c:out value="${message}"/>

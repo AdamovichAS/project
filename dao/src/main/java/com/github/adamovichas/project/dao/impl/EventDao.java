@@ -108,8 +108,10 @@ public class EventDao implements IEventDao {
 //        }finally {
 //            session.close();
 //        }
+        List<EventView>events = new ArrayList<>();
         List<EventEntity> eventEntities = eventRepository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
-        return getViews(eventEntities);
+        events = getViews(eventEntities);
+        return events;
     }
 
 //    private List<EventDTO> getDTOs(List<EventEntity> entities){

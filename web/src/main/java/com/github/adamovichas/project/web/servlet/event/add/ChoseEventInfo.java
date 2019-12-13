@@ -1,16 +1,16 @@
 package com.github.adamovichas.project.web.servlet.event.add;
 
 import com.github.adamovichas.project.model.factor.FactorDTO;
-import com.github.adamovichas.project.service.data.impl.EventService;
 import com.github.adamovichas.project.service.data.IEventService;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.service.util.event.EventUtil;
 import com.github.adamovichas.project.service.util.event.IEventUtil;
-import com.github.adamovichas.project.service.validation.EventValidation;
 import com.github.adamovichas.project.service.validation.IEventValidation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,23 +20,21 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 
+@WebServlet(name = "ChoseEventInfo", urlPatterns = {"/new_event/chose_league/chose_event_info"})
 public class ChoseEventInfo extends HttpServlet {
 
-    private IEventService dataEvent;
+    @Autowired
+    private IEventService eventService;
+    @Autowired
     private IEventValidation eventVal;
+    @Autowired
     private IEventUtil eventUtil;
 
-    @Override
-    public void init() throws ServletException {
-        dataEvent = EventService.getInstance();
-        eventVal = EventValidation.EVENT_VALIDATION;
-        eventUtil = EventUtil.EVENT_UTIL;
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long leagueId = (Long) req.getAttribute("leagueId");
-        List<TeamDTO> allTeamsByLeague = dataEvent.getAllTeamsByLeague(leagueId);
+        List<TeamDTO> allTeamsByLeague = eventService.getAllTeamsByLeague(leagueId);
         req.setAttribute("allTeams", allTeamsByLeague);
         req.setAttribute("leagueId",leagueId);
         req.getRequestDispatcher("/add_event.jsp").forward(req,resp);
@@ -57,7 +55,7 @@ public class ChoseEventInfo extends HttpServlet {
         double lose = Double.valueOf(req.getParameter("lose"));
         double draw = Double.valueOf(req.getParameter("draw"));
         List<FactorDTO> factorDTOS = eventUtil.createFactors(win, lose, draw);
-        eventDTO.setFactors(factorDTOS);
+ //       eventDTO.setFactors(factorDTOS);
         String errorMessage = eventVal.checkEventParam(eventDTO);
         if(nonNull(errorMessage)){
             req.setAttribute("error",errorMessage);

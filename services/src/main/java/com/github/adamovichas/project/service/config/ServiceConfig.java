@@ -27,11 +27,11 @@ import org.springframework.context.annotation.Import;
 @Configuration
 public class ServiceConfig {
 
-    private DaoConfig daoConfig;
-
-    public ServiceConfig(DaoConfig daoConfig) {
-        this.daoConfig = daoConfig;
-    }
+//    private DaoConfig daoConfig;
+//
+//    public ServiceConfig(DaoConfig daoConfig) {
+//        this.daoConfig = daoConfig;
+//    }
 
     @Bean
     public IBetService betService(IBetDao betDao, IUserDao userDao){

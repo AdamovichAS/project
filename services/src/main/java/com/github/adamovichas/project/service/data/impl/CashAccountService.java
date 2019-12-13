@@ -26,8 +26,9 @@ public class CashAccountService implements ICashAccountService {
 
 
     @Override
-    public CashAccountDTO verification(String login) {
-        return userDao.addUserCashAccount(login);
+    public boolean verification(String login) {
+        userDao.addUserCashAccount(login);
+        return true;
     }
 
     @Override
@@ -36,17 +37,19 @@ public class CashAccountService implements ICashAccountService {
     }
 
     @Override
-    public CashAccountDTO makeDeposit(String login, double depositValue) {
+    public boolean makeDeposit(String login, double depositValue) {
         CashAccountDTO cashAccountDTO = userDao.getCashAccountByLogin(login);
         cashAccountDTO.setValue(cashAccountDTO.getValue() + depositValue);
-        return userDao.updateCashAccountValue(cashAccountDTO);
+        userDao.updateCashAccountValue(cashAccountDTO);
+        return true;
     }
 
     @Override
-    public CashAccountDTO withdrawal(String login, double withdrawalValue) {
+    public boolean withdrawal(String login, double withdrawalValue) {
         CashAccountDTO cashAccountDTO = userDao.getCashAccountByLogin(login);
         cashAccountDTO.setValue(cashAccountDTO.getValue() - withdrawalValue);
-        return userDao.updateCashAccountValue(cashAccountDTO);
+        userDao.updateCashAccountValue(cashAccountDTO);
+        return true;
     }
 
     @Override

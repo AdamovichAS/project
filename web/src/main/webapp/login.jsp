@@ -10,9 +10,9 @@
     <title>Title</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/userlogin" method="POST">
+<form action="${pageContext.request.contextPath}/login" method="POST">
     <label><fmt:message key="index.userlogin" bundle="${messages}"/></label>
-    <input type="text" required placeholder="userlogin" name="userlogin"><br>
+    <input type="text" required placeholder="login" name="login"><br>
     <label><fmt:message key="userlogin.password" bundle="${messages}"/></label>
     <input type="password" required placeholder="password" name="password"><br><br>
     <input type="submit" name="submit" value="<fmt:message key="index.userlogin" bundle="${messages}"/>" />

@@ -4,22 +4,24 @@ package com.github.adamovichas.project.web.servlet;
 import com.github.adamovichas.project.service.data.IBetService;
 import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.web.service.Util;
+import com.github.adamovichas.project.web.service.IServiceUtil;
+import com.github.adamovichas.project.web.service.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+@WebServlet(name = "RoleRedirectServlet", urlPatterns = {"/redirect"})
 public class RoleRedirectServlet extends HttpServlet {
+
     @Autowired
-    private IUserService daoUser;
-    @Autowired
-    private IBetService dataBet;
+    private IServiceUtil serviceUtil;
 
 
     @Override
@@ -30,7 +32,7 @@ public class RoleRedirectServlet extends HttpServlet {
             // resp.sendRedirect("admin_menu.jsp");
             req.getRequestDispatcher("admin_menu.jsp").forward(req, resp);
         } else {
-            Util.setUserBetsInReq(req,resp);
+            serviceUtil.setUserBetsInReq(req,resp);
             req.getRequestDispatcher("user_menu.jsp").forward(req, resp);
         }
     }

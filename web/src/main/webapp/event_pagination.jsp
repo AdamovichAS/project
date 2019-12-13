@@ -54,14 +54,14 @@
                 <c:otherwise>
                     <li class="page-item">
                         <a class="page-link"
-                           href="${pageContext.request.contextPath}/index.jsp?currentPage=${page}">${page}</a></li>
+                           href="${pageContext.request.contextPath}/WEB-INF/pages/index.jspages/index.jsp?currentPage=${page}">${page}</a></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
         <c:if test="${currentPage < maxPages}">
             <li class="page-item">
                 <a class="page-link"
-                   href="${pageContext.request.contextPath}/index.jsp?currentPage=${currentPage+1}"
+                   href="${pageContext.request.contextPath}/WEB-INF/pages/index.jspages/index.jsp?currentPage=${currentPage+1}"
                    aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

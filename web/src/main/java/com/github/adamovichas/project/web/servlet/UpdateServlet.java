@@ -3,15 +3,18 @@ package com.github.adamovichas.project.web.servlet;
 
 
 import com.github.adamovichas.project.model.dto.UserDTO;
-import com.github.adamovichas.project.service.data.impl.UserService;
 import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
 
+import com.github.adamovichas.project.service.util.IUtil;
 import com.github.adamovichas.project.service.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +23,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@WebServlet(name = "UpdateServlet", urlPatterns = {"/update"})
 public class UpdateServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(UpdateServlet.class);
-    private final IUserService daoUser = UserService.getInstance();
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private IUtil util;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,13 +44,13 @@ public class UpdateServlet extends HttpServlet {
         userFieldsForUpdate.put("phone",req.getParameter("phone"));
         userFieldsForUpdate.put("email",req.getParameter("email"));
         userFieldsForUpdate.put("country",req.getParameter("country"));
-        Util.UTILS.removeEmptyValue(userFieldsForUpdate);
+        util.removeEmptyValue(userFieldsForUpdate);
         if(!userFieldsForUpdate.isEmpty()){
-            daoUser.updateUser(authUser.getLogin(),userFieldsForUpdate);
+            userService.updateUser(authUser.getLogin(),userFieldsForUpdate);
             if(password !=null) {
                 resp.addCookie(new Cookie("login", authUser.getLogin() + "/" + password));
             }
-            final UserDTO user = daoUser.getUserByLogin(authUser.getLogin());
+            final UserDTO user = userService.getUserByLogin(authUser.getLogin());
             req.setAttribute("user",user);
             req.setAttribute("message","Update is done! ");
             log.info("Updated user {}", user);
@@ -57,7 +65,7 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
-        UserDTO user = daoUser.getUserByLogin(authUser.getLogin());
+        UserDTO user = userService.getUserByLogin(authUser.getLogin());
         req.setAttribute("user",user);
         req.getRequestDispatcher("/update.jsp").forward(req,resp);
     }

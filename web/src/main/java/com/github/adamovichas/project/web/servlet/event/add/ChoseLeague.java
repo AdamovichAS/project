@@ -1,27 +1,28 @@
 package com.github.adamovichas.project.web.servlet.event.add;
 
-import com.github.adamovichas.project.service.data.impl.EventService;
 import com.github.adamovichas.project.service.data.IEventService;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@WebServlet(name = "ChoseLeague", urlPatterns = {"/new_event/chose_league/"})
 public class ChoseLeague extends HttpServlet {
 
-    private IEventService dataEvent;
-    @Override
-    public void init(){
-        dataEvent = EventService.getInstance();
-    }
+    @Autowired
+    private IEventService eventService;
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<LeagueDTO> allLeagueDTOS = dataEvent.getAllLeagues();
+        List<LeagueDTO> allLeagueDTOS = eventService.getAllLeagues();
         req.setAttribute("allLeagues", allLeagueDTOS);
         req.getRequestDispatcher("/add_event.jsp").forward(req,resp);
     }

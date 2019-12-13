@@ -27,10 +27,10 @@
         <br>${account.userlogin} <fmt:message key="my_page.balance" bundle="${messages}"/> ${account.value}<br>
         <c:choose>
             <c:when test="${action eq 'deposit'}">
-                <jsp:include page="/deposit.jsp"/>
+                <jsp:include page="/WEB-INF/pages/deposit.jspes/deposit.jsp"/>
             </c:when>
             <c:when test="${action eq 'withdrawal'}">
-                <jsp:include page="/withdrawal.jsp"/>
+                <jsp:include page="/WEB-INF/pages/withdrawal.jspwithdrawal.jsp"/>
             </c:when>
         </c:choose>
 
