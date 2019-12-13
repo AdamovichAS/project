@@ -46,7 +46,7 @@ public class ServiceUtil implements IServiceUtil{
     }
 
     @Override
-    public void setUserBetsInReq(HttpServletRequest req, HttpServletResponse resp) {
+    public void setUserBetsInReq(HttpServletRequest req) {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         String login = authUser.getLogin();
         if(authUser.getRole().equals(Role.USER_VER)) {

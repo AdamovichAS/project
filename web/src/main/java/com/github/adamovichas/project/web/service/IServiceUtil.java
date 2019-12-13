@@ -12,5 +12,5 @@ public interface IServiceUtil {
 
     AuthUser setAuthUserInSession(HttpServletRequest request, String login);
 
-    void setUserBetsInReq(HttpServletRequest req, HttpServletResponse resp);
+    void setUserBetsInReq(HttpServletRequest req);
 }

@@ -21,7 +21,7 @@ import static java.util.Objects.nonNull;
 @WebServlet(name = "CancelBetServlet", urlPatterns = {"/cancel_bet"})
 public class CancelBetServlet extends HttpServlet{
 
-    private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(CancelBetServlet.class);
     @Autowired
     private IBetService betService;
 
