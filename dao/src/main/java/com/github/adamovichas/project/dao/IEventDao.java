@@ -18,7 +18,9 @@ public interface IEventDao {
     EventDTO getEventById(Long id);
     EventView getEventViewById(Long id);
     Long getCountEvents();
-    List<EventView> getEventsOnPage(int page, int pageSize);
+    Long getCountEventsByResultFactorId(boolean isNull);
+    List<EventView> getEventsOnPageByResultFactorId(int page, int pageSize, boolean isNull);
+    List<EventView> getAllEventsOnPage(int page, int pageSize);
     void addResultFactorId(EventDTO eventDTO);
 
     /**
@@ -32,9 +34,11 @@ public interface IEventDao {
      *Statistic
      * @return
      */
-    EventStatisticDTO addStatistics(EventStatisticDTO statisticDto, Long eventId);
+    EventStatisticDTO addStatistics(EventStatisticDTO statisticDto);
 
 //    boolean addStatistics(EventStatisticDTO statisticDto);
 
     EventStatisticDTO getEventStatistic(Long eventId);
+
+
 }

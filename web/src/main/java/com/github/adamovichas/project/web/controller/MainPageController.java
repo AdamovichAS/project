@@ -1,20 +1,14 @@
 package com.github.adamovichas.project.web.controller;
 
-import com.github.adamovichas.project.model.dto.AuthUser;
-import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.model.view.EventView;
 import com.github.adamovichas.project.service.data.IEventService;
-import com.github.adamovichas.project.service.data.IUserService;
-import com.github.adamovichas.project.web.service.IServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller

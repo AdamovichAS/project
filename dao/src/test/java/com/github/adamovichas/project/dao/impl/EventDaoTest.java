@@ -117,8 +117,8 @@ public class EventDaoTest {
         EventDTO eventTest = util.createEventTest();
         EventStatisticDTO testStatistic = util.createTestStatistic();
         Long id = eventDao.addEvent(eventTest);
-//        testStatistic.setEventId(id);
-        EventStatisticDTO statisticAdded= eventDao.addStatistics(testStatistic,id);
+        testStatistic.setEventId(id);
+        EventStatisticDTO statisticAdded= eventDao.addStatistics(testStatistic);
         assertNotNull(statisticAdded.getEventId());
     }
 
@@ -127,7 +127,8 @@ public class EventDaoTest {
         EventDTO eventTest = util.createEventTest();
         EventStatisticDTO testStatistic = util.createTestStatistic();
         Long id = eventDao.addEvent(eventTest);
-        eventDao.addStatistics(testStatistic,id);
+        testStatistic.setEventId(id);
+        eventDao.addStatistics(testStatistic);
         EventStatisticDTO eventStatistic = eventDao.getEventStatistic(id);
         assertEquals(eventStatistic.getTeamOneGoals(),testStatistic.getTeamOneGoals());
         assertEquals(eventStatistic.getTeamTwoGoals(),testStatistic.getTeamTwoGoals());

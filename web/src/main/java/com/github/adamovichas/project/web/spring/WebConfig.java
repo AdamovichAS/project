@@ -54,8 +54,8 @@ public class WebConfig {
     }
 
     @Bean
-    AdminController adminController(){
-        return new AdminController();
+    AdminController adminController(ICashAccountService cashAccountService,IEventService eventService){
+        return new AdminController(cashAccountService, eventService);
     }
 
     @Bean
@@ -69,8 +69,8 @@ public class WebConfig {
     }
 
     @Bean
-    EventController eventController(IEventService eventService, IEventValidation eventValidation, IEventUtil eventUtil){
-        return new EventController(eventService,eventValidation,eventUtil);
+    EventController eventController(IEventService eventService, IEventValidation eventValidation, ICashAccountService cashAccountService){
+        return new EventController(eventService,eventValidation,cashAccountService);
     }
 
     @Bean

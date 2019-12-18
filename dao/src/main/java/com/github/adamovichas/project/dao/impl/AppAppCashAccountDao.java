@@ -24,7 +24,7 @@ public class AppAppCashAccountDao implements IAppCashAccountDao {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.MANDATORY)
     public AppCashAccountDTO updateBalance(double change) {
          AppCashAccountEntity accountEntity = repository.getOne(1L);
          accountEntity.setBalance(accountEntity.getBalance() + change);

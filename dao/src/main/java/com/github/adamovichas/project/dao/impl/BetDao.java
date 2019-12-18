@@ -114,26 +114,6 @@ public class BetDao implements IBetDao {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<BetView> getBetsOnPageByLoginAndStatus(String login, Status status, int page, int pageSize) {
         List<BetView> betViews = new ArrayList<>();
-//        final Session session = betRepository.getSession();
-//        try {
-//            session.getTransaction().begin();
-//            final Query query = session.createQuery("FROM BetEntity b WHERE b.userLogin = :login ORDER BY b.id asc")
-//                    .setParameter("login", login)
-//                    .setMaxResults(pageSize)
-//                    .setFirstResult((page - 1) * pageSize)
-//                    .setReadOnly(true);
-//            final List<BetEntity> betEntities = query.list();
-//            for (BetEntity entity : betEntities) {
-//                BetView view = EntityDtoViewConverter.getView(entity);
-//                betViews.add(view);
-//            }
-//            session.getTransaction().commit();
-//        }catch (PersistenceException e){
-//            log.error("Fail to get list of events from DB at: {}", LocalDateTime.now(), e);
-//            throw new RuntimeException(e);
-//        }finally {
-//            session.close();
-//        }
         List<BetEntity> betEntities = betRepository.getAllByUserLoginAndStatus(login, status, PageRequest.of(page - 1, pageSize, Sort.by("id").descending()));
         if(!betEntities.isEmpty()){
             betViews = getViews(betEntities);

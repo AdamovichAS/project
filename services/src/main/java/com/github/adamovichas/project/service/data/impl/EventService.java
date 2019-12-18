@@ -83,9 +83,26 @@ public class EventService implements IEventService {
     }
 
     @Override
+    @Transactional
+    public Long getEventMaxPagesByResultFactorId(boolean isNull){
+        Long rowsEvent = eventDao.getCountEventsByResultFactorId(isNull);
+        Long maxPages = rowsEvent / PAGE_SIZE;
+        if (rowsEvent % PAGE_SIZE > 0) {
+            maxPages++;
+        }
+        return maxPages;
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public List<EventView> getEventsOnCurrentPage(int page) {
-        return eventDao.getEventsOnPage(page, PAGE_SIZE);
+    public List<EventView> getEventsOnCurrentPageByResultFactorId(int page, boolean isNull) {
+        return eventDao.getEventsOnPageByResultFactorId(page, PAGE_SIZE, isNull);
+    }
+
+    @Override
+    @Transactional
+    public List<EventView> getEventsOnCurrentPage(int page){
+        return eventDao.getAllEventsOnPage(page,PAGE_SIZE);
     }
 
     /**
@@ -111,10 +128,10 @@ public class EventService implements IEventService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public FactorDTO makeEventFinished(EventStatisticDTO statisticDto, Long eventId) {
-        EventDTO eventDTO = eventDao.getEventById(eventId);
-        statisticDto =  eventDao.addStatistics(statisticDto,eventId);
-        List<FactorDTO> eventFactors = eventDao.getEventFactors(eventId);
+    public FactorDTO makeEventFinished(EventStatisticDTO statisticDto) {
+        EventDTO eventDTO = eventDao.getEventById(statisticDto.getEventId());
+        statisticDto =  eventDao.addStatistics(statisticDto);
+        List<FactorDTO> eventFactors = eventDao.getEventFactors(statisticDto.getEventId());
         FactorDTO winningFactor = eventUtil.getWinningFactor(statisticDto, eventFactors);
         eventDTO.setResultFactorId(winningFactor.getId());
         eventDao.addResultFactorId(eventDTO);

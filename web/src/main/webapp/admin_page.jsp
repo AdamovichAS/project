@@ -18,11 +18,14 @@
 </head>
 <body>
     <h4><fmt:message key="my_page.hello" bundle="${messages}"/> ${authUser.login} <fmt:message key="my_page.role" bundle="${messages}"/> ${authUser.role}</h4><br>
-    <a href="${pageContext.request.contextPath}/logout"><fmt:message key="index.logout" bundle="${messages}"/></a><br><br>
-    <a href="${pageContext.request.contextPath}/admin/event/add/chose_league/"><fmt:message key="add_event.add_event" bundle="${messages}"/></a><br><br>
+    <c:out value="${appCash}"/><br>
+    <a href="${pageContext.request.contextPath}/logout"><fmt:message key="index.logout" bundle="${messages}"/></a><br>
+    <a href="${pageContext.request.contextPath}/admin/event/add/chose_league/"><fmt:message key="add_event.add_event" bundle="${messages}"/></a><br>
+    <a href="${pageContext.request.contextPath}/admin/event/get_not_finished_events?action=addStatistic">add statistic to event, make it finish</a><br>
 
-
-
+<c:if test="${action eq ('finish' or 'addStatistic')}">
+    <jsp:include page="get_not_finished_events.jsp"/>
+</c:if>
 
 </body>
 </html>

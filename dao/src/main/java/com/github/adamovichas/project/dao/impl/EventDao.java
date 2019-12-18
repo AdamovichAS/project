@@ -49,6 +49,7 @@ public class EventDao implements IEventDao {
         eventEntity.setLeague(league);
         league.getEvents().add(eventEntity);
         eventRepository.save(eventEntity);
+        eventRepository.flush();
         return eventEntity.getId();
     }
 
@@ -96,42 +97,34 @@ public class EventDao implements IEventDao {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<EventView> getEventsOnPage(int page, int pageSize) {
-//        List<EventDTO>events = new ArrayList<>();
-//        Session session = eventRepository.getSession();
-//        try {
-//            session.getTransaction().begin();
-//            final Query query = session.createQuery("FROM EventEntity e ORDER BY e.id asc")
-//                    .setMaxResults(pageSize)
-//                    .setFirstResult((page - 1)*pageSize)
-//                    .setReadOnly(true);
-//            List<EventEntity> eventEntities = query.list();
-//            for (EventEntity entity : eventEntities) {
-//                EventDTO dto = EntityDtoViewConverter.getDTO(entity);
-//                events.add(dto);
-//            }
-//            session.getTransaction().commit();
-//        }catch (PersistenceException e){
-//            log.error("Fail to get list of events from DB at: {}", LocalDateTime.now(), e);
-//            throw new RuntimeException(e);
-//        }finally {
-//            session.close();
-//        }
-
-        List<EventEntity> eventEntities = eventRepository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
-        List<EventView> views = getViews(eventEntities);
-        return views;
+    public Long getCountEventsByResultFactorId(boolean isNull){
+        Long eventsCount;
+        if(isNull){
+            eventsCount = eventRepository.getCountEventsByResultFactorIdIsNull();
+        }else {
+            eventsCount = eventRepository.count() - eventRepository.getCountEventsByResultFactorIdIsNull();
+        }
+        return eventsCount;
     }
 
-//    private List<EventDTO> getDTOs(List<EventEntity> entities){
-//        List<EventDTO>dtos = new ArrayList<>();
-//        for (EventEntity entity : entities) {
-//            dtos.add(EntityDtoViewConverter.getDTO(entity));
-//        }
-//        return dtos;
-//    }
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<EventView> getEventsOnPageByResultFactorId(int page, int pageSize, boolean isNull) {
+        List<EventEntity> eventEntities;
+        if(isNull){
+            eventEntities = eventRepository.getAllByResultFactorIdIsNull(PageRequest.of(page - 1, pageSize, Sort.by("startTime")));
+        }else {
+            eventEntities = eventRepository.getAllByResultFactorIdIsNotNull(PageRequest.of(page - 1, pageSize, Sort.by("startTime")));
+        }
+        return getViews(eventEntities);
+    }
 
-
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
+    public List<EventView> getAllEventsOnPage(int page, int pageSize){
+        List<EventEntity> eventEntities = eventRepository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
+        return getViews(eventEntities);
+    }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -176,12 +169,13 @@ public class EventDao implements IEventDao {
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public EventStatisticDTO addStatistics(EventStatisticDTO statisticDto, Long eventId) {
+    public EventStatisticDTO addStatistics(EventStatisticDTO statisticDto) {
         EventStatisticEntity statisticEntity = EntityDtoViewConverter.getEntity(statisticDto);
-        EventEntity eventEntity = eventRepository.getOne(eventId);
-        eventEntity.setStatistic(statisticEntity);
+        EventEntity eventEntity = eventRepository.getOne(statisticDto.getEventId());
         statisticEntity.setEvent(eventEntity);
-        statisticRepository.save(statisticEntity);
+        eventEntity.setStatistic(statisticEntity);
+ //       statisticRepository.save(statisticEntity);
+        statisticRepository.flush();
         return EntityDtoViewConverter.getDTO(statisticEntity);
     }
 

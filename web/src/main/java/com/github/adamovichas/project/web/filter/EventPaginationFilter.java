@@ -36,7 +36,7 @@ import java.util.List;
 //        }
 //        int numberPage = Integer.parseInt(currentPage);
 //        req.setAttribute("currentPage",numberPage);
-//        List<EventView> events = eventService.getEventsOnCurrentPage(numberPage);
+//        List<EventView> events = eventService.getEventsOnCurrentPageByResultFactorId(numberPage);
 //        req.setAttribute("eventsList",events);
 //        Long maxPages = eventService.getEventMaxPages();
 //        req.setAttribute("maxPages",maxPages);

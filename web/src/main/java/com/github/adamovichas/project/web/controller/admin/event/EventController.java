@@ -1,10 +1,9 @@
 package com.github.adamovichas.project.web.controller.admin.event;
 
-import com.github.adamovichas.project.model.dto.EventDTO;
-import com.github.adamovichas.project.model.dto.LeagueDTO;
-import com.github.adamovichas.project.model.dto.TeamDTO;
+import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.view.EventView;
+import com.github.adamovichas.project.service.data.ICashAccountService;
 import com.github.adamovichas.project.service.data.IEventService;
 import com.github.adamovichas.project.service.util.event.IEventUtil;
 import com.github.adamovichas.project.web.request.EventRequest;
@@ -12,10 +11,13 @@ import com.github.adamovichas.project.web.validation.IEventValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -31,12 +33,12 @@ public class EventController {
 
     private final IEventService eventService;
     private final IEventValidation eventVal;
-    private final IEventUtil eventUtil;
+    private final ICashAccountService cashAccountService;
 
-    public EventController(IEventService eventService, IEventValidation eventVal, IEventUtil eventUtil) {
+    public EventController(IEventService eventService, IEventValidation eventVal, ICashAccountService cashAccountService) {
         this.eventService = eventService;
         this.eventVal = eventVal;
-        this.eventUtil = eventUtil;
+        this.cashAccountService = cashAccountService;
     }
 
     @GetMapping(value = "/add/chose_league")
@@ -82,5 +84,40 @@ public class EventController {
             modelAndView.addObject("error",errorMessage);
             return modelAndView;
         }
+    }
+
+    @GetMapping(value = "/get_not_finished_events")
+    public ModelAndView getNotFinishedEventsPagination(@RequestParam(value = "action") String action,
+                                                       @RequestParam(value = "currentPage",required = false) Integer currentPage){
+        ModelAndView modelAndView = new ModelAndView("admin_page", "action", action);
+        AppCashAccountDTO appCashAccount = cashAccountService.getAppCashAccount();
+        modelAndView.addObject("appCash",appCashAccount);
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        modelAndView.addObject("currentPage", currentPage);
+        List<EventView> events = eventService.getEventsOnCurrentPageByResultFactorId(currentPage,true);
+        modelAndView.addObject("eventsList", events);
+        Long maxPages = eventService.getEventMaxPagesByResultFactorId(true);
+        modelAndView.addObject("maxPages", maxPages);
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/get_not_finished_events/add_statistic")
+    public ModelAndView getEventStatistic(@RequestParam(value = "action") String action,
+                                          @RequestParam(value = "currentPage") Integer currentPage,
+                                          @RequestParam(value = "eventId") Long eventId){
+        ModelAndView modelAndView = getNotFinishedEventsPagination(action, currentPage);
+        modelAndView.addObject("eventId",eventId);
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/get_not_finished_events/add_statistic")
+    public ModelAndView addStatistic(EventStatisticDTO statistic){
+        FactorDTO winningFactor = eventService.makeEventFinished(statistic);
+        List<FactorDTO> eventFactors = eventService.getEventFactors(statistic.getEventId());
+        cashAccountService.eventCashAccountsCalculation(eventFactors,winningFactor);
+        ModelAndView modelAndView = getNotFinishedEventsPagination("finish", 1);
+        return modelAndView;
     }
 }

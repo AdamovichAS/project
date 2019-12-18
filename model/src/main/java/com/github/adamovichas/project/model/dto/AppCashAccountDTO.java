@@ -22,6 +22,6 @@ public class AppCashAccountDTO {
 
     @Override
     public String toString() {
-        return String.valueOf(balance);
+        return String.format("Application balance is %.2f",balance);
     }
 }

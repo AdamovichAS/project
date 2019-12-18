@@ -22,7 +22,10 @@ public interface EventRepository extends JpaRepository<EventEntity, Long> {
     boolean existsByTeamOneIdAndTeamTwoIdAndStartTime(@Param("teamOneId") String teamOneId,
                                                       @Param("teamTwoId") String teamTwoId,
                                                       @Param("startTime") Timestamp startTime);
+    @Query(value = "SELECT count(*) from event where event.result is null",nativeQuery = true)
+    Long getCountEventsByResultFactorIdIsNull();
 
     List<EventEntity> getAllByResultFactorIdIsNull();
-
+    List<EventEntity> getAllByResultFactorIdIsNull(Pageable page);
+    List<EventEntity> getAllByResultFactorIdIsNotNull(Pageable page);
 }

@@ -18,6 +18,8 @@ public interface IEventService {
     EventDTO getEventById(Long id);
     EventView getEventViewById(Long id);
     Long getEventMaxPages();
+    Long getEventMaxPagesByResultFactorId(boolean isNull);
+    List<EventView> getEventsOnCurrentPageByResultFactorId(int page, boolean isNull);
     List<EventView> getEventsOnCurrentPage(int page);
 
     /**
@@ -31,7 +33,7 @@ public interface IEventService {
      *Statistic
      * @return
      */
-    FactorDTO makeEventFinished(EventStatisticDTO statisticDto, Long eventId);
+    FactorDTO makeEventFinished(EventStatisticDTO statisticDto);
 
 //    boolean makeEventFinished(EventStatisticDTO statisticDto);
 

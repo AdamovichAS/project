@@ -14,11 +14,7 @@ public class EventStatisticEntity {
     private EventEntity event;
 
     @Id
-    @Column(name = "event_id", updatable = false)
-    @GenericGenerator(name = "gen",
-            strategy = "foreign",
-            parameters = @Parameter(name = "property", value = "event"))
-    @GeneratedValue(generator = "gen")
+    @Column(name = "event_id", nullable = false, updatable = false)
     public Long getEventId() {
         return eventId;
     }

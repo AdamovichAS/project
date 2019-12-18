@@ -5,6 +5,7 @@ import com.github.adamovichas.project.dao.IAppCashAccountDao;
 import com.github.adamovichas.project.dao.IBetDao;
 import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.model.bet.Status;
+import com.github.adamovichas.project.model.dto.AppCashAccountDTO;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
@@ -37,6 +38,12 @@ public class CashAccountService implements ICashAccountService {
     @Transactional
     public CashAccountDTO getAccountByLogin(String login) {
         return userDao.getCashAccountByLogin(login);
+    }
+
+    @Override
+    @Transactional
+    public AppCashAccountDTO getAppCashAccount(){
+        return appCashAccountDao.getAppCashAccount();
     }
 
     @Override
