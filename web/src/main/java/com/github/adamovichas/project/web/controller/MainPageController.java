@@ -11,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/main")
 public class MainPageController {
 
     private static final Logger log = LoggerFactory.getLogger(MainPageController.class);
@@ -28,7 +30,7 @@ public class MainPageController {
 
     }
 
-    @GetMapping(value = "/main")
+    @GetMapping(value = "")
     public String doGet(HttpServletRequest req) {
         String currentPage = req.getParameter("currentPage");
         if (currentPage == null) {

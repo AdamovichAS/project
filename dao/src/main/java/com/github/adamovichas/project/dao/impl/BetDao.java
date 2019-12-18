@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class BetDao implements IBetDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public Long addBet(BetDTO bet) {
         BetEntity betEntity = EntityDtoViewConverter.getEntity(bet);
         UserEntity userEntity = userRepository.getOne(bet.getUserLogin());
@@ -46,6 +49,7 @@ public class BetDao implements IBetDao {
         if(userEntity.getBets() == null){
             userEntity.setBets(new ArrayList<>());
         }
+//        betRepository.flush();
         userEntity.getBets().add(betEntity);
         factorEntity.getBets().add(betEntity);
         betRepository.save(betEntity);
@@ -53,12 +57,14 @@ public class BetDao implements IBetDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public BetView getViewById(Long idBet) {
         BetEntity betEntity = betRepository.findById(idBet).get();
         return EntityDtoViewConverter.getView(betEntity);
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<BetView> getAllByUserAndStatus(String login, Status status) {
         List<BetView> views = new ArrayList<>();
         List<BetEntity> betEntities = betRepository.getAllByUserLoginAndStatus(login,status);
@@ -69,6 +75,7 @@ public class BetDao implements IBetDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<BetDTO>getAllNotFinishedBetsByFactorId(Long factorId) {
         List<BetDTO>dtos = new ArrayList<>();
         List<BetEntity> betEntities = betRepository.getAllNotFinishedBetsByFactorId(factorId);
@@ -81,6 +88,7 @@ public class BetDao implements IBetDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public void updateBetStatus(Long idBet, Status status) {
         BetEntity betEntity = betRepository.getOne(idBet);
         betEntity.setStatus(status);
@@ -88,6 +96,7 @@ public class BetDao implements IBetDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Long getCountBetsByLoginAbdStatus(String login, Status status) {
 //        Session session = betRepository.getSession();
 //        session.getTransaction().begin();
@@ -102,6 +111,7 @@ public class BetDao implements IBetDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<BetView> getBetsOnPageByLoginAndStatus(String login, Status status, int page, int pageSize) {
         List<BetView> betViews = new ArrayList<>();
 //        final Session session = betRepository.getSession();
@@ -124,7 +134,7 @@ public class BetDao implements IBetDao {
 //        }finally {
 //            session.close();
 //        }
-        List<BetEntity> betEntities = betRepository.getAllByUserLoginAndStatus(login, status, PageRequest.of(page, pageSize, Sort.by("id")));
+        List<BetEntity> betEntities = betRepository.getAllByUserLoginAndStatus(login, status, PageRequest.of(page - 1, pageSize, Sort.by("id").descending()));
         if(!betEntities.isEmpty()){
             betViews = getViews(betEntities);
         }

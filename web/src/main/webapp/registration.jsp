@@ -19,24 +19,24 @@
 <body>
 <form action="${pageContext.request.contextPath}/registration" method="POST">
     <label><fmt:message key="index.userlogin" bundle="${messages}"/></label>
-    <input type="text" required placeholder="userlogin" name="userlogin"><br>
+    <input type="text" required placeholder="login" name="login"><br>
 
     <label><fmt:message key="userlogin.password" bundle="${messages}"/></label>
     <input type="password" required placeholder="password" name="password"><br>
     <label><fmt:message key="registration.repeat_password" bundle="${messages}"/></label>
     <input type="password" required placeholder="repeat password" name="repeatedPassword"><br><br>
-    <label><fmt:message key="registration.first_name" bundle="${messages}"/></label>
-    <input type="text" required placeholder="first name" name="firstName"><br>
-    <label><fmt:message key="registration.last_name" bundle="${messages}"/></label>
-    <input type="text" required placeholder="last name" name="lastName"><br>
-    <label><fmt:message key="registration.phone" bundle="${messages}"/></label>
-    <input type="number" required placeholder="phone" name="phone"><br>
-    <label><fmt:message key="registration.mail" bundle="${messages}"/></label>
-    <input type="text" required placeholder="email" name="email"><br>
-    <label><fmt:message key="registration.age" bundle="${messages}"/></label>
-    <input type="number" required placeholder="age" name="age"><br>
-    <label><fmt:message key="registration.country" bundle="${messages}"/></label>
-    <input type="text" required placeholder="country" name="country"><br>
+<%--    <label><fmt:message key="registration.first_name" bundle="${messages}"/></label>--%>
+<%--    <input type="text" required placeholder="first name" name="firstName"><br>--%>
+<%--    <label><fmt:message key="registration.last_name" bundle="${messages}"/></label>--%>
+<%--    <input type="text" required placeholder="last name" name="lastName"><br>--%>
+<%--    <label><fmt:message key="registration.phone" bundle="${messages}"/></label>--%>
+<%--    <input type="number" required placeholder="phone" name="phone"><br>--%>
+<%--    <label><fmt:message key="registration.mail" bundle="${messages}"/></label>--%>
+<%--    <input type="text" required placeholder="email" name="email"><br>--%>
+<%--    <label><fmt:message key="registration.age" bundle="${messages}"/></label>--%>
+<%--    <input type="number" required placeholder="age" name="age"><br>--%>
+<%--    <label><fmt:message key="registration.country" bundle="${messages}"/></label>--%>
+<%--    <input type="text" required placeholder="country" name="country"><br>--%>
 
     <input type="submit" name="submit" value="<fmt:message key="index.registration" bundle="${messages}"/>"/><br>
 </form>

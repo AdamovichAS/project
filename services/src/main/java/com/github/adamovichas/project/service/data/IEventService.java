@@ -16,6 +16,7 @@ public interface IEventService {
     Long addEvent(EventDTO eventDTO);
     List<EventView> getAllNotFinishedEvents();
     EventDTO getEventById(Long id);
+    EventView getEventViewById(Long id);
     Long getEventMaxPages();
     List<EventView> getEventsOnCurrentPage(int page);
 

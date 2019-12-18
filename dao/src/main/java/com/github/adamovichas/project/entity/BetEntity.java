@@ -58,7 +58,7 @@ public class BetEntity {
         this.money = money;
     }
 
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "RUN_TIME")
     @Enumerated(EnumType.STRING)
     public Status getStatus() {
         return status;

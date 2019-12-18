@@ -15,6 +15,9 @@ import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -33,13 +36,16 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public void addUser(UserDTO userDTO) {
         UserEntity userEntity = EntityDtoViewConverter.getEntity(userDTO);
         userRepository.save(userEntity);
+        userRepository.flush();
     }
 
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public UserDTO getUserByLogin(String login) {
         Optional<UserEntity> entityOptional = userRepository.findById(login);
         if(!entityOptional.isPresent()){
@@ -50,12 +56,14 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public void blockUser(String login) {
         UserEntity userEntity = userRepository.getOne(login);
         userEntity.setRole(Role.BLOCKED);
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public boolean updateUser(UserDTO user) {
         Optional<UserEntity> optional = userRepository.findById(user.getLogin());
         if(!optional.isPresent()){
@@ -73,6 +81,7 @@ public class UserDao implements IUserDao {
      */
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public CashAccountDTO addUserCashAccount(String login) {
         CashAccountEntity cashAccountEntity = new CashAccountEntity();
         cashAccountEntity.setValue(0);
@@ -80,20 +89,24 @@ public class UserDao implements IUserDao {
         cashAccountEntity.setUserEntity(userEntity);
         userEntity.setCashAccount(cashAccountEntity);
         cashAccountRepository.save(cashAccountEntity);
+        cashAccountRepository.flush();
         return EntityDtoViewConverter.getDTO(cashAccountEntity);
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public CashAccountDTO getCashAccountByLogin(String login) {
         CashAccountEntity cashAccountEntity = cashAccountRepository.getOne(login);
         return EntityDtoViewConverter.getDTO(cashAccountEntity);
     }
 
     @Override
-    @Modifying(flushAutomatically = true)
+ //   @Modifying(flushAutomatically = true)
+    @Transactional(propagation = Propagation.MANDATORY)
     public CashAccountDTO updateCashAccountValue(CashAccountDTO cashAccountDTO) {
         CashAccountEntity cashAccountEntity = cashAccountRepository.getOne(cashAccountDTO.getLogin());
         cashAccountEntity.setValue(cashAccountDTO.getValue());
+        cashAccountRepository.flush();
         return EntityDtoViewConverter.getDTO(cashAccountEntity);
     }
 
@@ -103,6 +116,7 @@ public class UserDao implements IUserDao {
      */
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public UserPassportDTO addPassport(UserPassportDTO userPassport) {
         UserPassportEntity passportEntity = EntityDtoViewConverter.getEntity(userPassport);
         UserEntity userEntity = userRepository.getOne(userPassport.getUserLogin());
@@ -113,6 +127,7 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public UserPassportDTO updatePassport(UserPassportDTO userPassport) {
         UserPassportEntity passportEntity = passportRepository.getOne(userPassport.getUserLogin());
         passportEntity.setFirstName(userPassport.getFirstName());
@@ -122,6 +137,7 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public UserPassportDTO getPassport(String login) {
         Optional<UserPassportEntity> optional = passportRepository.findById(login);
         if(!optional.isPresent()){

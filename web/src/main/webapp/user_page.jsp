@@ -24,13 +24,13 @@
 <br>
 <a href="${pageContext.request.contextPath}/update"><fmt:message key="update.button" bundle="${messages}"/></a>
 <br>
-<a href="${pageContext.request.contextPath}/cashier" target="_blank"><fmt:message key="cashier.button" bundle="${messages}"/></a>
+<a href="${pageContext.request.contextPath}/user/cashier" target="_blank"><fmt:message key="cashier.button" bundle="${messages}"/></a>
 <br>
-<a href="${pageContext.request.contextPath}/betDTO"><fmt:message key="my_page.betDTO" bundle="${messages}"/></a>
+<a href="${pageContext.request.contextPath}/user/bet/new"><fmt:message key="my_page.betDTO" bundle="${messages}"/></a>
 <br>
 <a href="${pageContext.request.contextPath}/bet_pagination" target="_blank">My bets</a>
 <br>
-<c:if test="${authUser.role eq 'USER_VER'}">
+<c:if test="${userBets ne null}">
     <jsp:include page="user_bet.jsp"/>
 </c:if>
 

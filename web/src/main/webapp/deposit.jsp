@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<form action="${pageContext.request.contextPath}/deposit" method="POST">
+<form action="${pageContext.request.contextPath}/user/cashier/deposit" method="POST">
     <label><fmt:message key="deposit.label" bundle="${messages}"/></label>
     <input type="number" step="0.01" min="1" required placeholder="0" name="deposit">
 

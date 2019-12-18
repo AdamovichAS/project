@@ -7,6 +7,7 @@ import com.github.adamovichas.project.service.data.IBetService;
 import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.dao.IBetDao;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class BetService implements IBetService {
     }
 
     @Override
+    @Transactional
     public Long addBet(BetDTO betDTO) {
         CashAccountDTO userCashAcc = userDao.getCashAccountByLogin(betDTO.getUserLogin());
         userCashAcc.setValue(userCashAcc.getValue() - betDTO.getMoney());
@@ -32,16 +34,19 @@ public class BetService implements IBetService {
     }
 
     @Override
+    @Transactional
     public BetView getViewById(Long idBet) {
         return betDao.getViewById(idBet);
     }
 
     @Override
+    @Transactional
     public List<BetView> getAllByUserAndStatus(String login, Status status) {
         return betDao.getAllByUserAndStatus(login, status);
     }
 
     @Override
+    @Transactional
     public void cancelBetById(List<Long> idBets) {
         for (Long bet : idBets) {
             BetView betView = betDao.getViewById(bet);
@@ -55,6 +60,7 @@ public class BetService implements IBetService {
 
 
     @Override
+    @Transactional
     public Long getBetMaxPagesByLoginAndStatus(String login, Status status){
         Long countBetsByLogin = betDao.getCountBetsByLoginAbdStatus(login,status);
         Long maxPages = countBetsByLogin / PAGE_SIZE;
@@ -65,6 +71,7 @@ public class BetService implements IBetService {
     }
 
     @Override
+    @Transactional
     public List<BetView> getBetsByLoginOnCurrentPage(String login, Status status, int page){
         return betDao.getBetsOnPageByLoginAndStatus(login,status,page,PAGE_SIZE);
     }

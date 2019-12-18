@@ -21,16 +21,16 @@
     <c:when test="${authUser.role eq 'USER_VER'}">
 
         <div >
-            <a href="${pageContext.request.contextPath}/cashier?action=deposit"><fmt:message key="deposit.button" bundle="${messages}"/></a>
-            <a href="${pageContext.request.contextPath}/cashier?action=withdrawal"><fmt:message key="withdrawal.button" bundle="${messages}"/></a>
+            <a href="${pageContext.request.contextPath}/user/cashier?action=deposit"><fmt:message key="deposit.button" bundle="${messages}"/></a>
+            <a href="${pageContext.request.contextPath}/user/cashier?action=withdrawal"><fmt:message key="withdrawal.button" bundle="${messages}"/></a>
         </div>
-        <br>${account.userlogin} <fmt:message key="my_page.balance" bundle="${messages}"/> ${account.value}<br>
+        <br>${account.login} <fmt:message key="my_page.balance" bundle="${messages}"/> ${account.value}<br>
         <c:choose>
             <c:when test="${action eq 'deposit'}">
-                <jsp:include page="/WEB-INF/pages/deposit.jspes/deposit.jsp"/>
+                <jsp:include page="deposit.jsp"/>
             </c:when>
             <c:when test="${action eq 'withdrawal'}">
-                <jsp:include page="/WEB-INF/pages/withdrawal.jspwithdrawal.jsp"/>
+                <jsp:include page="withdrawal.jsp"/>
             </c:when>
         </c:choose>
 

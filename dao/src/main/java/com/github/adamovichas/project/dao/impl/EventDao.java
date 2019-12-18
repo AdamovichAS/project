@@ -18,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class EventDao implements IEventDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public Long addEvent(EventDTO event) {
         EventEntity eventEntity = EntityDtoViewConverter.getEntity(event);
         LeagueEntity league = leagueRepository.getOne(event.getLeagueId());
@@ -50,17 +53,20 @@ public class EventDao implements IEventDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public boolean eventIsExist(EventDTO event) {
         return eventRepository.existsByTeamOneIdAndTeamTwoIdAndStartTime(event.getTeamOne(),event.getTeamTwo(),event.getStartTime());
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<EventView> getAllNotFinishedEvents() {
         List<EventEntity> eventEntities = eventRepository.getAllByResultFactorIdIsNull();
         return getViews(eventEntities);
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public void addResultFactorId(EventDTO eventDTO) {
         EventEntity eventEntity = eventRepository.getOne(eventDTO.getId());
         eventEntity.setResultFactorId(eventDTO.getResultFactorId());
@@ -76,17 +82,20 @@ public class EventDao implements IEventDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public EventDTO getEventById(Long id) {
          EventEntity eventEntity = eventRepository.getOne(id);
          return EntityDtoViewConverter.getDTO(eventEntity);
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Long getCountEvents() {
         return eventRepository.count();
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<EventView> getEventsOnPage(int page, int pageSize) {
 //        List<EventDTO>events = new ArrayList<>();
 //        Session session = eventRepository.getSession();
@@ -108,10 +117,10 @@ public class EventDao implements IEventDao {
 //        }finally {
 //            session.close();
 //        }
-        List<EventView>events = new ArrayList<>();
+
         List<EventEntity> eventEntities = eventRepository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("startTime"))).toList();
-        events = getViews(eventEntities);
-        return events;
+        List<EventView> views = getViews(eventEntities);
+        return views;
     }
 
 //    private List<EventDTO> getDTOs(List<EventEntity> entities){
@@ -125,6 +134,7 @@ public class EventDao implements IEventDao {
 
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public EventView getEventViewById(Long id) {
         EventEntity eventEntity = eventRepository.getOne(id);
         return EntityDtoViewConverter.getView(eventEntity);
@@ -135,6 +145,7 @@ public class EventDao implements IEventDao {
      */
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public void addFactors(List<FactorDTO> factorDTOS) {
         EventEntity eventEntity = eventRepository.getOne(factorDTOS.get(0).getEventId());
         List<FactorEntity>factorEntities = new ArrayList<>();
@@ -148,6 +159,7 @@ public class EventDao implements IEventDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<FactorDTO> getEventFactors(Long eventId) {
         List<FactorDTO>factorDTOS = new ArrayList<>();
         List<FactorEntity> factorEntities = factorRepository.getAllByEventId(eventId);
@@ -163,6 +175,7 @@ public class EventDao implements IEventDao {
      */
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public EventStatisticDTO addStatistics(EventStatisticDTO statisticDto, Long eventId) {
         EventStatisticEntity statisticEntity = EntityDtoViewConverter.getEntity(statisticDto);
         EventEntity eventEntity = eventRepository.getOne(eventId);
@@ -173,6 +186,7 @@ public class EventDao implements IEventDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public EventStatisticDTO getEventStatistic(Long eventId) {
         EventStatisticEntity statisticEntity = statisticRepository.getOne(eventId);
         return EntityDtoViewConverter.getDTO(statisticEntity);

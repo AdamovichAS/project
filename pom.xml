@@ -30,6 +30,9 @@
         <spring-orm.version>5.2.1.RELEASE</spring-orm.version>
         <spring-test.version>5.2.1.RELEASE</spring-test.version>
         <spring-data-jpa.version>2.2.2.RELEASE</spring-data-jpa.version>
+<!--        <spring-security-web.version>5.2.1.RELEASE</spring-security-web.version>-->
+<!--        <spring-security-config.version>5.2.1.RELEASE</spring-security-config.version>-->
+<!--        <spring-security-taglibs.version>5.2.1.RELEASE</spring-security-taglibs.version>-->
 
         <HikariCP.version>3.4.1</HikariCP.version>
 
@@ -67,6 +70,21 @@
                 <artifactId>spring-data-jpa</artifactId>
                 <version>${spring-data-jpa.version}</version>
             </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.security</groupId>-->
+<!--                <artifactId>spring-security-web</artifactId>-->
+<!--                <version>${spring-security-web.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.security</groupId>-->
+<!--                <artifactId>spring-security-config</artifactId>-->
+<!--                <version>${spring-security-config.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.security</groupId>-->
+<!--                <artifactId>spring-security-taglibs</artifactId>-->
+<!--                <version>${spring-security-taglibs.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-orm</artifactId>

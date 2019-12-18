@@ -5,6 +5,8 @@ import com.github.adamovichas.project.dao.repository.AppCashAccountRepository;
 import com.github.adamovichas.project.entity.AppCashAccountEntity;
 import com.github.adamovichas.project.model.dto.AppCashAccountDTO;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 public class AppAppCashAccountDao implements IAppCashAccountDao {
 
@@ -15,12 +17,14 @@ public class AppAppCashAccountDao implements IAppCashAccountDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public AppCashAccountDTO getAppCashAccount() {
         AppCashAccountEntity cashAccountEntity = repository.getOne(1L);
         return EntityDtoViewConverter.getDTO(cashAccountEntity);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public AppCashAccountDTO updateBalance(double change) {
          AppCashAccountEntity accountEntity = repository.getOne(1L);
          accountEntity.setBalance(accountEntity.getBalance() + change);

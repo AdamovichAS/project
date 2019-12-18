@@ -2,6 +2,7 @@ package com.github.adamovichas.project.web.service;
 
 
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
+import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.model.dto.AuthUser;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class ServiceUtil implements IServiceUtil{
 

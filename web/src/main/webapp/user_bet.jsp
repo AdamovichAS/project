@@ -35,7 +35,7 @@
 
 <%--<c:if test="${userBets ne null}">--%>
 <div class="row col-md-6">
-    <form action="${pageContext.request.contextPath}/cancel_bet" method="POST">
+    <form action="${pageContext.request.contextPath}/user/bet/cancel_bet" method="POST">
     <table class="table table-striped table-bordered table-sm">
         <H3>Your bets</H3>
         <tr>
@@ -59,7 +59,7 @@
             <c:if test="${currentPage > 1}">
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/bet_pagination?currentPage=${currentPage-1}"
+                       href="${pageContext.request.contextPath}/user/?currentPage=${currentPage-1}"
                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
@@ -75,14 +75,14 @@
                     <c:otherwise>
                         <li class="page-item">
                             <a class="page-link"
-                               href="${pageContext.request.contextPath}/bet_pagination?currentPage=${page}">${page}</a></li>
+                               href="${pageContext.request.contextPath}/user/?currentPage=${page}">${page}</a></li>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
             <c:if test="${currentPage < maxPages}">
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/bet_pagination?currentPage=${currentPage+1}"
+                       href="${pageContext.request.contextPath}/user/?currentPage=${currentPage+1}"
                        aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>

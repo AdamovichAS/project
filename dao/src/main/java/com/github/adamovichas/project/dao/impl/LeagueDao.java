@@ -2,6 +2,7 @@ package com.github.adamovichas.project.dao.impl;
 
 import com.github.adamovichas.project.dao.ILeagueDao;
 import com.github.adamovichas.project.dao.repository.LeagueRepository;
+import com.github.adamovichas.project.dao.repository.TeamRepository;
 import com.github.adamovichas.project.entity.LeagueEntity;
 import com.github.adamovichas.project.entity.TeamEntity;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
@@ -13,16 +14,17 @@ import java.util.List;
 
 public class LeagueDao implements ILeagueDao {
 
-    private final LeagueRepository repository;
+    private final LeagueRepository leagueRepository;
+    private final TeamRepository teamRepository;
 
-    public LeagueDao(LeagueRepository repository) {
-        this.repository = repository;
+    public LeagueDao(LeagueRepository leagueRepository, TeamRepository teamRepository) {
+        this.leagueRepository = leagueRepository;
+        this.teamRepository = teamRepository;
     }
-
 
     @Override
     public List<LeagueDTO> getAllLeagues() {
-        List<LeagueEntity> entities = repository.findAll();
+        List<LeagueEntity> entities = leagueRepository.findAll();
         List<LeagueDTO>dtos = new ArrayList<>();
         for (LeagueEntity entity : entities) {
             dtos.add(EntityDtoViewConverter.getDTO(entity));
@@ -32,10 +34,11 @@ public class LeagueDao implements ILeagueDao {
 
     @Override
     public List<TeamDTO> getAllTeamsByLeague(Long idLeague) {
-        LeagueEntity leagueEntity = repository.findById(idLeague).get();
-        List<TeamEntity> entityTeams = leagueEntity.getTeams();
+//        LeagueEntity leagueEntity = leagueRepository.getOne(idLeague);
+//        List<TeamEntity> entityTeams = leagueEntity.getTeams();
+        final List<TeamEntity> teams = teamRepository.getAllTeamsByLeague(idLeague);
         List<TeamDTO> teamDTOS = new ArrayList<>();
-        for (TeamEntity team : entityTeams) {
+        for (TeamEntity team : teams) {
             teamDTOS.add(EntityDtoViewConverter.getDTO(team));
         }
         return teamDTOS;

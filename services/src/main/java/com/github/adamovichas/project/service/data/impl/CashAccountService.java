@@ -9,6 +9,7 @@ import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.service.data.ICashAccountService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,17 +27,20 @@ public class CashAccountService implements ICashAccountService {
 
 
     @Override
+    @Transactional
     public boolean verification(String login) {
         userDao.addUserCashAccount(login);
         return true;
     }
 
     @Override
+    @Transactional
     public CashAccountDTO getAccountByLogin(String login) {
         return userDao.getCashAccountByLogin(login);
     }
 
     @Override
+    @Transactional
     public boolean makeDeposit(String login, double depositValue) {
         CashAccountDTO cashAccountDTO = userDao.getCashAccountByLogin(login);
         cashAccountDTO.setValue(cashAccountDTO.getValue() + depositValue);
@@ -45,6 +49,7 @@ public class CashAccountService implements ICashAccountService {
     }
 
     @Override
+    @Transactional
     public boolean withdrawal(String login, double withdrawalValue) {
         CashAccountDTO cashAccountDTO = userDao.getCashAccountByLogin(login);
         cashAccountDTO.setValue(cashAccountDTO.getValue() - withdrawalValue);
@@ -53,6 +58,7 @@ public class CashAccountService implements ICashAccountService {
     }
 
     @Override
+    @Transactional
     public void eventCashAccountsCalculation(List<FactorDTO> eventFactors, FactorDTO winningFactor) {
         for (FactorDTO eventFactor : eventFactors) {
             if(eventFactor.getId().equals(winningFactor.getId())){

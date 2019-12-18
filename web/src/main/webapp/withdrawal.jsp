@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<form action="${pageContext.request.contextPath}/withdrawal" method="POST">
+<form action="${pageContext.request.contextPath}/user/cashier/withdrawal" method="POST">
     <label><fmt:message key="withdrawal.label" bundle="${messages}"/></label>
     <input type="number" step="0.01" min="1" max="${account.value}" required placeholder="0" name="withdrawal">
 

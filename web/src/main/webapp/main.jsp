@@ -18,7 +18,7 @@
     </c:when>
     <c:otherwise>
         <a href="${pageContext.request.contextPath}/login"><fmt:message key="index.userlogin" bundle="${messages}"/></a><br>
-        <a href="${pageContext.request.contextPath}/registration.jsp"><fmt:message key="index.registration" bundle="${messages}"/></a><br>
+        <a href="${pageContext.request.contextPath}/registration"><fmt:message key="index.registration" bundle="${messages}"/></a><br>
     </c:otherwise>
 </c:choose>
 <jsp:include page="event_pagination.jsp"/>

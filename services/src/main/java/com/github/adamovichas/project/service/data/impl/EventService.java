@@ -11,6 +11,8 @@ import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.dao.IEventDao;
 import com.github.adamovichas.project.service.util.event.IEventUtil;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,11 +31,13 @@ public class EventService implements IEventService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<LeagueDTO> getAllLeagues() {
         return leagueDao.getAllLeagues();
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<TeamDTO> getAllTeamsByLeague(Long idLeague) {
         return leagueDao.getAllTeamsByLeague(idLeague);
     }
@@ -44,21 +48,31 @@ public class EventService implements IEventService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Long addEvent(EventDTO eventDTO) {
         return eventDao.addEvent(eventDTO);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<EventView> getAllNotFinishedEvents() {
         return eventDao.getAllNotFinishedEvents();
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public EventDTO getEventById(Long id) {
         return eventDao.getEventById(id);
     }
 
     @Override
+    @Transactional
+    public EventView getEventViewById(Long id) {
+        return eventDao.getEventViewById(id);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Long getEventMaxPages() {
         Long rowsEvent = eventDao.getCountEvents();
         Long maxPages = rowsEvent / PAGE_SIZE;
@@ -69,6 +83,7 @@ public class EventService implements IEventService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<EventView> getEventsOnCurrentPage(int page) {
         return eventDao.getEventsOnPage(page, PAGE_SIZE);
     }
@@ -78,11 +93,13 @@ public class EventService implements IEventService {
      */
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addFactors(List<FactorDTO> factorDTOS) {
         eventDao.addFactors(factorDTOS);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<FactorDTO> getEventFactors(Long eventId) {
         return eventDao.getEventFactors(eventId);
     }
@@ -93,6 +110,7 @@ public class EventService implements IEventService {
      */
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public FactorDTO makeEventFinished(EventStatisticDTO statisticDto, Long eventId) {
         EventDTO eventDTO = eventDao.getEventById(eventId);
         statisticDto =  eventDao.addStatistics(statisticDto,eventId);

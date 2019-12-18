@@ -2,6 +2,7 @@ package com.github.adamovichas.project.util;
 
 import com.github.adamovichas.project.entity.*;
 import com.github.adamovichas.project.entity.UserEntity;
+import com.github.adamovichas.project.model.bet.Status;
 import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.view.BetView;
@@ -166,7 +167,11 @@ public abstract class EntityDtoViewConverter {
         betEntity.setFactorId(betDTO.getFactorId());
         betEntity.setMoney(betDTO.getMoney());
         betEntity.setUserLogin(betDTO.getUserLogin());
-        betEntity.setStatus(betDTO.getStatus());
+        if(betDTO.getStatus() == null){
+            betEntity.setStatus(Status.RUN_TIME);
+        }else {
+            betEntity.setStatus(betDTO.getStatus());
+        }
         return betEntity;
     }
 

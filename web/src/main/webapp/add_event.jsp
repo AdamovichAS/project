@@ -22,7 +22,7 @@
 <c:choose>
     <c:when test="${leagueId ne null}">
 
-        <form action="${pageContext.request.contextPath}/new_event/chose_league/chose_event_info" method="POST">
+        <form action="${pageContext.request.contextPath}/admin/event/add/chose_league/add_info/create" method="POST">
             <label><fmt:message key="add_event.team_one" bundle="${messages}"/></label>
             <select name="teamOne">
                 <c:forEach items="${allTeams}" var="item">
@@ -42,9 +42,9 @@
             </div>
             <div>
                 <label><fmt:message key="add_event.factorDTOS" bundle="${messages}"/></label>
-                <input type="number" step="0.01" min="1" placeholder="factor win first" required name="win">
-                <input type="number" step="0.01" min="1" required  placeholder="factor draw" name="draw">
-                <input type="number" step="0.01" min="1" required placeholder="factor lose first" name="lose">
+                <input type="number" step="0.01" min="1.01" placeholder="factor win first" required name="win">
+                <input type="number" step="0.01" min="1.01" required  placeholder="factor draw" name="draw">
+                <input type="number" step="0.01" min="1.01" required placeholder="factor lose first" name="lose">
             </div>
             <input type="hidden" name="leagueId" value="${leagueId}">
             <input type="submit"  value="<fmt:message key="add_event.create_event" bundle="${messages}"/>"/>
@@ -60,18 +60,19 @@
         <c:out value="Name - ${savedEvent.name}"/><br>
         <c:out value="Start time - ${savedEvent.startTime}"/><br>
         <c:out value="End time - ${savedEvent.endTime}"/><br>
+        <c:out value="FACTORS"/><br>
         <c:forEach items="${savedEvent.factors}" var="item">
             <c:out value="${item}"/>
         </c:forEach>
-        <br> <a href="${pageContext.request.contextPath}/redirect"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
+        <br> <a href="${pageContext.request.contextPath}/admin/"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
     </c:when>
     <c:otherwise>
 
-        <form action="${pageContext.request.contextPath}/new_event/chose_league/" method="POST">
+        <form action="${pageContext.request.contextPath}/admin/event/add/chose_league/add_info" method="POST">
             <label><fmt:message key="add_event.select_league" bundle="${messages}"/></label>
-            <select name="league">
-                <c:forEach items="${allLeagues}" var="item">
-                    <option value="${item.id}">${item}</option>
+            <select name="leagueId">
+                <c:forEach items="${allLeagues}" var="league">
+                    <option value="${league.id}">${league}</option>
                 </c:forEach>
             </select>
             <input type="submit"  value="<fmt:message key="add_event.chose_league" bundle="${messages}"/>"/>

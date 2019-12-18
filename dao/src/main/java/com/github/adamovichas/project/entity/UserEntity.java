@@ -39,7 +39,7 @@ public class UserEntity {
         this.cashAccount = money;
     }
 
-    @Column(name = "role", columnDefinition = "USER_VER")
+    @Column(name = "role", columnDefinition = "USER_NOT_VER")
     @Enumerated(EnumType.STRING)
     public Role getRole() {
         return role;

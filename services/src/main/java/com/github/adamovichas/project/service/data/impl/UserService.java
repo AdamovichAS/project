@@ -6,6 +6,7 @@ import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.dao.IUserDao;
 import com.github.adamovichas.project.service.util.user.IUserUtil;
 import com.github.adamovichas.project.service.util.user.passport.IUserPassportUtil;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class UserService implements IUserService {
      */
 
     @Override
+    @Transactional
     public boolean loginIsExist(String login)  {
         boolean result = false;
         UserDTO userByLogin = userDao.getUserByLogin(login);
@@ -41,6 +43,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public String addNewUser(Map<String,String> userFieldsAndValues) {
         String login = userFieldsAndValues.get("login");
         if(loginIsExist(login)){
@@ -52,6 +55,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public boolean userIsExist(String login, String password) {
         boolean result = false;
         final UserDTO userByLogin = userDao.getUserByLogin(login);
@@ -65,6 +69,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public boolean updateUser(String login, Map<String, String> userFieldsForUpdate) {
         UserDTO user = userDao.getUserByLogin(login);
         if(user == null){
@@ -75,6 +80,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserDTO getUserByLogin(String login) {
         return userDao.getUserByLogin(login);
     }
@@ -85,6 +91,7 @@ public class UserService implements IUserService {
      */
 
     @Override
+    @Transactional
     public UserPassportDTO addUserPassport(Map<String, String> passportFieldsAndValues) {
         String login = passportFieldsAndValues.get("userLogin");
 //        UserDTO userByLogin = userDao.getUserByLogin(login);
@@ -97,6 +104,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserPassportDTO updatePassport(String login, Map<String, String> passportFieldsForUpdate) {
         UserPassportDTO passport = userDao.getPassport(login);
 //        if(passport == null){
@@ -106,6 +114,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserPassportDTO getPassport(String login) {
         return userDao.getPassport(login);
     }
@@ -116,16 +125,19 @@ public class UserService implements IUserService {
      */
 
     @Override
+    @Transactional
     public CashAccountDTO addUserCashAccount(String login) {
        return userDao.addUserCashAccount(login);
     }
 
     @Override
+    @Transactional
     public CashAccountDTO getCashAccountByLogin(String login) {
         return userDao.getCashAccountByLogin(login);
     }
 
     @Override
+    @Transactional
     public CashAccountDTO updateCashAccountValue(CashAccountDTO cashAccountDTO) {
         return userDao.updateCashAccountValue(cashAccountDTO);
     }

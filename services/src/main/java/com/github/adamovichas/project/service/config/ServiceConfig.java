@@ -1,7 +1,6 @@
 package com.github.adamovichas.project.service.config;
 
 import com.github.adamovichas.project.dao.*;
-import com.github.adamovichas.project.config.DaoConfig;
 import com.github.adamovichas.project.service.data.IBetService;
 import com.github.adamovichas.project.service.data.ICashAccountService;
 import com.github.adamovichas.project.service.data.IEventService;
@@ -18,11 +17,8 @@ import com.github.adamovichas.project.service.util.user.IUserUtil;
 import com.github.adamovichas.project.service.util.user.UserUtil;
 import com.github.adamovichas.project.service.util.user.passport.IUserPassportUtil;
 import com.github.adamovichas.project.service.util.user.passport.UserPassportUtil;
-import com.github.adamovichas.project.service.validation.EventValidation;
-import com.github.adamovichas.project.service.validation.IEventValidation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 @Configuration
 public class ServiceConfig {
@@ -62,8 +58,8 @@ public class ServiceConfig {
     @Bean
     public IEventUtil eventUtil(){return new EventUtil();}
 
-    @Bean
-    public IEventValidation eventValidation(){return new EventValidation();}
+//    @Bean
+//    public IEventValidation eventValidation(){return new EventValidation();}
 
     @Bean
     public IUtil util(){return new Util();}

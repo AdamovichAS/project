@@ -4,19 +4,17 @@ import com.github.adamovichas.project.model.dto.EventStatisticDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class EventUtil implements IEventUtil{
 
-    @Override
-    public List<FactorDTO> createFactors(double winFactor, double loseFactor, double drawFactor) {
-        FactorDTO factorDTOWin = new FactorDTO(FactorName.win,winFactor);
-        FactorDTO factorDTOLose = new FactorDTO(FactorName.lose,loseFactor);
-        FactorDTO factorDTODraw = new FactorDTO(FactorName.draw,drawFactor);
-        return new ArrayList<>(Arrays.asList(factorDTOWin, factorDTOLose, factorDTODraw));
-    }
 
     @Override
     public FactorDTO getFactorByName(List<FactorDTO> factors, String factorName) {
@@ -29,6 +27,7 @@ public class EventUtil implements IEventUtil{
         }
         return factorDTOE;
     }
+
 
     @Override
     public FactorDTO getWinningFactor(EventStatisticDTO statisticDTO, List<FactorDTO> eventFactors){

@@ -2,7 +2,6 @@ package com.github.adamovichas.project.web.controller;
 
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.service.data.IEventService;
 import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.web.service.IServiceUtil;
 import org.slf4j.Logger;
@@ -14,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class AuthentificationController {
 
-    private static final Logger log = LoggerFactory.getLogger(MainPageController.class);
+    private static final Logger log = LoggerFactory.getLogger(AuthentificationController.class);
 
     private final IUserService userService;
     private final IServiceUtil serviceUtil;
@@ -61,10 +62,36 @@ public class AuthentificationController {
     public String redirectAfterLogin(HttpServletRequest req) {
         AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         if (Role.ADMIN.equals(authUser.getRole())) {
-            return "admin_menu";
+            return "redirect:/admin/";
         } else {
-            serviceUtil.setUserBetsInReq(req);
-            return "user_menu";
+ //           serviceUtil.setUserBetsInReq(req);
+            return "redirect:/user/";
+        }
+    }
+
+    @GetMapping(value = "/registration")
+    public String registrationGet(){
+        return "registration";
+    }
+
+    @PostMapping(value = "/registration")
+    public String registrationPost(HttpServletRequest req){
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String repeatedPassword = req.getParameter("repeatedPassword");
+        if(userService.loginIsExist(login) || !password.equals(repeatedPassword)){
+            req.setAttribute("loginError","A user with this login already exists or the passwords do not match");
+            return "forward:/registration.jsp";
+        }else{
+            Map<String,String> userParam = new HashMap<>();
+            userParam.put("login",login);
+            userParam.put("password",password);
+            userParam.put("role",Role.USER_NOT_VER.toString());
+            userService.addNewUser(userParam);
+            AuthUser authUser = new AuthUser(login, Role.USER_NOT_VER);
+            req.getSession().setAttribute("authUser",authUser);
+            log.info("user created:{} at {}", login, LocalDateTime.now());
+            return "user_page";
         }
     }
 }

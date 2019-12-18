@@ -32,6 +32,9 @@ public class DaoConfig {
     private LeagueRepository leagueRepository;
 
     @Autowired
+    private TeamRepository teamRepository;
+
+    @Autowired
     private AppCashAccountRepository appCashAccountRepository;
 
     @Autowired
@@ -62,7 +65,7 @@ public class DaoConfig {
 
     @Bean
     public ILeagueDao leagueDao(){
-        return new LeagueDao(leagueRepository);
+        return new LeagueDao(leagueRepository,teamRepository);
     }
 
     @Bean

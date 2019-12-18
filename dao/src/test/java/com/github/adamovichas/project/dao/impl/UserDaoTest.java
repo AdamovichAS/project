@@ -15,6 +15,7 @@ import com.github.adamovichas.project.model.user.Role;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,13 +46,20 @@ public class UserDaoTest {
     }
 
     @Test
-    public void getUserByLogin() {
+    public void getUserByLoginTrue() {
         UserDTO testUser = util.createTestUser();
         userDao.addUser(testUser);
         final UserDTO userByLogin = userDao.getUserByLogin(testUser.getLogin());
         assertEquals(userByLogin.getLogin(),testUser.getLogin());
         assertEquals(userByLogin.getPassword(),testUser.getPassword());
         assertEquals(userByLogin.getRole(),testUser.getRole());
+    }
+
+    @Test
+    public void getUserByLoginNull(){
+        final UserDTO testUser = util.createTestUser();
+        final UserDTO userByLogin = userDao.getUserByLogin(testUser.getLogin());
+        assertNull(userByLogin);
     }
 
     @Test

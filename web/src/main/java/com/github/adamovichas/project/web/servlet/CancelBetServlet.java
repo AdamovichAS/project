@@ -18,27 +18,27 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-@WebServlet(name = "CancelBetServlet", urlPatterns = {"/cancel_bet"})
-public class CancelBetServlet extends HttpServlet{
-
-    private static final Logger log = LoggerFactory.getLogger(CancelBetServlet.class);
-    @Autowired
-    private IBetService betService;
-
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-  //      Long betId = Long.valueOf(req.getParameter("betId"));
-        final String[] betIds = req.getParameterValues("betId");
-        if(nonNull(betIds)) {
-            List<Long> betsId = new ArrayList<>();
-            for (String id : betIds) {
-                betsId.add(Long.valueOf(id));
-            }
-            betService.cancelBetById(betsId);
-        }
-  //      betService.cancelBetById(betId);
- //       log.info("BetDTO with Id {} cancel", betId);
-        req.getRequestDispatcher("/bet_pagination").forward(req,resp);
-    }
-}
+//@WebServlet(name = "CancelBetServlet", urlPatterns = {"/cancel_bet"})
+//public class CancelBetServlet extends HttpServlet{
+//
+//    private static final Logger log = LoggerFactory.getLogger(CancelBetServlet.class);
+//    @Autowired
+//    private IBetService betService;
+//
+//
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//  //      Long betId = Long.valueOf(req.getParameter("betId"));
+//        final String[] betIds = req.getParameterValues("betId");
+//        if(nonNull(betIds)) {
+//            List<Long> betsId = new ArrayList<>();
+//            for (String id : betIds) {
+//                betsId.add(Long.valueOf(id));
+//            }
+//            betService.cancelBetById(betsId);
+//        }
+//  //      betService.cancelBetById(betId);
+// //       log.info("BetDTO with Id {} cancel", betId);
+//        req.getRequestDispatcher("/bet_pagination").forward(req,resp);
+//    }
+//}
