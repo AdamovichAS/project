@@ -1,13 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 07.11.2019
-  Time: 16:11
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <fmt:setLocale value= "${locale}"/>
 <fmt:setBundle basename = "translations" var = "messages"/>
@@ -17,9 +12,8 @@
     <title>Title</title>
 </head>
 <body>
-<c:choose>
-    <c:when test="${authUser.role eq 'USER_VER'}">
 
+    <sec:authorize access="hasRole('USER_VER')">
         <div >
             <a href="${pageContext.request.contextPath}/user/cashier?action=deposit"><fmt:message key="deposit.button" bundle="${messages}"/></a>
             <a href="${pageContext.request.contextPath}/user/cashier?action=withdrawal"><fmt:message key="withdrawal.button" bundle="${messages}"/></a>
@@ -33,12 +27,8 @@
                 <jsp:include page="withdrawal.jsp"/>
             </c:when>
         </c:choose>
+    </sec:authorize>
 
-    </c:when>
-    <c:otherwise>
-        <a href="${pageContext.request.contextPath}/verification"><fmt:message key="verefication.button" bundle="${messages}"/></a>
-    </c:otherwise>
-</c:choose>
 
 
 

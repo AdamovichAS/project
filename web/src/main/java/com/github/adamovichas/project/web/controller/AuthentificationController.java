@@ -2,8 +2,10 @@ package com.github.adamovichas.project.web.controller;
 
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.dto.UserDTO;
+import com.github.adamovichas.project.model.dto.UserPassportDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.service.data.IUserService;
+import com.github.adamovichas.project.service.util.IUtil;
 import com.github.adamovichas.project.web.request.LoginRequest;
 import com.github.adamovichas.project.web.service.WebUtil;
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,15 +29,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Objects.nonNull;
+
 @Controller
 public class AuthentificationController {
 
     private static final Logger log = LoggerFactory.getLogger(AuthentificationController.class);
 
     private final IUserService userService;
+    private final IUtil util;
 
-    public AuthentificationController(IUserService userService) {
+    public AuthentificationController(IUserService userService, IUtil util) {
         this.userService = userService;
+        this.util = util;
     }
 
     @GetMapping(value = "/login")
@@ -70,9 +78,6 @@ public class AuthentificationController {
 
     @RequestMapping(value = "/logout")
     public String logout(HttpServletRequest req){
-//        AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
-//        req.getSession().removeAttribute("authUser");
-//        req.getSession().invalidate();
         AuthUser authUser = WebUtil.getUserInSession();
         SecurityContextHolder.clearContext();
         try {
@@ -86,12 +91,10 @@ public class AuthentificationController {
 
     @RequestMapping(value = "/my_page")
     public String redirectAfterLogin(HttpServletRequest req) {
-//        AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         AuthUser authUser = WebUtil.getUserInSession();
         if (Role.ADMIN.equals(authUser.getRole())) {
             return "redirect:/admin/";
         } else {
- //           serviceUtil.setUserBetsInReq(req);
             return "redirect:/user/";
         }
     }
@@ -122,5 +125,54 @@ public class AuthentificationController {
             log.info("user created:{} at {}", login, LocalDateTime.now());
             return "user_page";
         }
+    }
+    @GetMapping(value = "/update")
+    public ModelAndView getUpdatePage(@RequestParam(value = "action",required = false) String action){
+        final ModelAndView modelAndView = new ModelAndView("update");
+        if(nonNull(action)){
+            modelAndView.addObject("action", action);
+        }
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/update_password")
+    public ModelAndView updatePassword(HttpServletRequest req){
+        AuthUser authUser = WebUtil.getUserInSession();
+        ModelAndView modelAndView = new ModelAndView("update");
+        final String password = req.getParameter("password");
+        final String repeatedPassword = req.getParameter("repeatedPassword");
+        if(!password.equals(repeatedPassword)){
+            modelAndView.addObject("message","Update is failed! ");
+        }else {
+            Map<String,String> userFieldsForUpdate = new HashMap<>();
+            userFieldsForUpdate.put("password",password);
+            userFieldsForUpdate.put("repeatedPassword",repeatedPassword);
+            userService.updateUser(authUser.getLogin(),userFieldsForUpdate);
+            modelAndView.addObject("message","Update is done! ");
+        }
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/update_passport")
+    public ModelAndView updatePassport(HttpServletRequest req){
+        AuthUser authUser = WebUtil.getUserInSession();
+        ModelAndView modelAndView = new ModelAndView("update");
+        Map<String,String> passportFieldsForUpdate = new HashMap<>();
+//        userFieldsForUpdate.put("password",req.getParameter("password"));
+//        userFieldsForUpdate.put("repeatedPassword",req.getParameter("repeatedPassword"));
+        passportFieldsForUpdate.put("firstName",req.getParameter("firstName"));
+        passportFieldsForUpdate.put("lastName",req.getParameter("lastName"));
+        passportFieldsForUpdate.put("passSeries",req.getParameter("passSeries"));
+        util.removeEmptyValue(passportFieldsForUpdate);
+        if(!passportFieldsForUpdate.isEmpty()){
+            userService.updatePassport(authUser.getLogin(),passportFieldsForUpdate);
+            final UserPassportDTO passport = userService.getPassport(authUser.getLogin());
+            modelAndView.addObject("passport",passport);
+            modelAndView.addObject("message","Update is done! ");
+            log.info("Updated passport {} at {}", passport, LocalDateTime.now());
+        }else {
+            modelAndView.addObject("message","Update is failed! ");
+        }
+        return modelAndView;
     }
 }

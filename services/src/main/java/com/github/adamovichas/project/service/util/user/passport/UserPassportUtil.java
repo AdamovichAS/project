@@ -16,8 +16,9 @@ public class UserPassportUtil implements IUserPassportUtil {
     }
 
     @Override
-    public UserPassportDTO createPassport(Map<String, String> passportFieldsAndValues) {
+    public UserPassportDTO createPassport(String login, Map<String, String> passportFieldsAndValues) {
         UserPassportDTO passport = new UserPassportDTO();
+        passport.setUserLogin(login);
         updateFields(passport,passportFieldsAndValues);
         return passport;
     }

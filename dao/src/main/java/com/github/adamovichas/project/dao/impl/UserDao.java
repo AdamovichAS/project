@@ -133,6 +133,7 @@ public class UserDao implements IUserDao {
         passportEntity.setFirstName(userPassport.getFirstName());
         passportEntity.setLastName(userPassport.getLastName());
         passportEntity.setPassSeries(userPassport.getPassSeries());
+        passportRepository.flush();
         return EntityDtoViewConverter.getDTO(passportEntity);
     }
 

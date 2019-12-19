@@ -24,7 +24,7 @@ public interface IUserService {
      * @return
      */
 
-    UserPassportDTO addUserPassport(Map<String,String> passportFieldsAndValues);
+    UserPassportDTO addUserPassport(String login, Map<String,String> passportFieldsAndValues);
     UserPassportDTO updatePassport(String login, Map<String,String> passportFieldsForUpdate);
     UserPassportDTO getPassport(String login);
 

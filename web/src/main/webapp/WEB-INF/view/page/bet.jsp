@@ -1,13 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 09.10.2019
-  Time: 17:01
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <fmt:setLocale value= "${locale}"/>
 <fmt:setBundle basename = "translations" var = "messages"/>
@@ -36,8 +32,8 @@
         <input type="number" step="0.01" min="1" max="${user_money}" placeholder="<fmt:message key="betDTO.cashAccountDTO" bundle="${messages}"/>" name="moneyForBet" required><br>
         <input type="submit" name="submit" value="<fmt:message key="my_page.betDTO" bundle="${messages}"/>" />
     </form>
-    <br>
-    <a href="${pageContext.request.contextPath}/user/"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>
+<%--    <br>--%>
+<%--    <a href="${pageContext.request.contextPath}/user/"><fmt:message key="index.my_page" bundle="${messages}"/></a><br>--%>
 
 </body>
 </html>

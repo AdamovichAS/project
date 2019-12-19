@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="without_menu" template="/WEB-INF/view/layouts/without_menu.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header_main_page.jsp"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jsp"/>
+    </definition>
+
+<!--    <definition name="user_admin" template="/WEB-INF/view/layouts/user_admin_page.jsp">-->
+<!--        <put-attribute name="title" value=""/>-->
+<!--        <put-attribute name="header" value="/WEB-INF/view/common/header_user_admin_page.jsp"/>-->
+<!--        <put-attribute name="body" value=""/>-->
+<!--        <put-attribute name="menu" value=""/>-->
+<!--        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jsp"/>-->
+<!--    </definition>-->
+
+    <definition name="authentication" template="/WEB-INF/view/layouts/without_menu.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jsp"/>
+    </definition>
+
+    <definition name="main" extends="without_menu">
+        <put-attribute name="title" value="Main page"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/main.jsp"/>
+    </definition>
+    <definition name="login" extends="authentication">
+        <put-attribute name="title" value="Login"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/login.jsp"/>
+    </definition>
+    <definition name="registration" extends="authentication">
+        <put-attribute name="title" value="Registration"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/registration.jsp"/>
+    </definition>
+    <definition name="user_page" extends="without_menu">
+        <put-attribute name="title" value="User page"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header_user_admin_page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/user_page.jsp"/>
+    </definition>
+    <definition name="admin_page" extends="without_menu">
+        <put-attribute name="title" value="Admin page"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header_user_admin_page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/admin_page.jsp"/>
+    </definition>
+    <definition name="cashier" extends="without_menu">
+        <put-attribute name="title" value="My cashier"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header_user_admin_page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/cashier.jsp"/>
+    </definition>
+    <definition name="bet" extends="without_menu">
+        <put-attribute name="title" value="Bets"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header_user_admin_page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/bet.jsp"/>
+    </definition>
+    <definition name="add_event" extends="without_menu">
+        <put-attribute name="title" value="Add event"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header_user_admin_page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/add_event.jsp"/>
+    </definition>
+    <definition name="update" extends="without_menu">
+        <put-attribute name="title" value="Update Info"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header_main_page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/update.jsp"/>
+    </definition>
+</tiles-definitions>

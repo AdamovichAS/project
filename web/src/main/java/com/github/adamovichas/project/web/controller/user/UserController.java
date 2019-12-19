@@ -3,19 +3,29 @@ package com.github.adamovichas.project.web.controller.user;
 import com.github.adamovichas.project.model.bet.Status;
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
+import com.github.adamovichas.project.model.dto.UserDTO;
+import com.github.adamovichas.project.model.dto.UserPassportDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.service.data.IBetService;
 import com.github.adamovichas.project.service.data.IUserService;
+import com.github.adamovichas.project.service.util.IUtil;
 import com.github.adamovichas.project.web.service.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static java.util.Objects.nonNull;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -34,7 +44,6 @@ public class UserController {
     @RequestMapping(value = "")
     public ModelAndView userGet(HttpServletRequest req){
         ModelAndView modelAndView = new ModelAndView("user_page");
-        //        AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
         AuthUser authUser = WebUtil.getUserInSession();
         String login = authUser.getLogin();
         if(authUser.getRole().equals(Role.USER_VER)) {
@@ -56,5 +65,7 @@ public class UserController {
         }
         return modelAndView;
     }
+
+
 
 }

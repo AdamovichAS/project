@@ -1,4 +1,5 @@
 package com.github.adamovichas.project.service.data.impl;
+import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.dto.UserPassportDTO;
 import com.github.adamovichas.project.service.data.IUserService;
@@ -92,14 +93,8 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public UserPassportDTO addUserPassport(Map<String, String> passportFieldsAndValues) {
-        String login = passportFieldsAndValues.get("userLogin");
-//        UserDTO userByLogin = userDao.getUserByLogin(login);
-//        if(userByLogin == null){
-//            return false;
-//        }
-        UserPassportDTO passport = userPassportUtil.createPassport(passportFieldsAndValues);
-
+    public UserPassportDTO addUserPassport(String login, Map<String, String> passportFieldsAndValues) {
+        UserPassportDTO passport = userPassportUtil.createPassport(login,passportFieldsAndValues);
         return userDao.addPassport(passport);
     }
 
@@ -107,9 +102,11 @@ public class UserService implements IUserService {
     @Transactional
     public UserPassportDTO updatePassport(String login, Map<String, String> passportFieldsForUpdate) {
         UserPassportDTO passport = userDao.getPassport(login);
-//        if(passport == null){
-//            return false;
-//        }
+        if(passport == null){
+            passport = addUserPassport(login,passportFieldsForUpdate);
+        }else {
+            userPassportUtil.updateFields(passport, passportFieldsForUpdate);
+        }
         return userDao.updatePassport(passport);
     }
 

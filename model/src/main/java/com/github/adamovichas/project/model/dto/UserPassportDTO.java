@@ -41,4 +41,8 @@ public class UserPassportDTO {
         this.passSeries = passSeries;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Login: %s | first name: %s | last name: %s | passport series: %s",UserLogin,firstName,lastName,passSeries);
+    }
 }
