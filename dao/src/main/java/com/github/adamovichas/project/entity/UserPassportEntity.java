@@ -1,5 +1,6 @@
 package com.github.adamovichas.project.entity;
 
+import com.github.adamovichas.project.model.user.passport.VereficationStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,7 +15,9 @@ public class UserPassportEntity {
     private String firstName;
     private String lastName;
     private String passSeries;
+    private String passFileName;
     private UserEntity userEntity;
+    private VereficationStatus vereficationStatus;
 
 
     public UserPassportEntity(){}
@@ -50,6 +53,25 @@ public class UserPassportEntity {
     }
     public void setPassSeries(String passSeries) {
         this.passSeries = passSeries;
+    }
+
+    @Column(name = "pass_file_name", nullable = false)
+    public String getPassFileName() {
+        return passFileName;
+    }
+
+    public void setPassFileName(String passFileName) {
+        this.passFileName = passFileName;
+    }
+
+    @Column(name = "verification_status")
+    @Enumerated(EnumType.STRING)
+    public VereficationStatus getVereficationStatus() {
+        return vereficationStatus;
+    }
+
+    public void setVereficationStatus(VereficationStatus vereficationStatus) {
+        this.vereficationStatus = vereficationStatus;
     }
 
     @OneToOne(mappedBy = "userPassportEntity")

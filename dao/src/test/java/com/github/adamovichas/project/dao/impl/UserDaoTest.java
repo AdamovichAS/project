@@ -127,29 +127,29 @@ public class UserDaoTest {
      * UserPassport
      */
 
-    @Test
-    public void addPassportTest(){
-        UserDTO testUser = util.createTestUser();
-        UserPassportDTO passport = util.createTestPassport();
-        userDao.addUser(testUser);
-        userDao.addPassport(passport);
-        UserPassportDTO passportAdded = userDao.getPassport(testUser.getLogin());
-        assertNotNull(passportAdded);
-    }
+//    @Test
+//    public void addPassportTest(){
+//        UserDTO testUser = util.createTestUser();
+//        UserPassportDTO passport = util.createTestPassport();
+//        userDao.addUser(testUser);
+//        userDao.addPassport(passport);
+//        UserPassportDTO passportAdded = userDao.getPassport(testUser.getLogin());
+//        assertNotNull(passportAdded);
+//    }
 
-    @Test
-    public void updateTest(){
-        UserDTO testUser = util.createTestUser();
-        UserPassportDTO passportDTO = util.createTestPassport();
-        userDao.addUser(testUser);
-        userDao.addPassport(passportDTO);
-        passportDTO.setPassSeries("MPC");
-        passportDTO.setLastName("New");
-        passportDTO.setFirstName("New");
-        UserPassportDTO passportAfterUpd = userDao.updatePassport(passportDTO);
-        assertEquals(passportAfterUpd.getUserLogin(),passportDTO.getUserLogin());
-        assertEquals(passportAfterUpd.getFirstName(),passportDTO.getFirstName());
-        assertEquals(passportAfterUpd.getLastName(),passportDTO.getLastName());
-        assertEquals(passportAfterUpd.getPassSeries(),passportDTO.getPassSeries());
-    }
+//    @Test
+//    public void updateTest(){
+//        UserDTO testUser = util.createTestUser();
+//        UserPassportDTO passportDTO = util.createTestPassport();
+//        userDao.addUser(testUser);
+//        userDao.addPassport(passportDTO);
+//        passportDTO.setPassSeries("MPC");
+//        passportDTO.setLastName("New");
+//        passportDTO.setFirstName("New");
+//        UserPassportDTO passportAfterUpd = userDao.updatePassport(passportDTO);
+//        assertEquals(passportAfterUpd.getUserLogin(),passportDTO.getUserLogin());
+//        assertEquals(passportAfterUpd.getFirstName(),passportDTO.getFirstName());
+//        assertEquals(passportAfterUpd.getLastName(),passportDTO.getLastName());
+//        assertEquals(passportAfterUpd.getPassSeries(),passportDTO.getPassSeries());
+//    }
 }

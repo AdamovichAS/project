@@ -41,6 +41,7 @@
         <tiles-el.version>3.0.8</tiles-el.version>
         <tiles-template.version>3.0.8</tiles-template.version>
 
+        <commons-fileupload.version>1.4</commons-fileupload.version>
         <HikariCP.version>3.4.1</HikariCP.version>
 
         <junit-jupiter-engine.version>5.5.2</junit-jupiter-engine.version>
@@ -127,6 +128,13 @@
                 <groupId>org.apache.tiles</groupId>
                 <artifactId>tiles-template</artifactId>
                 <version>${tiles-template.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons-fileupload.version}</version>
             </dependency>
 
             <dependency>

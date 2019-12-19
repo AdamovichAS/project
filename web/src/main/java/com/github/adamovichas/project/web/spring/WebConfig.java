@@ -7,23 +7,20 @@ import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.service.util.IUtil;
 import com.github.adamovichas.project.service.util.event.IEventUtil;
 import com.github.adamovichas.project.web.controller.AuthentificationController;
-import com.github.adamovichas.project.web.controller.FileController;
 import com.github.adamovichas.project.web.controller.MainPageController;
+import com.github.adamovichas.project.web.controller.UserInfoUpdateController;
 import com.github.adamovichas.project.web.controller.admin.AdminController;
 import com.github.adamovichas.project.web.controller.admin.event.EventController;
 import com.github.adamovichas.project.web.controller.user.UserController;
 import com.github.adamovichas.project.web.controller.user.bet.BetController;
 import com.github.adamovichas.project.web.controller.user.cashier.CashierController;
 import com.github.adamovichas.project.web.validation.EventValidation;
-import com.github.adamovichas.project.web.validation.Filevalidator;
 import com.github.adamovichas.project.web.validation.IEventValidation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
@@ -47,6 +44,13 @@ public class WebConfig {
     }
 
     @Bean
+    public CommonsMultipartResolver multipartResolver(){
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setDefaultEncoding("UTF-8");
+        return multipartResolver;
+    }
+
+    @Bean
     public TilesConfigurer tilesConfigurer(){
         final TilesConfigurer tilesConfigurer = new TilesConfigurer();
         tilesConfigurer.setDefinitions("/WEB-INF/tiles.xml");
@@ -61,8 +65,8 @@ public class WebConfig {
     MainPageController mainPageController(IEventService eventService){return new MainPageController(eventService);}
 
     @Bean
-    AuthentificationController authentificationController(IUserService userService, IUtil util){
-        return new AuthentificationController(userService, util);
+    AuthentificationController authentificationController(IUserService userService){
+        return new AuthentificationController(userService);
     }
 
     @Bean
@@ -73,6 +77,11 @@ public class WebConfig {
     @Bean
     UserController userController(IUserService userService, IBetService betService){
         return new UserController(userService,betService);
+    }
+
+    @Bean
+    UserInfoUpdateController userInfoUpdateController(IUserService userService,IUtil util){
+        return new UserInfoUpdateController(userService,util);
     }
 
     @Bean
@@ -90,15 +99,6 @@ public class WebConfig {
         return new BetController(eventService,eventUtil,betService,cashAccountService);
     }
 
-    @Bean
-    Filevalidator filevalidator(){
-        return new Filevalidator();
-    }
-
-    @Bean
-    FileController fileController(Filevalidator filevalidator){
-        return new FileController(filevalidator);
-    }
 
 //    @Bean
 //    ViewResolver viewResolver () {

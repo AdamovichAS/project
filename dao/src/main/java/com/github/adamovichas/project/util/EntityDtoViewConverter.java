@@ -231,6 +231,8 @@ public abstract class EntityDtoViewConverter {
         dto.setLastName(entity.getLastName());
         dto.setPassSeries(entity.getPassSeries());
         dto.setUserLogin(entity.getUserLogin());
+        dto.setPassFileName(entity.getPassFileName());
+        dto.setVereficationStatus(entity.getVereficationStatus());
         return dto;
     }
 
@@ -240,6 +242,8 @@ public abstract class EntityDtoViewConverter {
         entity.setLastName(dto.getLastName());
         entity.setUserLogin(dto.getUserLogin());
         entity.setPassSeries(dto.getPassSeries());
+        entity.setPassFileName(dto.getPassFileName());
+        entity.setVereficationStatus(dto.getVereficationStatus());
         return entity;
     }
 

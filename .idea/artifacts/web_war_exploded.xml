@@ -31,6 +31,8 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-test:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.4" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.2" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-core:3.0.8" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-api:3.0.8" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-api:1.0.7" />

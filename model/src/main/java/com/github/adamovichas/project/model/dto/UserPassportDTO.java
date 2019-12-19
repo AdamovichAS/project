@@ -1,5 +1,7 @@
 package com.github.adamovichas.project.model.dto;
 
+import com.github.adamovichas.project.model.user.passport.VereficationStatus;
+
 import java.sql.Date;
 
 public class UserPassportDTO {
@@ -8,6 +10,8 @@ public class UserPassportDTO {
     private String firstName;
     private String lastName;
     private String passSeries;
+    private String passFileName;
+    private VereficationStatus vereficationStatus;
 
     public String getUserLogin() {
         return UserLogin;
@@ -41,8 +45,24 @@ public class UserPassportDTO {
         this.passSeries = passSeries;
     }
 
+    public String getPassFileName() {
+        return passFileName;
+    }
+
+    public void setPassFileName(String passFileName) {
+        this.passFileName = passFileName;
+    }
+
+    public VereficationStatus getVereficationStatus() {
+        return vereficationStatus;
+    }
+
+    public void setVereficationStatus(VereficationStatus vereficationStatus) {
+        this.vereficationStatus = vereficationStatus;
+    }
+
     @Override
     public String toString() {
-        return String.format("Login: %s | first name: %s | last name: %s | passport series: %s",UserLogin,firstName,lastName,passSeries);
+        return String.format("Login: %s | first name: %s | last name: %s | passport series: %s | verification status: %s",UserLogin,firstName,lastName,passSeries, vereficationStatus);
     }
 }
