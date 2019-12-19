@@ -30,4 +30,6 @@ public class AuthUser {
     public void setRole(Role role) {
         this.role = role;
     }
+
+
 }

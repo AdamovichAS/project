@@ -12,6 +12,7 @@ import com.github.adamovichas.project.service.data.IEventService;
 import com.github.adamovichas.project.service.util.event.IEventUtil;
 import com.github.adamovichas.project.web.controller.MainPageController;
 import com.github.adamovichas.project.web.request.BetRequest;
+import com.github.adamovichas.project.web.service.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,27 +50,27 @@ public class BetController {
         this.cashAccountService = cashAccountService;
     }
     @GetMapping(value = "/new")
-    public ModelAndView newBet(HttpServletRequest req,ModelAndView modelAndView){
+    public ModelAndView newBet(ModelAndView modelAndView){
         modelAndView.setViewName("bet");
         List<EventView> events = eventService.getAllNotFinishedEvents();
         modelAndView.addObject("events", events);
-        AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
+        AuthUser authUser = WebUtil.getUserInSession();
         CashAccountDTO cashAccountDTOById = cashAccountService.getAccountByLogin(authUser.getLogin());
         modelAndView.addObject("user_money", cashAccountDTOById);
         return modelAndView;
     }
     @PostMapping(value = "/new")
-    public ModelAndView newBetPost(HttpServletRequest req, BetRequest betRequest){
+    public ModelAndView newBetPost(BetRequest betRequest){
         final List<FactorDTO> eventFactors = eventService.getEventFactors(betRequest.getEventId());
         final FactorDTO bettingFactor = eventUtil.getFactorByName(eventFactors, betRequest.getFactorName());
-        AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
+        AuthUser authUser = WebUtil.getUserInSession();
         BetDTO betDTO = new BetDTO(authUser.getLogin(), bettingFactor.getId(), betRequest.getMoneyForBet());
         Long idBet = betService.addBet(betDTO);
         BetView view = betService.getViewById(idBet);
         log.info("Bet saved {} at {}",view, LocalDateTime.now());
         final ModelAndView modelAndView = new ModelAndView("bet", "betView", view);
 //        req.setAttribute("betView", view);
-        newBet(req,modelAndView);
+        newBet(modelAndView);
         return modelAndView;
     }
 

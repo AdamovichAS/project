@@ -1,6 +1,5 @@
 package com.github.adamovichas.project.web.spring;
 
-import com.github.adamovichas.project.service.config.ServiceConfig;
 import com.github.adamovichas.project.service.data.IBetService;
 import com.github.adamovichas.project.service.data.ICashAccountService;
 import com.github.adamovichas.project.service.data.IEventService;
@@ -13,21 +12,19 @@ import com.github.adamovichas.project.web.controller.admin.event.EventController
 import com.github.adamovichas.project.web.controller.user.UserController;
 import com.github.adamovichas.project.web.controller.user.bet.BetController;
 import com.github.adamovichas.project.web.controller.user.cashier.CashierController;
-import com.github.adamovichas.project.web.service.IServiceUtil;
-import com.github.adamovichas.project.web.service.ServiceUtil;
 import com.github.adamovichas.project.web.validation.EventValidation;
 import com.github.adamovichas.project.web.validation.IEventValidation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-//@ComponentScan(basePackages = {"com.github.adamovichas.project.web"})
+@ComponentScan(basePackages = {"com.github.adamovichas.project.web"})
 public class WebConfig {
 
 //    private ServiceConfig serviceConfig;
@@ -36,10 +33,7 @@ public class WebConfig {
 //        this.serviceConfig = serviceConfig;
 //    }
 
-    @Bean
-    IServiceUtil serviceUtil(IUserService userService){
-        return new ServiceUtil(userService);
-    }
+
 
     @Bean
     IEventValidation eventValidation(){return new EventValidation();
@@ -49,8 +43,8 @@ public class WebConfig {
     MainPageController mainPageController(IEventService eventService){return new MainPageController(eventService);}
 
     @Bean
-    AuthentificationController authentificationController(IUserService userService, IServiceUtil serviceUtil){
-        return new AuthentificationController(userService,serviceUtil);
+    AuthentificationController authentificationController(IUserService userService){
+        return new AuthentificationController(userService);
     }
 
     @Bean
@@ -80,7 +74,8 @@ public class WebConfig {
 
     @Bean
     ViewResolver viewResolver () {
-        final InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setViewClass(JstlView.class);
         resolver.setPrefix("/");
         resolver.setSuffix(".jsp");
         return resolver;

@@ -5,6 +5,7 @@ import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.service.data.ICashAccountService;
 import com.github.adamovichas.project.web.controller.AuthentificationController;
+import com.github.adamovichas.project.web.service.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,8 @@ public class CashierController {
     @GetMapping(value = "")
     public ModelAndView getCashAccount(HttpServletRequest req, ModelAndView modelAndView){
         modelAndView.setViewName("cashier");
-        AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
+//       AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
+        AuthUser authUser = WebUtil.getUserInSession();
         if(authUser.getRole().equals(Role.USER_VER)) {
             CashAccountDTO account = cashAccountService.getAccountByLogin(authUser.getLogin());
             modelAndView.addObject("account", account);
@@ -48,7 +50,7 @@ public class CashierController {
     public ModelAndView makeDeposit(HttpServletRequest req){
         ModelAndView modelAndView = new ModelAndView("cashier");
         double deposit = Double.parseDouble(req.getParameter("deposit"));
-        AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
+        AuthUser authUser = WebUtil.getUserInSession();
         boolean isDepositDone = cashAccountService.makeDeposit(authUser.getLogin(), deposit);
         String message;
         if(isDepositDone){
@@ -65,7 +67,7 @@ public class CashierController {
     public ModelAndView makeWithdrawal(HttpServletRequest req){
         ModelAndView modelAndView = new ModelAndView("cashier");
         double withdrawal = Double.parseDouble(req.getParameter("withdrawal"));
-        AuthUser authUser = (AuthUser) req.getSession().getAttribute("authUser");
+        AuthUser authUser = WebUtil.getUserInSession();
         boolean isWithdrawalDone = cashAccountService.withdrawal(authUser.getLogin(), withdrawal);
         String message;
         if(isWithdrawalDone){
@@ -77,4 +79,5 @@ public class CashierController {
         getCashAccount(req,modelAndView);
         return modelAndView;
     }
+
 }

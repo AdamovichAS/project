@@ -84,9 +84,9 @@ public class CashAccountService implements ICashAccountService {
                 List<BetDTO> losingBets = betDao.getAllNotFinishedBetsByFactorId(eventFactor.getId());
                 if(!losingBets.isEmpty()){
                     for (BetDTO losingBet : losingBets) {
-                        CashAccountDTO userCashAcc = userDao.getCashAccountByLogin(losingBet.getUserLogin());
-                        userCashAcc.setValue(userCashAcc.getValue() - losingBet.getMoney());
-                        userDao.updateCashAccountValue(userCashAcc);
+//                        CashAccountDTO userCashAcc = userDao.getCashAccountByLogin(losingBet.getUserLogin());
+//                        userCashAcc.setValue(userCashAcc.getValue() - losingBet.getMoney());
+//                        userDao.updateCashAccountValue(userCashAcc);
                         appCashAccountDao.updateBalance(losingBet.getMoney());
                         betDao.updateBetStatus(losingBet.getId(),Status.FINISH);
                     }

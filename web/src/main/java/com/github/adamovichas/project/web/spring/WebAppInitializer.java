@@ -12,7 +12,7 @@ import javax.servlet.Filter;
 public class WebAppInitializer  extends AbstractAnnotationConfigDispatcherServletInitializer{
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {RootConfig.class};
+        return new Class[] {RootConfig.class,WebSecurityConfig.class};
     }
 
     @Override
@@ -25,12 +25,12 @@ public class WebAppInitializer  extends AbstractAnnotationConfigDispatcherServle
         return new String[] {"/"};
     }
 
-//    @Override
-//    protected Filter[] getServletFilters() {
-//        final DelegatingFilterProxy delegateFilterProxy = new DelegatingFilterProxy();
-//        delegateFilterProxy.setTargetBeanName("springSecurityFilterChain");
-//        return new Filter[]{delegateFilterProxy};
-//    }
+    @Override
+    protected Filter[] getServletFilters() {
+        final DelegatingFilterProxy delegateFilterProxy = new DelegatingFilterProxy();
+        delegateFilterProxy.setTargetBeanName("springSecurityFilterChain");
+        return new Filter[]{delegateFilterProxy};
+    }
 
     }
 
