@@ -26,7 +26,6 @@
         <label>Passport series</label>
         <input type="text" placeholder="new pass series" name="passSeries"><br>
         <input type="file" required name="passportImg">
-<%--        <input type="text" hidden value="WAITING" name="verStatus">--%>
         <input type="submit" name="submit" value="<fmt:message key="update.button" bundle="${messages}"/>"/><br>
     </form>
 <%--    <a href="${pageContext.request.contextPath}/my_page" ><fmt:message key="index.my_page" bundle="${messages}"/></a><br>--%>

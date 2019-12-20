@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 public abstract class WebUtil {
 
@@ -45,6 +46,10 @@ public abstract class WebUtil {
     public static AuthUser getUserInSession() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (AuthUser) authentication.getPrincipal();
+    }
+
+    public static void removeEmptyValue(Map<String,String> map){
+        map.entrySet().removeIf(stringStringEntry -> stringStringEntry.getValue().equals(""));
     }
 
 

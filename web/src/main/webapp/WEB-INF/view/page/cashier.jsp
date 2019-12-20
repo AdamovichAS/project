@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <sec:authorize access="hasRole('USER_VER')">
+    <sec:authorize access="hasRole('VEREF_PASSED')">
         <div >
             <a href="${pageContext.request.contextPath}/user/cashier?action=deposit"><fmt:message key="deposit.button" bundle="${messages}"/></a>
             <a href="${pageContext.request.contextPath}/user/cashier?action=withdrawal"><fmt:message key="withdrawal.button" bundle="${messages}"/></a>

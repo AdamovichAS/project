@@ -67,7 +67,7 @@ public class UserDaoTest {
         UserDTO testUser = util.createTestUser();
         userDao.addUser(testUser);
         testUser.setPassword("newPas");
-        testUser.setRole(Role.USER_NOT_VER);
+        testUser.setRole(Role.USER);
         final boolean isUpdated = userDao.updateUser(testUser);
         UserDTO userByLogin = userDao.getUserByLogin(testUser.getLogin());
         assertTrue(isUpdated);

@@ -15,7 +15,7 @@
 
 
     <div >
-        <sec:authorize access="hasAnyRole('USER_VER','USER_NOT_VER')">
+        <sec:authorize access="hasRole('USER')">
         <a href="${pageContext.request.contextPath}/update?action=passport">Update passport</a>
         </sec:authorize>
         <a href="${pageContext.request.contextPath}/update?action=password">Update password</a>

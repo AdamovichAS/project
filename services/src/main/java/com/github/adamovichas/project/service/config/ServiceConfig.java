@@ -9,8 +9,6 @@ import com.github.adamovichas.project.service.data.impl.BetService;
 import com.github.adamovichas.project.service.data.impl.CashAccountService;
 import com.github.adamovichas.project.service.data.impl.EventService;
 import com.github.adamovichas.project.service.data.impl.UserService;
-import com.github.adamovichas.project.service.util.IUtil;
-import com.github.adamovichas.project.service.util.Util;
 import com.github.adamovichas.project.service.util.event.EventUtil;
 import com.github.adamovichas.project.service.util.event.IEventUtil;
 import com.github.adamovichas.project.service.util.user.IUserUtil;
@@ -61,6 +59,4 @@ public class ServiceConfig {
 //    @Bean
 //    public IEventValidation eventValidation(){return new EventValidation();}
 
-    @Bean
-    public IUtil util(){return new Util();}
 }

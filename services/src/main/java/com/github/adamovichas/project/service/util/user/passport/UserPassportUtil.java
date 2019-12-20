@@ -20,14 +20,14 @@ public class UserPassportUtil implements IUserPassportUtil {
     public UserPassportDTO createPassport(String login, Map<String, String> passportFieldsAndValues) {
         UserPassportDTO passport = new UserPassportDTO();
         passport.setUserLogin(login);
-        passport.setVereficationStatus(VereficationStatus.WAITING);
+        passport.setVereficationStatus(VereficationStatus.VEREF_WAITING);
         updateFields(passport,passportFieldsAndValues);
         return passport;
     }
 
     @Override
     public void updateFields(UserPassportDTO passportForUpdate, Map<String, String> fieldsForUpdate) {
-        passportForUpdate.setVereficationStatus(VereficationStatus.WAITING);
+        passportForUpdate.setVereficationStatus(VereficationStatus.VEREF_WAITING);
         String fieldName;
         for (Field field : passportFields) {
             fieldName = field.getName();

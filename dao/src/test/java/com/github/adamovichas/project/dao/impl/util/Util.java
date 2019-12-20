@@ -25,7 +25,7 @@ public class Util implements IUtil{
         UserDTO user = new UserDTO();
         user.setLogin("test");
         user.setPassword("123");
-        user.setRole(Role.USER_VER);
+        user.setRole(Role.USER);
         return  user;
     }
 

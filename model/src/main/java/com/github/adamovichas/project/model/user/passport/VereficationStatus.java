@@ -1,5 +1,5 @@
 package com.github.adamovichas.project.model.user.passport;
 
 public enum VereficationStatus {
-    WAITING, PASSED;
+    VEREF_WAITING, VEREF_PASSED;
 }

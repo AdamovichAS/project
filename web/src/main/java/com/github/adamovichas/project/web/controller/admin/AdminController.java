@@ -32,4 +32,6 @@ public class AdminController {
         return new ModelAndView("admin_page","appCash",appCashAccount);
     }
 
+
+
 }

@@ -4,7 +4,6 @@ import com.github.adamovichas.project.service.data.IBetService;
 import com.github.adamovichas.project.service.data.ICashAccountService;
 import com.github.adamovichas.project.service.data.IEventService;
 import com.github.adamovichas.project.service.data.IUserService;
-import com.github.adamovichas.project.service.util.IUtil;
 import com.github.adamovichas.project.service.util.event.IEventUtil;
 import com.github.adamovichas.project.web.controller.AuthentificationController;
 import com.github.adamovichas.project.web.controller.MainPageController;
@@ -80,8 +79,8 @@ public class WebConfig {
     }
 
     @Bean
-    UserInfoUpdateController userInfoUpdateController(IUserService userService,IUtil util){
-        return new UserInfoUpdateController(userService,util);
+    UserInfoUpdateController userInfoUpdateController(IUserService userService){
+        return new UserInfoUpdateController(userService);
     }
 
     @Bean

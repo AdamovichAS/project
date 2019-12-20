@@ -2,7 +2,7 @@ package com.github.adamovichas.project.service.util;
 
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.model.user.Role;
-import com.github.adamovichas.project.service.util.Util;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

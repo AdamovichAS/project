@@ -19,7 +19,7 @@ public class UserUtil implements IUserUtil{
     @Override
     public UserDTO createUser(Map<String,String> userFieldsAndValues){
         UserDTO user = new UserDTO();
-        user.setRole(Role.USER_NOT_VER);
+        user.setRole(Role.USER);
         updateFields(user,userFieldsAndValues);
         return user;
     }

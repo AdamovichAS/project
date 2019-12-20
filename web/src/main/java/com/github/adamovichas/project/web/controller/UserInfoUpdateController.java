@@ -3,7 +3,6 @@ package com.github.adamovichas.project.web.controller;
 import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.dto.UserPassportDTO;
 import com.github.adamovichas.project.service.data.IUserService;
-import com.github.adamovichas.project.service.util.IUtil;
 import com.github.adamovichas.project.web.service.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,14 +33,12 @@ public class UserInfoUpdateController {
     private static final Logger log = LoggerFactory.getLogger(AuthentificationController.class);
 
     private final IUserService userService;
-    private final IUtil util;
 
     @Value("${pass.upload.path}")
     private String uploadPath;
 
-    public UserInfoUpdateController(IUserService userService, IUtil util) {
+    public UserInfoUpdateController(IUserService userService) {
         this.userService = userService;
-        this.util = util;
     }
 
     @GetMapping(value = "/update")
@@ -79,7 +76,7 @@ public class UserInfoUpdateController {
         if (nonNull(passportImg) && !passportImg.getOriginalFilename().isEmpty()) {
             byte[] bytes = passportImg.getBytes();
             String uuidFile = UUID.randomUUID().toString();
-            String fileName = uuidFile + passportImg.getOriginalFilename();
+            String fileName = passportImg.getOriginalFilename();
             File dir = new File(uploadPath);
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -95,7 +92,7 @@ public class UserInfoUpdateController {
         passportFieldsForUpdate.put("firstName", req.getParameter("firstName"));
         passportFieldsForUpdate.put("lastName", req.getParameter("lastName"));
         passportFieldsForUpdate.put("passSeries", req.getParameter("passSeries"));
-        util.removeEmptyValue(passportFieldsForUpdate);
+        WebUtil.removeEmptyValue(passportFieldsForUpdate);
         if (!passportFieldsForUpdate.isEmpty()) {
             userService.updatePassport(authUser.getLogin(), passportFieldsForUpdate);
             final UserPassportDTO passport = userService.getPassport(authUser.getLogin());

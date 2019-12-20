@@ -16,13 +16,13 @@
 <br>
 <a href="${pageContext.request.contextPath}/update">Update my info</a>
 <br>
-<sec:authorize access="hasRole('USER_VER')">
+<sec:authorize access="hasRole('VEREF_PASSED')">
 <a href="${pageContext.request.contextPath}/user/cashier" target="_blank"><fmt:message key="cashier.button" bundle="${messages}"/></a>
 <br>
 <a href="${pageContext.request.contextPath}/user/bet/new"><fmt:message key="my_page.betDTO" bundle="${messages}"/></a>
 <br>
 </sec:authorize>
-<sec:authorize access="hasRole('USER_NOT_VER')">
+<sec:authorize access="hasRole('VEREF_WAITING')">
     To make a deposit and bets, go through verification, please<br>
     <a href="${pageContext.request.contextPath}/verification"><fmt:message key="verefication.button" bundle="${messages}"/></a>
 </sec:authorize>

@@ -1,18 +1,19 @@
 package com.github.adamovichas.project.model.dto;
 
 import com.github.adamovichas.project.model.user.Role;
+import com.github.adamovichas.project.model.user.passport.VereficationStatus;
 
 public class AuthUser {
 
     private String login;
     private Role role;
+    private VereficationStatus status;
 
-    public AuthUser() {
-    }
 
-    public AuthUser(String login, Role role) {
+    public AuthUser(String login, Role role, VereficationStatus status) {
         this.login = login;
         this.role = role;
+        this.status = status;
     }
 
     public String getLogin() {
@@ -31,5 +32,11 @@ public class AuthUser {
         this.role = role;
     }
 
+    public VereficationStatus getStatus() {
+        return status;
+    }
 
+    public void setStatus(VereficationStatus status) {
+        this.status = status;
+    }
 }
