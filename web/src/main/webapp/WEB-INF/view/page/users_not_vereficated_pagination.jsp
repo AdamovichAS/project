@@ -13,21 +13,21 @@
 <body>
 <div class="row col-md-6">
     <table class="table table-striped table-bordered table-sm">
-        <H3>Not finished events</H3>
+        <H3>Not verified users</H3>
         <tr>
-            <th><fmt:message key="event_pagination.name" bundle="${messages}"/></th>
-            <th><fmt:message key="event_pagination.start" bundle="${messages}"/></th>
+            <th>Login</th>
+<%--            <th><fmt:message key="event_pagination.start" bundle="${messages}"/></th>--%>
         </tr>
 
-        <c:forEach items="${eventsList}" var="event">
+        <c:forEach items="${passportVerif}" var="passport">
             <tr>
                 <td>
-                    <a href="${pageContext.request.contextPath}/admin/event/get_not_finished_events/add_statistic?action=addStatistic&currentPage=${currentPage}&eventId=${event.id}">${event.getName()}</a><br>
-                    <c:if test="${eventId eq event.id}">
-                        <jsp:include page="add_statistic.jsp"/>
+                    <a href="${pageContext.request.contextPath}/admin/get_not_verified_users/get_passport_info?currentPage=${currentPage}&login=${passport.userLogin}">${passport.userLogin}</a><br>
+                    <c:if test="${login eq passport.userLogin}">
+                        <jsp:include page="user_verefication.jsp"/>
                     </c:if>
                 </td>
-                <td>${event.getStartTime()}</td>
+<%--                <td>${event.getStartTime()}</td>--%>
             </tr>
         </c:forEach>
     </table>
@@ -38,7 +38,7 @@
         <c:if test="${currentPage > 1}">
             <li class="page-item">
                 <a class="page-link"
-                   href="${pageContext.request.contextPath}/admin/event/get_not_finished_events?action=finish&currentPage=${currentPage-1}"
+                   href="${pageContext.request.contextPath}/admin/get_not_verified_users?currentPage=${currentPage-1}"
                    aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
@@ -54,7 +54,7 @@
                 <c:otherwise>
                     <li class="page-item">
                         <a class="page-link"
-                           href="${pageContext.request.contextPath}/admin/event/get_not_finished_events?action=finish&currentPage=${page}">${page}</a>
+                           href="${pageContext.request.contextPath}/admin/get_not_verified_users?currentPage=${page}">${page}</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -62,7 +62,7 @@
         <c:if test="${currentPage < maxPages}">
             <li class="page-item">
                 <a class="page-link"
-                   href="${pageContext.request.contextPath}/admin/event/get_not_finished_events?action=finish&currentPage=${currentPage+1}"
+                   href="${pageContext.request.contextPath}/admin/get_not_verified_users?currentPage=${currentPage+1}"
                    aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

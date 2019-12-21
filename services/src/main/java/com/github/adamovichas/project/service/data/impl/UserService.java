@@ -1,7 +1,7 @@
 package com.github.adamovichas.project.service.data.impl;
-import com.github.adamovichas.project.model.dto.AuthUser;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.dto.UserPassportDTO;
+import com.github.adamovichas.project.model.user.passport.VereficationStatus;
 import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.model.dto.UserDTO;
 import com.github.adamovichas.project.dao.IUserDao;
@@ -9,12 +9,15 @@ import com.github.adamovichas.project.service.util.user.IUserUtil;
 import com.github.adamovichas.project.service.util.user.passport.IUserPassportUtil;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 
 import static java.util.Objects.nonNull;
 
 public class UserService implements IUserService {
+
+    private static final int PAGE_SIZE = 2;
 
     private final IUserUtil userUtil;
     private final IUserPassportUtil userPassportUtil;
@@ -112,8 +115,44 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
+    public UserPassportDTO upadatePassport(UserPassportDTO passportDTO) {
+        return userDao.updatePassport(passportDTO);
+    }
+
+    @Override
+    @Transactional
+    public void verifyUser(String login, VereficationStatus newStatus){
+        UserPassportDTO passport = userDao.getPassport(login);
+        passport.setVereficationStatus(newStatus);
+        userDao.updatePassport(passport);
+        CashAccountDTO cashAccountDTO = userDao.getCashAccountByLogin(login);
+        if(cashAccountDTO == null){
+            userDao.addUserCashAccount(login);
+        }
+
+    }
+
+    @Override
+    @Transactional
     public UserPassportDTO getPassport(String login) {
         return userDao.getPassport(login);
+    }
+
+    @Override
+    @Transactional
+    public List<UserPassportDTO> getPassportOnPageByVerificationStatusWaitAndRoleUser(int page) {
+        return userDao.getPassportOnPageByVerificationStatusWaitAndRoleUser(page - 1,PAGE_SIZE);
+    }
+
+    @Override
+    @Transactional
+    public Long getPassportMaxPagesByVerificationStatusWaiting(){
+        Long rowsEvent = userDao.getCountPassportPagesByVerificationStatusWaitingAndRoleUser();
+        Long maxPages = rowsEvent / PAGE_SIZE;
+        if (rowsEvent % PAGE_SIZE > 0) {
+            maxPages++;
+        }
+        return maxPages;
     }
 
     /**

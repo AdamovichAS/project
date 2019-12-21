@@ -87,6 +87,19 @@ public class EventDaoTest {
         assertEquals(eventFactors.size(),eventView.getFactors().size());
 
     }
+    @Test
+    public void addResultFactorId(){
+        Long resultFactorId = 4L;
+        final EventDTO eventTest = util.createEventTest();
+        eventTest.setResultFactorId(null);
+        final Long eventId = eventDao.addEvent(eventTest);
+        final EventDTO eventById = eventDao.getEventById(eventId);
+        assertNull(eventById.getResultFactorId());
+        eventById.setResultFactorId(resultFactorId);
+        eventDao.addResultFactorId(eventById);
+        final EventDTO eventWithResFactorId = eventDao.getEventById(eventId);
+        assertEquals(resultFactorId,eventWithResFactorId.getResultFactorId());
+    }
 
     /**
      * Factor
@@ -134,19 +147,6 @@ public class EventDaoTest {
         assertEquals(eventStatistic.getTeamTwoGoals(),testStatistic.getTeamTwoGoals());
         assertEquals(eventStatistic.getEventId(),id);
     }
-
-//    @Test
-//    void getAllNotFinishedEvents(){
-//   //     Long countAllNotFinishedEvents = util.getCountAllNotFinishedEvents();
-//        final List<EventDTO> events = eventDao.getAllNotFinishedEvents();
-//  //      assertEquals(events.size(),countAllNotFinishedEvents);
-//    }
-
-
-
-
-
-
 
 
 }

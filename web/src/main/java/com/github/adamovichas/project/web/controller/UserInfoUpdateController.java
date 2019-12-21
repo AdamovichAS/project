@@ -76,7 +76,7 @@ public class UserInfoUpdateController {
         if (nonNull(passportImg) && !passportImg.getOriginalFilename().isEmpty()) {
             byte[] bytes = passportImg.getBytes();
             String uuidFile = UUID.randomUUID().toString();
-            String fileName = passportImg.getOriginalFilename();
+            String fileName = uuidFile + passportImg.getOriginalFilename();
             File dir = new File(uploadPath);
             if (!dir.exists()) {
                 dir.mkdirs();

@@ -2,11 +2,9 @@ package com.github.adamovichas.project.model.dto;
 
 import com.github.adamovichas.project.model.user.passport.VereficationStatus;
 
-import java.sql.Date;
-
 public class UserPassportDTO {
 
-    private String UserLogin;
+    private String userLogin;
     private String firstName;
     private String lastName;
     private String passSeries;
@@ -14,11 +12,11 @@ public class UserPassportDTO {
     private VereficationStatus vereficationStatus;
 
     public String getUserLogin() {
-        return UserLogin;
+        return userLogin;
     }
 
     public void setUserLogin(String userLogin) {
-        UserLogin = userLogin;
+        this.userLogin = userLogin;
     }
 
     public String getFirstName() {
@@ -63,6 +61,6 @@ public class UserPassportDTO {
 
     @Override
     public String toString() {
-        return String.format("Login: %s | first name: %s | last name: %s | passport series: %s | verification status: %s",UserLogin,firstName,lastName,passSeries, vereficationStatus);
+        return String.format("Login: %s | first name: %s | last name: %s | passport series: %s | verification status: %s", userLogin,firstName,lastName,passSeries, vereficationStatus);
     }
 }

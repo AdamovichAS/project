@@ -97,7 +97,9 @@ public class EventController {
         }
         modelAndView.addObject("currentPage", currentPage);
         List<EventView> events = eventService.getEventsOnCurrentPageByResultFactorId(currentPage,true);
-        modelAndView.addObject("eventsList", events);
+        if(!events.isEmpty()) {
+            modelAndView.addObject("eventsList", events);
+        }
         Long maxPages = eventService.getEventMaxPagesByResultFactorId(true);
         modelAndView.addObject("maxPages", maxPages);
         return modelAndView;

@@ -46,7 +46,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void getUserByLoginTrue() {
+    public void getUserByLoginNotNull() {
         UserDTO testUser = util.createTestUser();
         userDao.addUser(testUser);
         final UserDTO userByLogin = userDao.getUserByLogin(testUser.getLogin());
@@ -84,6 +84,7 @@ public class UserDaoTest {
         final UserDTO userByLogin = userDao.getUserByLogin(testUser.getLogin());
         assertEquals(userByLogin.getRole(),Role.BLOCKED);
     }
+
 
     /**
      *CashAccount
@@ -127,29 +128,36 @@ public class UserDaoTest {
      * UserPassport
      */
 
-//    @Test
-//    public void addPassportTest(){
-//        UserDTO testUser = util.createTestUser();
-//        UserPassportDTO passport = util.createTestPassport();
-//        userDao.addUser(testUser);
-//        userDao.addPassport(passport);
-//        UserPassportDTO passportAdded = userDao.getPassport(testUser.getLogin());
-//        assertNotNull(passportAdded);
-//    }
+    @Test
+    public void addPassportTest(){
+        UserDTO testUser = util.createTestUser();
+        UserPassportDTO passport = util.createTestPassport();
+        userDao.addUser(testUser);
+        userDao.addPassport(passport);
+        UserPassportDTO passportAdded = userDao.getPassport(testUser.getLogin());
+        assertEquals(passportAdded.getUserLogin(),passport.getUserLogin());
+        assertEquals(passportAdded.getPassSeries(),passport.getPassSeries());
+        assertEquals(passportAdded.getPassFileName(),passport.getPassFileName());
+        assertEquals(passportAdded.getLastName(),passport.getLastName());
+        assertEquals(passportAdded.getFirstName(),passport.getFirstName());
+        assertEquals(passportAdded.getVereficationStatus(),passport.getVereficationStatus());
+    }
 
-//    @Test
-//    public void updateTest(){
-//        UserDTO testUser = util.createTestUser();
-//        UserPassportDTO passportDTO = util.createTestPassport();
-//        userDao.addUser(testUser);
-//        userDao.addPassport(passportDTO);
-//        passportDTO.setPassSeries("MPC");
-//        passportDTO.setLastName("New");
-//        passportDTO.setFirstName("New");
-//        UserPassportDTO passportAfterUpd = userDao.updatePassport(passportDTO);
-//        assertEquals(passportAfterUpd.getUserLogin(),passportDTO.getUserLogin());
-//        assertEquals(passportAfterUpd.getFirstName(),passportDTO.getFirstName());
-//        assertEquals(passportAfterUpd.getLastName(),passportDTO.getLastName());
-//        assertEquals(passportAfterUpd.getPassSeries(),passportDTO.getPassSeries());
-//    }
+    @Test
+    public void updateTest(){
+        UserDTO testUser = util.createTestUser();
+        UserPassportDTO passportDTO = util.createTestPassport();
+        userDao.addUser(testUser);
+        userDao.addPassport(passportDTO);
+        passportDTO.setPassSeries("MPC");
+        passportDTO.setLastName("New");
+        passportDTO.setFirstName("New");
+        UserPassportDTO passportAfterUpd = userDao.updatePassport(passportDTO);
+        assertEquals(passportAfterUpd.getUserLogin(),passportDTO.getUserLogin());
+        assertEquals(passportAfterUpd.getPassSeries(),passportDTO.getPassSeries());
+        assertEquals(passportAfterUpd.getPassFileName(),passportDTO.getPassFileName());
+        assertEquals(passportAfterUpd.getLastName(),passportDTO.getLastName());
+        assertEquals(passportAfterUpd.getFirstName(),passportDTO.getFirstName());
+        assertEquals(passportAfterUpd.getVereficationStatus(),passportDTO.getVereficationStatus());
+    }
 }

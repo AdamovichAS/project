@@ -20,13 +20,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.github.adamovichas.project.web"})
+//@ComponentScan(basePackages = {"com.github.adamovichas.project.web"})
 public class WebConfig {
 
 //    private ServiceConfig serviceConfig;
@@ -34,6 +35,7 @@ public class WebConfig {
 //    public WebConfig(ServiceConfig serviceConfig) {
 //        this.serviceConfig = serviceConfig;
 //    }
+
 
     @Bean
     public UrlBasedViewResolver tilesViewResolver(){
@@ -69,8 +71,8 @@ public class WebConfig {
     }
 
     @Bean
-    AdminController adminController(ICashAccountService cashAccountService,IEventService eventService){
-        return new AdminController(cashAccountService, eventService);
+    AdminController adminController(ICashAccountService cashAccountService,IUserService userService){
+        return new AdminController(cashAccountService, userService);
     }
 
     @Bean

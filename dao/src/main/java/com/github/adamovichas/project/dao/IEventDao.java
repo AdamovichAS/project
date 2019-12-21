@@ -35,9 +35,6 @@ public interface IEventDao {
      * @return
      */
     EventStatisticDTO addStatistics(EventStatisticDTO statisticDto);
-
-//    boolean addStatistics(EventStatisticDTO statisticDto);
-
     EventStatisticDTO getEventStatistic(Long eventId);
 
 

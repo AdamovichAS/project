@@ -7,6 +7,7 @@ import com.github.adamovichas.project.model.dto.*;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.model.user.Role;
+import com.github.adamovichas.project.model.user.passport.VereficationStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -80,6 +81,8 @@ public class Util implements IUtil{
         passportDTO.setPassSeries("MP");
         passportDTO.setLastName("Test");
         passportDTO.setFirstName("Test");
+        passportDTO.setVereficationStatus(VereficationStatus.VEREF_WAITING);
+        passportDTO.setPassFileName("test");
         return passportDTO;
     }
 

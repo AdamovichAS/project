@@ -14,11 +14,13 @@ import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.transaction.annotation.Isolation;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDao implements IUserDao {
@@ -133,6 +135,8 @@ public class UserDao implements IUserDao {
         passportEntity.setFirstName(userPassport.getFirstName());
         passportEntity.setLastName(userPassport.getLastName());
         passportEntity.setPassSeries(userPassport.getPassSeries());
+        passportEntity.setVereficationStatus(userPassport.getVereficationStatus());
+        passportEntity.setPassFileName(userPassport.getPassFileName());
         passportRepository.flush();
         return EntityDtoViewConverter.getDTO(passportEntity);
     }
@@ -148,4 +152,22 @@ public class UserDao implements IUserDao {
         return EntityDtoViewConverter.getDTO(passportEntity);
     }
 
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public Long getCountPassportPagesByVerificationStatusWaitingAndRoleUser() {
+        return passportRepository.getCountPassportsByVereficationStatusWiatAndRoleUser();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<UserPassportDTO> getPassportOnPageByVerificationStatusWaitAndRoleUser(int page, int pageSize) {
+        List<UserPassportEntity> passportEntities = passportRepository.getPassportsOnPageByVerificationStatusWaitingAndRoleUser(PageRequest.of(page ,pageSize, Sort.by("userLogin")));
+        List<UserPassportDTO>passportDTOS = new ArrayList<>();
+        if(!passportEntities.isEmpty()){
+            for (UserPassportEntity entity : passportEntities) {
+                passportDTOS.add(EntityDtoViewConverter.getDTO(entity));
+            }
+        }
+        return passportDTOS;
+    }
 }

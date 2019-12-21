@@ -1,17 +1,14 @@
 package com.github.adamovichas.project.entity;
 
 import com.github.adamovichas.project.model.user.passport.VereficationStatus;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Date;
-import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "user_passport")
 public class UserPassportEntity {
 
-    private String UserLogin;
+    private String userLogin;
     private String firstName;
     private String lastName;
     private String passSeries;
@@ -25,10 +22,10 @@ public class UserPassportEntity {
     @Id
     @Column(name = "user_login", nullable = false, updatable = false)
     public String getUserLogin() {
-        return UserLogin;
+        return userLogin;
     }
     public void setUserLogin(String userLogin) {
-        UserLogin = userLogin;
+        this.userLogin = userLogin;
     }
 
     @Column(name = "first_name",nullable = false)
