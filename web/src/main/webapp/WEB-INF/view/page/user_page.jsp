@@ -24,10 +24,13 @@
 </sec:authorize>
 <sec:authorize access="hasRole('VEREF_WAITING')">
     To make a deposit and bets, go through verification, please<br>
-    <a href="${pageContext.request.contextPath}/verification"><fmt:message key="verefication.button" bundle="${messages}"/></a>
+    <a href="${pageContext.request.contextPath}/update"><fmt:message key="verefication.button" bundle="${messages}"/></a>
 </sec:authorize>
-<%--<a href="${pageContext.request.contextPath}/bet_pagination" target="_blank">My bets</a>--%>
-<%--<br>--%>
+<sec:authorize access="hasRole('VEREF_CANCELD')">
+    Please repeat verification, upload a new passport photo <br>
+    <a href="${pageContext.request.contextPath}/update"><fmt:message key="verefication.button" bundle="${messages}"/></a>
+</sec:authorize>
+
 <c:if test="${userBets ne null}">
     <jsp:include page="user_bet.jsp"/>
 </c:if>

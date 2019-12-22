@@ -27,14 +27,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
-//@ComponentScan(basePackages = {"com.github.adamovichas.project.web"})
 public class WebConfig {
-
-//    private ServiceConfig serviceConfig;
-//
-//    public WebConfig(ServiceConfig serviceConfig) {
-//        this.serviceConfig = serviceConfig;
-//    }
 
 
     @Bean
@@ -76,8 +69,8 @@ public class WebConfig {
     }
 
     @Bean
-    UserController userController(IUserService userService, IBetService betService){
-        return new UserController(userService,betService);
+    UserController userController(ICashAccountService cashAccountService, IBetService betService){
+        return new UserController(cashAccountService,betService);
     }
 
     @Bean
@@ -101,12 +94,4 @@ public class WebConfig {
     }
 
 
-//    @Bean
-//    ViewResolver viewResolver () {
-//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//        resolver.setViewClass(JstlView.class);
-//        resolver.setPrefix("/WEB-INF/view/page/");
-//        resolver.setSuffix(".jsp");
-//        return resolver;
-//    }
 }

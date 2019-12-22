@@ -8,11 +8,11 @@ import com.github.adamovichas.project.util.EntityDtoViewConverter;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public class AppAppCashAccountDao implements IAppCashAccountDao {
+public class AppCashAccountDao implements IAppCashAccountDao {
 
     private final AppCashAccountRepository repository;
 
-    public AppAppCashAccountDao(AppCashAccountRepository repository) {
+    public AppCashAccountDao(AppCashAccountRepository repository) {
         this.repository = repository;
     }
 

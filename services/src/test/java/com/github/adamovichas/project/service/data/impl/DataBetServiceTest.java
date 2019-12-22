@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class DataBetServiceTest {
 
@@ -49,20 +49,21 @@ public class DataBetServiceTest {
         BetDTO testBet = new BetDTO("test",100L,1000);
         CashAccountDTO userCashAccount = createUserCashAccount();
         testBet.setId(50L);
-        when(betDao.addBet(testBet)).thenReturn(testBet.getId());
         when(userDao.getCashAccountByLogin(testBet.getUserLogin())).thenReturn(userCashAccount);
-        Long id = betService.addBet(testBet);
-        assertEquals(id,testBet.getId());
+        when(betDao.addBet(testBet)).thenReturn(testBet.getId());
+        betService.addBet(testBet);
+        verify(userDao,times(1)).getCashAccountByLogin(testBet.getUserLogin());
+        verify(userDao,times(1)).updateCashAccountValue(userCashAccount);
+        verify(betDao,times(1)).addBet(testBet);
+
     }
 
     @Test
     public void getViewById(){
         BetView betView = new BetView();
-        betView.setId(100L);
-        betView.setLogin("Test");
         when(betDao.getViewById(betView.getId())).thenReturn(betView);
-        BetView viewById = betService.getViewById(betView.getId());
-        assertEquals(viewById.getLogin(),betView.getLogin());
+        betService.getViewById(betView.getId());
+        verify(betDao,times(1)).getViewById(betView.getId());
     }
 
     @Test
@@ -74,9 +75,29 @@ public class DataBetServiceTest {
         assertEquals(notFinishedBetByLogin.size(),betViews.size());
     }
 
-//    @Test
-//    public void cancelBetById(){
-//        betService.cancelBetById(1L);
-//        Mockito.verify(betDao,times(1)).updateBetStatus(1L);
-//    }
+    @Test
+    public void cancelBetById(){
+        BetView betView = new BetView();
+        betView.setLogin("test");
+        betView.setMoney(100);
+        CashAccountDTO cashAccountDTO = createUserCashAccount();
+        List<Long>listId = new ArrayList<>(Arrays.asList(1L,2L));
+        when(betDao.getViewById(anyLong())).thenReturn(betView);
+        when(userDao.getCashAccountByLogin(anyString())).thenReturn(cashAccountDTO);
+        betService.cancelBetById(listId);
+        verify(betDao,times(listId.size())).getViewById(anyLong());
+        verify(userDao,times(listId.size())).getCashAccountByLogin(anyString());
+        verify(betDao,times(listId.size())).updateBetStatus(anyLong(),any(Status.class));
+        verify(userDao,times(listId.size())).updateCashAccountValue(any(CashAccountDTO.class));
+    }
+
+    @Test
+    void getBetMaxPagesByLoginAndStatus(){
+        when(betDao.getCountBetsByLoginAbdStatus(anyString(),any(Status.class))).thenReturn(10L);
+        final Long pages = betService.getBetMaxPagesByLoginAndStatus("test", Status.FINISH);
+        verify(betDao,times(1)).getCountBetsByLoginAbdStatus(anyString(),any(Status.class));
+        assertEquals(pages,2);
+    }
+
+
 }

@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ICashAccountService {
-    boolean verification(String login);
+
     CashAccountDTO getAccountByLogin(String login);
 
-    @Transactional
+
     AppCashAccountDTO getAppCashAccount();
 
     boolean makeDeposit(String login, double depositValue);

@@ -7,6 +7,7 @@ import com.github.adamovichas.project.model.user.Role;
 import com.github.adamovichas.project.model.user.passport.VereficationStatus;
 import com.github.adamovichas.project.model.view.BetView;
 import com.github.adamovichas.project.service.data.IBetService;
+import com.github.adamovichas.project.service.data.ICashAccountService;
 import com.github.adamovichas.project.service.data.IUserService;
 import com.github.adamovichas.project.web.service.WebUtil;
 import org.slf4j.Logger;
@@ -24,11 +25,11 @@ public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    private final IUserService userService;
+    private final ICashAccountService cashAccountService;
     private final IBetService betService;
 
-    public UserController(IUserService userService, IBetService betService) {
-        this.userService = userService;
+    public UserController(ICashAccountService cashAccountService, IBetService betService) {
+        this.cashAccountService = cashAccountService;
         this.betService = betService;
     }
 
@@ -38,7 +39,7 @@ public class UserController {
         AuthUser authUser = WebUtil.getUserInSession();
         String login = authUser.getLogin();
         if(authUser.getStatus().equals(VereficationStatus.VEREF_PASSED)) {
-            CashAccountDTO accountByLogin = userService.getCashAccountByLogin(login);
+            CashAccountDTO accountByLogin = cashAccountService.getAccountByLogin(login);
             modelAndView.addObject("account",accountByLogin);
             String currentPage = req.getParameter("currentPage");
             if(currentPage == null){

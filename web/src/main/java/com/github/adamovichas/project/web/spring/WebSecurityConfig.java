@@ -17,13 +17,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .antMatchers("/**").permitAll()
-//                                .antMatchers("/logout").hasAnyRole("ADMIN","USER_VER")
-//                                .antMatchers("/admin/**").hasRole("ADMIN")
-//                                .antMatchers("/user/bet/**","/user/cashier/**").hasRole("USER_VER")
+                                .antMatchers("/","/login","/registration","/main/").permitAll()
+                                .antMatchers("/logout","/my_page","/update","/update_password","/update_passport").hasAnyRole("ADMIN","USER")
+                                .antMatchers("/admin/**").hasRole("ADMIN")
+                                .antMatchers("/user/").hasRole("USER")
+                                .antMatchers("/user/bet/**","/user/cashier/**").hasAnyRole("VEREF_PASSED")
                                 .anyRequest().authenticated())
-//                .exceptionHandling(exceptionHandling ->
-//                        exceptionHandling.accessDeniedPage("access_denied.jsp"))
                 .csrf().disable();
     }
 }

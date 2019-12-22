@@ -10,11 +10,15 @@ import com.github.adamovichas.project.model.dto.BetDTO;
 import com.github.adamovichas.project.model.dto.CashAccountDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.service.data.ICashAccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class CashAccountService implements ICashAccountService {
+    private static final Logger log = LoggerFactory.getLogger(ICashAccountService.class);
 
     private final IBetDao betDao;
     private final IUserDao userDao;
@@ -27,12 +31,6 @@ public class CashAccountService implements ICashAccountService {
     }
 
 
-    @Override
-    @Transactional
-    public boolean verification(String login) {
-        userDao.addUserCashAccount(login);
-        return true;
-    }
 
     @Override
     @Transactional
@@ -51,8 +49,14 @@ public class CashAccountService implements ICashAccountService {
     public boolean makeDeposit(String login, double depositValue) {
         CashAccountDTO cashAccountDTO = userDao.getCashAccountByLogin(login);
         cashAccountDTO.setValue(cashAccountDTO.getValue() + depositValue);
-        userDao.updateCashAccountValue(cashAccountDTO);
-        return true;
+        try {
+            userDao.updateCashAccountValue(cashAccountDTO);
+            return true;
+        } catch (Exception e){
+            log.error("Deposit failed, login {} value {} at {}",login, depositValue, LocalDateTime.now(),e);
+            return false;
+        }
+
     }
 
     @Override
@@ -60,8 +64,13 @@ public class CashAccountService implements ICashAccountService {
     public boolean withdrawal(String login, double withdrawalValue) {
         CashAccountDTO cashAccountDTO = userDao.getCashAccountByLogin(login);
         cashAccountDTO.setValue(cashAccountDTO.getValue() - withdrawalValue);
-        userDao.updateCashAccountValue(cashAccountDTO);
-        return true;
+        try {
+            userDao.updateCashAccountValue(cashAccountDTO);
+            return true;
+        } catch (Exception e){
+            log.error("Withdrawal failed, login {} value {} at {}",login, withdrawalValue, LocalDateTime.now(),e);
+            return false;
+        }
     }
 
     @Override
@@ -84,9 +93,6 @@ public class CashAccountService implements ICashAccountService {
                 List<BetDTO> losingBets = betDao.getAllNotFinishedBetsByFactorId(eventFactor.getId());
                 if(!losingBets.isEmpty()){
                     for (BetDTO losingBet : losingBets) {
-//                        CashAccountDTO userCashAcc = userDao.getCashAccountByLogin(losingBet.getUserLogin());
-//                        userCashAcc.setValue(userCashAcc.getValue() - losingBet.getMoney());
-//                        userDao.updateCashAccountValue(userCashAcc);
                         appCashAccountDao.updateBalance(losingBet.getMoney());
                         betDao.updateBetStatus(losingBet.getId(),Status.FINISH);
                     }

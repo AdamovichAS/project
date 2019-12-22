@@ -113,11 +113,6 @@ public class UserService implements IUserService {
         return userDao.updatePassport(passport);
     }
 
-    @Override
-    @Transactional
-    public UserPassportDTO upadatePassport(UserPassportDTO passportDTO) {
-        return userDao.updatePassport(passportDTO);
-    }
 
     @Override
     @Transactional
@@ -154,29 +149,5 @@ public class UserService implements IUserService {
         }
         return maxPages;
     }
-
-    /**
-     * UserCashAccount
-     * @return
-     */
-
-    @Override
-    @Transactional
-    public CashAccountDTO addUserCashAccount(String login) {
-       return userDao.addUserCashAccount(login);
-    }
-
-    @Override
-    @Transactional
-    public CashAccountDTO getCashAccountByLogin(String login) {
-        return userDao.getCashAccountByLogin(login);
-    }
-
-    @Override
-    @Transactional
-    public CashAccountDTO updateCashAccountValue(CashAccountDTO cashAccountDTO) {
-        return userDao.updateCashAccountValue(cashAccountDTO);
-    }
-
 
 }

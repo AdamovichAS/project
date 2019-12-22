@@ -29,9 +29,8 @@ public interface IUserService {
 
     UserPassportDTO addUserPassport(String login, Map<String,String> passportFieldsAndValues);
     UserPassportDTO updatePassport(String login, Map<String,String> passportFieldsForUpdate);
-    UserPassportDTO upadatePassport(UserPassportDTO passportDTO);
 
-    @Transactional
+
     void verifyUser(String login, VereficationStatus newStatus);
 
     UserPassportDTO getPassport(String login);
@@ -43,9 +42,9 @@ public interface IUserService {
      * @return
      */
 
-    CashAccountDTO addUserCashAccount(String login);
-    CashAccountDTO getCashAccountByLogin(String login);
+//    CashAccountDTO addUserCashAccount(String login);
+//    CashAccountDTO getCashAccountByLogin(String login);
 //    CashAccountDTO updateCashAccountValue(double difference);
 
-    CashAccountDTO updateCashAccountValue(CashAccountDTO cashAccountDTO);
+//    CashAccountDTO updateCashAccountValue(CashAccountDTO cashAccountDTO);
 }

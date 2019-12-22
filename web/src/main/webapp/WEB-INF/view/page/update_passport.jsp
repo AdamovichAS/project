@@ -20,11 +20,11 @@
 <%--        <label><fmt:message key="registration.repeat_password" bundle="${messages}"/></label>--%>
 <%--        <input type="password" required placeholder="repeat password" name="repeatedPassword"><br>--%>
         <label><fmt:message key="registration.first_name" bundle="${messages}"/></label>
-        <input type="text" placeholder="new first name" name="firstName"><br>
+        <input type="text" required placeholder="new first name" name="firstName"><br>
         <label><fmt:message key="registration.last_name" bundle="${messages}"/></label>
-        <input type="text" placeholder="new last name" name="lastName"><br>
+        <input type="text" required placeholder="new last name" name="lastName"><br>
         <label>Passport series</label>
-        <input type="text" placeholder="new pass series" name="passSeries"><br>
+        <input type="text" required placeholder="new pass series" name="passSeries"><br>
         <input type="file" required name="passportImg">
         <input type="submit" name="submit" value="<fmt:message key="update.button" bundle="${messages}"/>"/><br>
     </form>

@@ -70,7 +70,7 @@ public class DaoConfig {
 
     @Bean
     public IAppCashAccountDao appCashAccountDao(){
-        return new AppAppCashAccountDao(appCashAccountRepository);
+        return new AppCashAccountDao(appCashAccountRepository);
     }
 
 }

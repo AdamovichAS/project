@@ -2,12 +2,14 @@ package com.github.adamovichas.project.service.data.impl;
 
 import com.github.adamovichas.project.dao.impl.LeagueDao;
 import com.github.adamovichas.project.model.dto.EventDTO;
+import com.github.adamovichas.project.model.dto.EventStatisticDTO;
 import com.github.adamovichas.project.model.dto.LeagueDTO;
 import com.github.adamovichas.project.model.dto.TeamDTO;
 import com.github.adamovichas.project.model.factor.FactorDTO;
 import com.github.adamovichas.project.model.factor.FactorName;
 import com.github.adamovichas.project.dao.impl.EventDao;
 import com.github.adamovichas.project.model.view.EventView;
+import com.github.adamovichas.project.service.util.event.EventUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,16 +24,18 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-public class EventDaoServiceTest {
+public class EventServiceTest {
 
     @Mock
     public EventDao eventDao;
 
     @Mock
     public LeagueDao leagueDao;
+
+    @Mock
+    EventUtil eventUtil;
 
     @InjectMocks
     public EventService eventService;
@@ -48,7 +52,7 @@ public class EventDaoServiceTest {
         return eventDTO;
     }
 
-    EventView createeventView(){
+    EventView createEventView(){
         EventView view = new EventView();
         view.setId(50L);
         view.setTeamOne("Arsenal");
@@ -69,6 +73,7 @@ public class EventDaoServiceTest {
         return factorDTOS;
     }
 
+
     @Test
     public void eventIsExist(){
         EventDTO eventDTOTest = createEventTest();
@@ -85,7 +90,7 @@ public class EventDaoServiceTest {
 
     @Test
     public void getAllNotFinishedEvents(){
-        List<EventView> views = new ArrayList<>(Collections.singletonList(createeventView()));
+        List<EventView> views = new ArrayList<>(Collections.singletonList(createEventView()));
         when(eventDao.getAllNotFinishedEvents()).thenReturn(views);
         List<EventView> allNotFinishedEvents = eventService.getAllNotFinishedEvents();
         assertEquals(allNotFinishedEvents.size(), views.size());
@@ -121,5 +126,46 @@ public class EventDaoServiceTest {
         when(eventDao.getCountEvents()).thenReturn(10L);
         Long pages = eventService.getEventMaxPages();
         assertEquals(pages,2L);
+    }
+
+    @Test
+    void getEventViewById(){
+        eventService.getEventViewById(10L);
+        verify(eventDao,times(1)).getEventViewById(10L);
+    }
+
+    @Test
+    void getEventMaxPagesByResultFactorId(){
+        when(eventDao.getCountEventsByResultFactorId(true)).thenReturn(10L);
+        final Long pages = eventService.getEventMaxPagesByResultFactorId(true);
+        assertEquals(pages,2);
+    }
+
+    @Test
+    void makeEventFinished(){
+        EventDTO eventTest = createEventTest();
+        EventStatisticDTO statisticDTO = new EventStatisticDTO();
+        statisticDTO.setEventId(eventTest.getId());
+        statisticDTO.setTeamOneGoals(1);
+        statisticDTO.setTeamTwoGoals(2);
+        List<FactorDTO> factorsTest = createFactorsTest();
+        FactorDTO winningFactor = new FactorDTO(FactorName.lose, 2.1, 50L);
+
+        when(eventDao.getEventById(eventTest.getId())).thenReturn(eventTest);
+        when(eventDao.addStatistics(statisticDTO)).thenReturn(statisticDTO);
+        when(eventDao.getEventFactors(eventTest.getId())).thenReturn(factorsTest);
+        when(eventUtil.getWinningFactor(statisticDTO,factorsTest)).thenReturn(winningFactor);
+        eventService.makeEventFinished(statisticDTO);
+        verify(eventDao,times(1)).getEventById(statisticDTO.getEventId());
+        verify(eventDao,times(1)).addStatistics(statisticDTO);
+        verify(eventDao,times(1)).getEventFactors(eventTest.getId());
+        verify(eventUtil,times(1)).getWinningFactor(statisticDTO,factorsTest);
+        verify(eventDao,times(1)).addResultFactorId(eventTest);
+    }
+
+    @Test
+    void getEventStatistic(){
+        eventService.getEventStatistic(1L);
+        verify(eventDao,times(1)).getEventStatistic(anyLong());
     }
 }
