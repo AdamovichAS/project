@@ -34,7 +34,7 @@
         <cobertura.version>2.7</cobertura.version>
         <mysql.conector.java.version>8.0.17</mysql.conector.java.version>
         <slf4j-api.version>1.7.28</slf4j-api.version>
-        <log4j-core.version>2.12.1</log4j-core.version>
+        <log4j-core.version>2.15.0</log4j-core.version>
         <log4j-slf4j-impl.version>2.12.1</log4j-slf4j-impl.version>
         <hibernate-core.version>5.4.5.Final</hibernate-core.version>
     </properties>
